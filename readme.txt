@@ -5,6 +5,7 @@ Phase - A simple beginning
 - "Schicke" (funktionale) Oberfläche
 - Auflistung und Sortierung von Events
 - Abbruchbedingungen mit Tastatureingaben (https://code.google.com/p/jnativehook/)
+- "Aufnahme-Button" um leichter Events hinzuzufügen
 
 Phase - Not only time is relative
 - eingaben an zufälliger Position eines Bereiches (Rechteck) möglich
