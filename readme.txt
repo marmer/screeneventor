@@ -6,6 +6,8 @@ Phase - A simple beginning
 - Auflistung und Sortierung von Events
 - Abbruchbedingungen mit Tastatureingaben (https://code.google.com/p/jnativehook/)
 - "Aufnahme-Button" um leichter Events hinzuzufügen
+- Schleife (mit zähler und/oder endlos)
+- Delays vor Klicks und zwischen key up und key down event
 
 Phase - Not only time is relative
 - eingaben an zufälliger Position eines Bereiches (Rechteck) möglich
