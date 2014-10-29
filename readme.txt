@@ -14,7 +14,8 @@ Phase - A Safe for your Inputs
 - Speichermöglichkeit von Botkonfiguration
 
 Phase - Colorful Clicks
-- Visualisieren von "simulierten" Eingaben (z.B. durch roten Punkten mit/ohne Zahlen von Klicks, wo sie getätigt werden
+- Anzeigen aller Eingaben (Mit und ohne "IDs/Klickreihenfolge")
+- Simulierten (visualisieren) von eingaben, wie sie getätigt werden würden (z.B. durch roten Punkten mit/ohne Zahlen von Klicks, wo sie getätigt werden
 
 Phase - moving ovation
 - Verschieben und Skalieren von Eingaben
