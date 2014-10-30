@@ -2,23 +2,23 @@ Blick in die Zukunft:
 
 Phase - A simple beginning 
 - Einfachen Mausbot mit basic events erstellen
-- "Schicke" (funktionale) Oberfläche
+- "Schicke" (funktionale) OberflÃ¤che
 - Auflistung und Sortierung von Events
 - Abbruchbedingungen mit Tastatureingaben (https://code.google.com/p/jnativehook/)
-- "Aufnahme-Button" um leichter Events hinzuzufügen
-- Schleife (mit zähler und/oder endlos)
+- "Aufnahme-Button" um leichter Events hinzuzufÃ¼gen
+- Schleife (mit zÃ¤hler und/oder endlos)
 - Delays vor Klicks und zwischen key up und key down event
 
 Phase - Not only time is relative
-- eingaben an zufälliger Position eines Bereiches (Rechteck) möglich
-- eingaben an zufälliger Position rund um Cursorposition (radius) tätigen
+- eingaben an zufÃ¤lliger Position eines Bereiches (Rechteck) mÃ¶glich
+- eingaben an zufÃ¤lliger Position rund um Cursorposition (radius) tÃ¤tigen
 
 Phase - A Safe for your Inputs
-- Speichermöglichkeit von Botkonfiguration
+- SpeichermÃ¶glichkeit von Botkonfiguration
 
 Phase - Colorful Clicks
 - Anzeigen aller Eingaben (Mit und ohne "IDs/Klickreihenfolge")
-- Simulierten (visualisieren) von eingaben, wie sie getätigt werden würden (z.B. durch roten Punkten mit/ohne Zahlen von Klicks, wo sie getätigt werden
+- Simulierten (visualisieren) von eingaben, wie sie getÃ¤tigt werden wÃ¼rden (z.B. durch roten Punkten mit/ohne Zahlen von Klicks, wo sie getÃ¤tigt werden
 
 Phase - moving ovation
 - Verschieben und Skalieren von Eingaben
@@ -29,11 +29,11 @@ Phase - Keyboard Party
 
 Phase - Blind Dates
 - Screenshoterstellung (Frequenz konfigurierbar oder durch andere Events gegeben)
-- Festlegen einfacher zu "überwachender" Bereiche
-- Abbruchbedingung anhand des Screenshots, die unabhängig funktioniert
+- Festlegen einfacher zu "Ã¼berwachender" Bereiche
+- Abbruchbedingung anhand des Screenshots, die unabhÃ¤ngig funktioniert
 
 Phase - Time to Read
-- Aus Screenshots sollen Texte erkannt werden können und basierend auf den Texten Events erzeugt werden
+- Aus Screenshots sollen Texte erkannt werden kÃ¶nnen und basierend auf den Texten Events erzeugt werden
 
 Phase - hang out of the window
 - Fenstererkennung und Manipulation

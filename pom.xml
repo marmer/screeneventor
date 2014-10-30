@@ -13,7 +13,11 @@
 			<name>Mariano Mertinat</name>
 		</developer>
 	</developers>
-
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
 	<distributionManagement>
 		<repository>
 			<id>releases</id>
