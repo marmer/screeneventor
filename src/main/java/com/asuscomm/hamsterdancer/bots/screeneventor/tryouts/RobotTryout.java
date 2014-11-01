@@ -1,5 +1,6 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.tryouts;
 
+import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Circle;
 import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Point;
 import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Rectangle;
 
@@ -8,7 +9,6 @@ import java.awt.Dimension;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
-
 import java.util.Random;
 
 
@@ -44,12 +44,13 @@ public class RobotTryout {
 		// final int widthMax = 3250;
 		// final int heightMin = 400;
 		// final int heightMax = 700;
+
 		final int left = 2950;
 		final int right = 3300;
 		final int top = 400;
 		final int bottom = 725;
 
-		final double timeToClickInMin = 1.25;
+		final double timeToClickInMin = .25;
 		final double timeToClickInSec = timeToClickInMin * 60; // approximate
 		final int timeToClickInMs = (int) timeToClickInSec * 1000;
 		final int delay = 4;
@@ -58,7 +59,8 @@ public class RobotTryout {
 		final boolean stop = false;
 
 		for (int i = 0; (i < iterations) && !stop; i++) {
-			final Point point = Rectangle.getRandomPointOfRectableArea(left, bottom, right, top);
+			 final Point point = Rectangle.getRandomPointOfRectableArea(left, bottom, right, top);
+//			final Point point = Circle.getRandomPointOfCircleArea(new Point(left, top), 15);
 
 			// moveMouse(r, point);
 			performClick(r, point);

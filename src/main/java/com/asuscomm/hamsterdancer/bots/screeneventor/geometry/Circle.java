@@ -151,8 +151,5 @@ public class Circle implements Area {
 
 		return new Point(center.x + (int) FastMath.round(r * Math.cos(theta)),
 		        center.y + (int) Math.round(r * FastMath.sin(theta)));
-
-		// TODO add tests
 	}
-
 }

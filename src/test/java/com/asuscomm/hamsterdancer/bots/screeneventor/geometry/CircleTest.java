@@ -10,6 +10,23 @@ import org.testng.annotations.Test;
  * @since  2014-11-01
  */
 public class CircleTest {
+	/** sample circle with a radius of 6. */
+	int[][] sampleCircle = {
+			{ 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0 },
+			{ 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 },
+			{ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
+			{ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
+			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+			{ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
+			{ 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0 },
+			{ 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0 },
+			{ 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0 }
+		};
+
 	/** Test. */
 	@Test
 	public void equalsAndConstructorTest() {
@@ -53,10 +70,36 @@ public class CircleTest {
 		assert !new Circle(0, 0, 1).isInArea(1, -1) : "outside bottom leftleft border";
 	}
 
+	@Test
+	public void getRandomPoint() {
+		final int radius = 6;
+		final int diameter = (radius * 2) + 1;
+
+		// initialize array
+		final int[][] randomPoints = new int[diameter][];
+
+		for (int i = 0; i < diameter; i++) {
+			randomPoints[i] = new int[13];
+		}
+
+		final Circle circle = new Circle(new Point(0, 0), radius);
+
+		for (int i = 0; i < 10000; i++) {
+			final Point randomPoint = circle.getRandomPoint();
+			randomPoints[radius + randomPoint.x][radius + randomPoint.y] = 1;
+		}
+
+		// compare arrays
+		for (int x = 0; x < diameter; x++) {
+			for (int y = 0; y < diameter; y++) {
+				assert sampleCircle[x][y] == randomPoints[x][y];
+			}
+		}
+	}
+
 	/** Test. */
 	@Test
 	public void toStringTest() {
-		assert "Circle [[1,2],3]".equals(new Circle(new Point(1, 2), 3)
-		        .toString());
+		assert "Circle [[1,2],3]".equals(new Circle(new Point(1, 2), 3).toString());
 	}
 }
