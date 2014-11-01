@@ -2,13 +2,15 @@ package com.asuscomm.hamsterdancer.bots.screeneventor.geometry;
 
 /**
  * Representation of a circle.
- * 
+ *
  * @author MarMer
  * @since 2014-11-01
  */
-public class Circle {
-	private final Point center;
-	private final int radius;
+public class Circle implements Area {
+	/** Circles center */
+	public final Point center;
+	/** Circles radius */
+	public final int radius;
 
 	/**
 	 * Creates a new Circle object.
@@ -40,6 +42,7 @@ public class Circle {
 	 *
 	 * @return True if the given Point is in the circles area.
 	 */
+	@Override
 	public boolean isInArea(final Point point) {
 		return radius >= center.getDistance(point);
 	}
@@ -54,6 +57,7 @@ public class Circle {
 	 * @see {@link #isInArea(Point)
 
 	 */
+	@Override
 	public boolean isInArea(final int x, final int y) {
 		return isInArea(new Point(x, y));
 	}
@@ -101,6 +105,6 @@ public class Circle {
 
 	@Override
 	public String toString() {
-		return "Circle [center=" + center + ", radius=" + radius + "]";
+		return "Circle [" + center + "," + radius + "]";
 	}
 }
