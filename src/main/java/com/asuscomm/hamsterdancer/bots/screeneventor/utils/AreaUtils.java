@@ -1,8 +1,11 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.utils;
 
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.geom.Area;
+import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Circle;
+import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Point;
+import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Rectangle;
+
+import org.apache.commons.math3.util.FastMath;
+import org.apache.commons.math3.util.MathUtils;
 
 import java.util.Random;
 
@@ -21,80 +24,33 @@ public final class AreaUtils {
 	}
 
 	/**
-	 * Checks whether a given {@link Point} is within an {@link Area}.
+	 * checks whether a number is in a range (including the borders).
 	 *
-	 * @param  area {@link Area}
-	 * @param  point Point to check.
+	 * @param  middle      the potential middle.
+	 * @param  lowerBorder The lower border
+	 * @param  upperBorder The upper border
 	 *
-	 * @return true if point is in Area.
+	 * @return True if the middle is within the range or at a border (lowerBorder <= middle <=
+	 *         topBorder).
 	 */
-	public static boolean isInRectangleArea(final Rectangle area, final Point point) {
-		return isInRectangleArea(area, point.x, point.y);
+	public static boolean isBetween(final int middle,
+		final int lowerBorder,
+		final int upperBorder) {
+		return (FastMath.min(lowerBorder, upperBorder) <= middle) &&
+			(middle <= FastMath.max(lowerBorder, upperBorder));
 	}
 
 	/**
-	 * Checks whether a given {@link Point} is within an {@link Area}.
+	 * Creates a random {@link Point} within a given Area.
 	 *
-	 * @param  area {@link Area}.
-	 * @param  xToCheck X Coordinate of point.
-	 * @param  yToCheck Y Coordinate of point.
-	 *
-	 * @return true if point is in Area.
-	 */
-	public static boolean isInRectangleArea(final Rectangle area,
-		final int xToCheck,
-		final int yToCheck) {
-		return area.contains(xToCheck, yToCheck);
-	}
-
-	/**
-	 * Checks whether a point is within a circle.
-	 *
-	 * @param  center       Circles center
-	 * @param  radius       Circles radius.
-	 * @param  pointToCheck point to check.
-	 *
-	 * @return True if the point is in the center of the circle.
-	 */
-	public static boolean isInCircleArea(final Point center,
-		final int radius,
-		final Point pointToCheck) {
-		return isInCircleArea(center, radius, pointToCheck.x, pointToCheck.y);
-	}
-
-	/**
-	 * Checks whether a point is within a circle.
-	 *
-	 * @param  center   Circles center
-	 * @param  radius   Circles radius.
-	 * @param  xToCheck X Coordinate of the point to check.
-	 * @param  yToCheck Y Coordinate of the point to check.
-	 *
-	 * @return True if the point is in the center of the circle.
-	 */
-	public static boolean isInCircleArea(final Point center,
-		final int radius,
-		final int xToCheck,
-		final int yToCheck) {
-		return radius >=
-			Math.sqrt(Math.pow(center.x - xToCheck, 2) + Math.pow(center.y - yToCheck, 2));
-	}
-
-	/**
-	 * Creates a random Point within a given Area.
-	 *
-	 * @param  area to get a point from.
+	 * @param  rectangle Rectangle you want to get a point of.
 	 *
 	 * @return a random Point within a given Area.
 	 *
 	 * @see    #getRandomPointOfRectableArea(int, int, int, int)
 	 */
-	public static Point getRandomPointOfRectableArea(final Rectangle area) {
-		return getRandomPointOfRectableArea(
-				area.x,
-				area.x + area.width,
-				area.y,
-				area.y + area.width);
+	public static Point getRandomPointOfRectableArea(final Rectangle rectangle) {
+		return getRandomPointOfRectableArea(rectangle.lowerLeft, rectangle.upperRight);
 	}
 
 	/**
@@ -140,6 +96,17 @@ public final class AreaUtils {
 	/**
 	 * Creates a random {@link Point} within a given circle.
 	 *
+	 * @param  circle the circle you want to get a {@link Point}.
+	 *
+	 * @return a random {@link Point} within a given Area.
+	 */
+	public static Point getRandomPointOfCircleArea(final Circle circle) {
+		return getRandomPointOfCircleArea(circle.center, circle.radius);
+	}
+
+	/**
+	 * Creates a random {@link Point} within a given circle.
+	 *
 	 * @param  center Center of the circle.
 	 * @param  radius Radius of the circle.
 	 *
@@ -159,11 +126,11 @@ public final class AreaUtils {
 	 * @return a random Point within a given Area.
 	 */
 	public static Point getRandomPointOfCircleArea(final int x, final int y, final int radius) {
-		final double r = radius * Math.sqrt(random.nextDouble());
-		final double theta = 2 * Math.PI * Math.random();
+		final double r = radius * FastMath.sqrt(random.nextDouble());
+		final double theta = MathUtils.TWO_PI * Math.random();
 
-		return new Point(x + (int) Math.round(r * Math.cos(theta)),
+		return new Point(x + (int) FastMath.round(r * Math.cos(theta)),
 				y +
-				(int) Math.round(r * Math.sin(theta)));
+				(int) Math.round(r * FastMath.sin(theta)));
 	}
 }
