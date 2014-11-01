@@ -8,6 +8,8 @@ Phase - A simple beginning
 - "Aufnahme-Button" um leichter Events hinzuzufügen
 - Schleife (mit zähler und/oder endlos)
 - Delays vor Klicks und zwischen key up und key down event
+- Abbruchbedingung über Auslaufen des Scripts (wenn keine Schleife definiert oder abbruchbedingung hat
+- Abbruchbedingung durch maximal mögliche Durchlaufzeit.
 
 Phase - Not only time is relative
 - eingaben an zufälliger Position eines Bereiches (Rechteck) möglich
@@ -26,6 +28,9 @@ Phase - moving ovation
 Phase - Keyboard Party
 - Einfache Tastaturevents
 - Eingabe von Strings
+
+Phase - Makros
+- Statt nur einer Start und Stop Tastenkombination die ein Skript startet, mehrere Tastenkombinationen für mehrere Skripts ermöglichen. 
 
 Phase - Blind Dates
 - Screenshoterstellung (Frequenz konfigurierbar oder durch andere Events gegeben)
