@@ -1,10 +1,10 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.tryouts;
 
+import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Point;
 import com.asuscomm.hamsterdancer.bots.screeneventor.utils.AreaUtils;
 
 import java.awt.AWTException;
 import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
@@ -74,7 +74,7 @@ public class RobotTryout {
 	 * @param r     TODO: doc
 	 * @param point TODO: doc
 	 */
-	protected static void performClick(final Robot r, final Point point) {
+	private static void performClick(final Robot r, final Point point) {
 		performClick(r, point.x, point.y);
 	}
 
@@ -85,7 +85,7 @@ public class RobotTryout {
 	 * @param x TODO: doc
 	 * @param y TODO: doc
 	 */
-	protected static void performClick(final Robot r, final int x, final int y) {
+	private static void performClick(final Robot r, final int x, final int y) {
 		r.mouseMove(x, y);
 		performClick(r);
 	}
@@ -95,7 +95,7 @@ public class RobotTryout {
 	 *
 	 * @param r TODO: doc
 	 */
-	protected static void performClick(final Robot r) {
+	private static void performClick(final Robot r) {
 		r.mousePress(InputEvent.BUTTON1_MASK);
 		r.mouseRelease(InputEvent.BUTTON1_MASK);
 	}
