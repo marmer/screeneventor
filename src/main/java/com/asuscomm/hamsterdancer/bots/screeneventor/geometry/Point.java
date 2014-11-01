@@ -42,15 +42,15 @@ public class Point implements Serializable {
 	 * @return the distance btween theese points.
 	 */
 	public double getDistance(final Point other) {
-		prepareVector();
-
-		return vector.distance(other.vector);
+		return getVector().distance(other.getVector());
 	}
 
-	private void prepareVector() {
+	private Vector2D getVector() {
 		if (vector == null) {
 			vector = new Vector2D(x, y);
 		}
+
+		return vector;
 	}
 
 	@Override
