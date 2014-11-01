@@ -72,11 +72,11 @@ public final class AreaUtils {
 	 *
 	 * @return True if the point is in the center of the circle.
 	 */
-	private static boolean isInCircleArea(final Point center,
+	public static boolean isInCircleArea(final Point center,
 		final int radius,
 		final int xToCheck,
 		final int yToCheck) {
-		return radius >
+		return radius >=
 			Math.sqrt(Math.pow(center.x - xToCheck, 2) + Math.pow(center.y - yToCheck, 2));
 	}
 
@@ -133,8 +133,6 @@ public final class AreaUtils {
 
 		final int x = x1 + random.nextInt((x2 - x1) + 1);
 		final int y = y2 + random.nextInt((y1 - y2) + 1);
-
-		// FIXME handle negative coordinates which is needed for multiple monitors.
 
 		return new Point(x, y);
 	}
