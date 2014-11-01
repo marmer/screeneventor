@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 
 /**
- * Representation of a point in a 2D-Area.
+ * Representation of a point.
  *
  * @author MarMer
  * @since  2014-11-01

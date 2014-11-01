@@ -56,6 +56,7 @@ public class CircleTest {
 	/** Test. */
 	@Test
 	public void toStringTest() {
-		assert "Circle [center=[1,2], radius=3]".equals(new Circle(new Point(1, 2), 3).toString());
+		assert "Circle [[1,2],3]".equals(new Circle(new Point(1, 2), 3)
+		        .toString());
 	}
 }
