@@ -1,5 +1,10 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.geometry;
 
+import java.util.Random;
+
+import org.apache.commons.math3.util.FastMath;
+import org.apache.commons.math3.util.MathUtils;
+
 /**
  * Representation of a circle.
  *
@@ -7,10 +12,11 @@ package com.asuscomm.hamsterdancer.bots.screeneventor.geometry;
  * @since 2014-11-01
  */
 public class Circle implements Area {
+	private static Random random = new Random();
 	/** Circles center */
 	public final Point center;
 	/** Circles radius */
-	public final int radius; 
+	public final int radius;
 
 	/**
 	 * Creates a new Circle object.
@@ -107,4 +113,56 @@ public class Circle implements Area {
 	public String toString() {
 		return "Circle [" + center + "," + radius + "]";
 	}
+
+
+	/**
+	 * Creates a random {@link Point} within a given circle.
+	 *
+	 * @param  circle the circle you want to get a {@link Point}.
+	 *
+	 * @return a random {@link Point} within a given Area.
+	 */
+	public static Point getRandomPointOfCircleArea(final Circle circle) {
+		return getRandomPointOfCircleArea(circle.center, circle.radius);
+	}
+
+	/**
+	 * Creates a random {@link Point} within a given circle.
+	 *
+	 * @param  center Center of the circle.
+	 * @param  radius Radius of the circle.
+	 *
+	 * @return a random {@link Point} within a given Area.
+	 */
+	public static Point getRandomPointOfCircleArea(final Point center, final int radius) {
+		return new Circle(center, radius).getRandomPoint();
+	}
+
+	/**
+	 * Creates es a random Point within a given circle.
+	 *
+	 * @param x
+	 *            X Coordinate of the center of the circle.
+	 * @param y
+	 *            Y Coordinate of the center of the circle.
+	 * @param radius
+	 *            Radius of the circle.
+	 * @return a random Point within a given Area.
+	 */
+	public static Point getRandomPointOfCircleArea(final int x, final int y, final int radius) {
+		return getRandomPointOfCircleArea(new Point(x, y), radius);
+
+	}
+
+	@Override
+	public Point getRandomPoint() {
+		final double r = radius * FastMath.sqrt(random.nextDouble());
+		final double theta = MathUtils.TWO_PI * Math.random();
+
+		return new Point(center.x + (int) FastMath.round(r * Math.cos(theta)),
+		        center.y + (int) Math.round(r * FastMath.sin(theta)));
+
+		// TODO add tests
+	}
+
 }

@@ -1,7 +1,7 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.tryouts;
 
 import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Point;
-import com.asuscomm.hamsterdancer.bots.screeneventor.utils.AreaUtils;
+import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Rectangle;
 
 import java.awt.AWTException;
 import java.awt.Dimension;
@@ -49,16 +49,18 @@ public class RobotTryout {
 		final int top = 400;
 		final int bottom = 725;
 
-		final int timeToClickInMin = 1;
-		final int timeToClickInSec = timeToClickInMin * 60; // approximate
-		final int timeToClickInMs = timeToClickInSec * 1000;
+		final double timeToClickInMin = 1.25;
+		final double timeToClickInSec = timeToClickInMin * 60; // approximate
+		final int timeToClickInMs = (int) timeToClickInSec * 1000;
 		final int delay = 4;
 		final int iterations = timeToClickInMs / delay;
 
 		final boolean stop = false;
 
 		for (int i = 0; (i < iterations) && !stop; i++) {
-			final Point point = AreaUtils.getRandomPointOfRectableArea(left, right, top, bottom);
+			final Point point = Rectangle.getRandomPointOfRectableArea(left, bottom, right, top);
+
+			// moveMouse(r, point);
 			performClick(r, point);
 
 			r.delay(delay);
@@ -66,6 +68,16 @@ public class RobotTryout {
 
 		// r.mouseMove(left, bottom);
 		performClick(r, 500, 500);
+	}
+
+	/**
+	 * TODO: doc
+	 *
+	 * @param r     TODO: doc
+	 * @param point TODO: doc
+	 */
+	protected static void moveMouse(final Robot r, final Point point) {
+		r.mouseMove(point.x, point.y);
 	}
 
 	/**

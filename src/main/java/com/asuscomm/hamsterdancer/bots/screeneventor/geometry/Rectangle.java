@@ -1,19 +1,21 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.geometry;
 
-import com.asuscomm.hamsterdancer.bots.screeneventor.utils.AreaUtils;
-
 import org.apache.commons.math3.util.FastMath;
+
+import java.util.Random;
 
 
 /**
  * Representation of a rectangle.
- * 
+ *
  * @author MarMer
  * @since  2014-11-01
  */
 public class Rectangle implements Area {
+	private static Random random = new Random();
+
 	/** lower Left Corner. */
-	public final Point lowerLeft; 
+	public final Point lowerLeft;
 
 	/** upper Right Corner. */
 	public final Point upperRight;
@@ -98,7 +100,65 @@ public class Rectangle implements Area {
 
 	@Override
 	public boolean isInArea(final Point point) {
-		return AreaUtils.isBetween(point.x, lowerLeft.x, upperRight.x) &&
-			AreaUtils.isBetween(point.y, lowerLeft.y, upperRight.y);
+		return Rectangle.isBetween(point.x, lowerLeft.x, upperRight.x) &&
+			Rectangle.isBetween(point.y, lowerLeft.y, upperRight.y);
+	}
+
+	/**
+	 * checks whether a number is in a range (including the borders).
+	 *
+	 * @param  middle      the potential middle.
+	 * @param  lowerBorder The lower border
+	 * @param  upperBorder The upper border
+	 *
+	 * @return True if the middle is within the range or at a border (lowerBorder <= middle <=
+	 *         topBorder).
+	 */
+	public static boolean isBetween(final int middle,
+		final int lowerBorder,
+		final int upperBorder) {
+		return (FastMath.min(lowerBorder, upperBorder) <= middle) &&
+			(middle <= FastMath.max(lowerBorder, upperBorder));
+	}
+
+	/**
+	 * Creates a random {@link Point} within a given Area.
+	 *
+	 * @param  startPoint Starting edge of an area.
+	 * @param  endPoint   End edge of an area.
+	 *
+	 * @return a random Point within a given Area.
+	 *
+	 * @see    #getRandomPointOfRectableArea(int, int, int, int)
+	 */
+	public static Point getRandomPointOfRectableArea(final Point startPoint, final Point endPoint) {
+		return new Rectangle(startPoint, endPoint).getRandomPoint();
+	}
+
+	/**
+	 * Creates a random {@link Point} within a given Area.
+	 *
+	 * @param  left   First x coordinate
+	 * @param  bottom First y coordinate
+	 * @param  top    Second x coordinate
+	 * @param  right  y2 Second y coordinate
+	 *
+	 * @return a random Point within a given Area.
+	 */
+	public static Point getRandomPointOfRectableArea(final int left,
+		final int bottom,
+		final int top,
+		final int right) {
+		return getRandomPointOfRectableArea(new Point(left, bottom), new Point(top, right));
+	}
+
+	@Override
+	public Point getRandomPoint() {
+		final int x = lowerLeft.x + random.nextInt((upperRight.x - lowerLeft.x) + 1);
+		final int y = lowerLeft.y + random.nextInt((upperRight.y - lowerLeft.y) + 1);
+
+		return new Point(x, y);
+
+		// TODO add tests
 	}
 }
