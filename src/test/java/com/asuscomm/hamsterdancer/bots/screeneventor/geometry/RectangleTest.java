@@ -33,12 +33,46 @@ public class RectangleTest {
 	@Test
 	public void isInArea() {
 		assert new Rectangle(0, 0, 0, 0).isInArea(0, 0);
+
+		assert new Rectangle(-1, -1, 1, 1).isInArea(0, 0);
+
+		assert new Rectangle(-1, -1, 1, 1).isInArea(0, 1);
+		assert new Rectangle(-1, -1, 1, 1).isInArea(1, 0);
+		assert new Rectangle(-1, -1, 1, 1).isInArea(0, -1);
+		assert new Rectangle(-1, -1, 1, 1).isInArea(-1, 0);
+
+		assert new Rectangle(-1, -1, 1, 1).isInArea(1, 1);
+		assert new Rectangle(-1, -1, 1, 1).isInArea(1, -1);
+		assert new Rectangle(-1, -1, 1, 1).isInArea(-1, 1);
+		assert new Rectangle(-1, -1, 1, 1).isInArea(-1, -1);
+	}
+
+	@Test
+	public void isInAreaNot() {
+		assert !new Rectangle(0, 0, 0, 0).isInArea(1, 1);
+		assert !new Rectangle(0, 0, 0, 0).isInArea(1, -1);
+		assert !new Rectangle(0, 0, 0, 0).isInArea(-1, 1);
+		assert !new Rectangle(0, 0, 0, 0).isInArea(-1, -1);
+
+		assert !new Rectangle(0, 0, 0, 0).isInArea(1, 0);
+		assert !new Rectangle(0, 0, 0, 0).isInArea(-1, 0);
+		assert !new Rectangle(0, 0, 0, 0).isInArea(0, 1);
+		assert !new Rectangle(0, 0, 0, 0).isInArea(-0, -1);
 	}
 
 	/** toStringTest. */
 	@Test
 	public void toStringTest() {
-		assert "Rectangle [[1,2],[3,4]]".equals(new Rectangle(1, 2, 3, 4)
-		        .toString());
+		assert "Rectangle [[1,2],[3,4]]".equals(new Rectangle(1, 2, 3, 4).toString());
+	}
+
+	@Test(dependsOnMethods = "isInArea")
+	public void getRandomPoint() {
+		final Rectangle rectangle = new Rectangle(0, 0, 0, 0);
+
+		for (int i = 0; i < 100; i++) {
+			assert rectangle.isInArea(rectangle.getRandomPoint());
+		}
+		// TODO finish me
 	}
 }
