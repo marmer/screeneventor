@@ -158,7 +158,5 @@ public class Rectangle implements Area {
 		final int y = lowerLeft.y + random.nextInt((upperRight.y - lowerLeft.y) + 1);
 
 		return new Point(x, y);
-
-		// TODO add tests
 	}
 }

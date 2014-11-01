@@ -2,6 +2,9 @@ package com.asuscomm.hamsterdancer.bots.screeneventor.geometry;
 
 import org.testng.annotations.Test;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 
 /**
  * TODO: doc
@@ -68,11 +71,35 @@ public class RectangleTest {
 
 	@Test(dependsOnMethods = "isInArea")
 	public void getRandomPoint() {
-		final Rectangle rectangle = new Rectangle(0, 0, 0, 0);
+		Rectangle rectangle = new Rectangle(0, 0, 0, 0);
 
-		for (int i = 0; i < 100; i++) {
-			assert rectangle.isInArea(rectangle.getRandomPoint());
+		for (int i = 0; i < 1000; i++) {
+			final Point randomPoint = rectangle.getRandomPoint();
+			assert rectangle.isInArea(randomPoint);
 		}
-		// TODO finish me
+
+		rectangle = new Rectangle(-2, -2, 2, 2);
+
+		final Set<Point> allPossiblePoints = collectAllPossiblePoints(rectangle);
+
+		for (int i = 0; i < 10000; i++) {
+			final Point randomPoint = rectangle.getRandomPoint();
+			assert rectangle.isInArea(randomPoint);
+			allPossiblePoints.remove(randomPoint);
+		}
+
+		assert allPossiblePoints.isEmpty() : "all possible points should have been found";
+	}
+
+	private Set<Point> collectAllPossiblePoints(final Rectangle rectangle) {
+		final Set<Point> possibilities = new LinkedHashSet<Point>();
+
+		for (int x = rectangle.lowerLeft.x; x <= rectangle.upperRight.x; x++) {
+			for (int y = rectangle.lowerLeft.y; y <= rectangle.upperRight.y; y++) {
+				possibilities.add(new Point(x, y));
+			}
+		}
+
+		return possibilities;
 	}
 }
