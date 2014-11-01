@@ -1,9 +1,13 @@
-package com.asuscomm.hamsterdancer.bots.screeneventor;
+package com.asuscomm.hamsterdancer.bots.screeneventor.tryouts;
+
+import com.asuscomm.hamsterdancer.bots.screeneventor.utils.AreaUtils;
 
 import java.awt.AWTException;
 import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.Robot;
 import java.awt.Toolkit;
+import java.awt.event.InputEvent;
 
 import java.util.Random;
 
@@ -36,9 +40,63 @@ public class RobotTryout {
 		System.out.println(width);
 		System.out.println(height);
 
-		for (int i = 0; i < 50000; i++) {
-			// r.mouseMove(rand.nextInt((int) width), rand.nextInt((int) height));
-			r.mouseMove(500, 500);
+		// final int widthMin = 3000;
+		// final int widthMax = 3250;
+		// final int heightMin = 400;
+		// final int heightMax = 700;
+		final int left = 2950;
+		final int right = 3300;
+		final int top = 400;
+		final int bottom = 725;
+
+		final int timeToClickInMin = 1;
+		final int timeToClickInSec = timeToClickInMin * 60; // approximate
+		final int timeToClickInMs = timeToClickInSec * 1000;
+		final int delay = 4;
+		final int iterations = timeToClickInMs / delay;
+
+		final boolean stop = false;
+
+		for (int i = 0; (i < iterations) && !stop; i++) {
+			final Point point = AreaUtils.getRandomPointOfRectableArea(left, right, top, bottom);
+			performClick(r, point);
+
+			r.delay(delay);
 		}
+
+		// r.mouseMove(left, bottom);
+		performClick(r, 500, 500);
+	}
+
+	/**
+	 * TODO: doc
+	 *
+	 * @param r     TODO: doc
+	 * @param point TODO: doc
+	 */
+	protected static void performClick(final Robot r, final Point point) {
+		performClick(r, point.x, point.y);
+	}
+
+	/**
+	 * TODO: doc
+	 *
+	 * @param r TODO: doc
+	 * @param x TODO: doc
+	 * @param y TODO: doc
+	 */
+	protected static void performClick(final Robot r, final int x, final int y) {
+		r.mouseMove(x, y);
+		performClick(r);
+	}
+
+	/**
+	 * TODO: doc
+	 *
+	 * @param r TODO: doc
+	 */
+	protected static void performClick(final Robot r) {
+		r.mousePress(InputEvent.BUTTON1_MASK);
+		r.mouseRelease(InputEvent.BUTTON1_MASK);
 	}
 }
