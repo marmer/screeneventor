@@ -31,26 +31,26 @@ public class CircleTest {
 
 	@Test
 	public void isInCircleArea() {
-		assert new Circle(0, 0, 0).isInCircleArea(0, 0) : "No Radius no Circle";
+		assert new Circle(0, 0, 0).isInArea(0, 0) : "No Radius no Circle";
 
-		assert new Circle(0, 0, 1).isInCircleArea(0, 0) : "Middle";
-		assert new Circle(0, 0, 1).isInCircleArea(0, 1) : "top border";
-		assert new Circle(0, 0, 1).isInCircleArea(1, 0) : "right border";
-		assert new Circle(0, 0, 1).isInCircleArea(0, -1) : "bottom border";
-		assert new Circle(0, 0, 1).isInCircleArea(1, 0) : "left border";
+		assert new Circle(0, 0, 1).isInArea(0, 0) : "Middle";
+		assert new Circle(0, 0, 1).isInArea(0, 1) : "top border";
+		assert new Circle(0, 0, 1).isInArea(1, 0) : "right border";
+		assert new Circle(0, 0, 1).isInArea(0, -1) : "bottom border";
+		assert new Circle(0, 0, 1).isInArea(1, 0) : "left border";
 	}
 
 	@Test
 	public void isInCircleOutsideOfArea() {
-		assert !new Circle(0, 0, 1).isInCircleArea(0, 2) : "outside top border";
-		assert !new Circle(0, 0, 1).isInCircleArea(2, 0) : "outside right border";
-		assert !new Circle(0, 0, 1).isInCircleArea(0, -2) : "outside bottom border";
-		assert !new Circle(0, 0, 1).isInCircleArea(2, 0) : "outside left border";
+		assert !new Circle(0, 0, 1).isInArea(0, 2) : "outside top border";
+		assert !new Circle(0, 0, 1).isInArea(2, 0) : "outside right border";
+		assert !new Circle(0, 0, 1).isInArea(0, -2) : "outside bottom border";
+		assert !new Circle(0, 0, 1).isInArea(2, 0) : "outside left border";
 
-		assert !new Circle(0, 0, 1).isInCircleArea(1, 1) : "outside top right border";
-		assert !new Circle(0, 0, 1).isInCircleArea(1, -1) : "outside bottom right border";
-		assert !new Circle(0, 0, 1).isInCircleArea(1, 1) : "outside top left border";
-		assert !new Circle(0, 0, 1).isInCircleArea(1, -1) : "outside bottom leftleft border";
+		assert !new Circle(0, 0, 1).isInArea(1, 1) : "outside top right border";
+		assert !new Circle(0, 0, 1).isInArea(1, -1) : "outside bottom right border";
+		assert !new Circle(0, 0, 1).isInArea(1, 1) : "outside top left border";
+		assert !new Circle(0, 0, 1).isInArea(1, -1) : "outside bottom leftleft border";
 	}
 
 	/** Test. */

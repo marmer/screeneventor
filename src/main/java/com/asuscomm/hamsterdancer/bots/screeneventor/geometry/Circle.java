@@ -1,10 +1,10 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.geometry;
 
 /**
- * Representation of a circle in a 2D-Area.
- *
+ * Representation of a circle.
+ * 
  * @author MarMer
- * @since  2014-11-01
+ * @since 2014-11-01
  */
 public class Circle {
 	private final Point center;
@@ -40,7 +40,7 @@ public class Circle {
 	 *
 	 * @return True if the given Point is in the circles area.
 	 */
-	public boolean isInCircleArea(final Point point) {
+	public boolean isInArea(final Point point) {
 		return radius >= center.getDistance(point);
 	}
 
@@ -51,11 +51,11 @@ public class Circle {
 	 * @param point
 	 *            {@link Point} to check.
 	 * @return True if the given Point is in the circles area.
-	 * @see {@link #isInCircleArea(Point)
+	 * @see {@link #isInArea(Point)
 
 	 */
-	public boolean isInCircleArea(final int x, final int y) {
-		return isInCircleArea(new Point(x, y));
+	public boolean isInArea(final int x, final int y) {
+		return isInArea(new Point(x, y));
 	}
 
 	@Override
