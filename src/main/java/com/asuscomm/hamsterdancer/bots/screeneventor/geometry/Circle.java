@@ -56,12 +56,13 @@ public class Circle implements Area {
 	/**
 	 * Checks whether the given Point is in the circles area (including the
 	 * borders itself).
-	 *
-	 * @param point
-	 *            {@link Point} to check.
+	 * 
+	 * @param x
+	 *            X-Coordinate of point to check.
+	 * @param y
+	 *            Y-Coordinate of point to check.
 	 * @return True if the given Point is in the circles area.
-	 * @see {@link #isInArea(Point)
-
+	 * @see {@link #isInArea(Point)
 	 */
 	@Override
 	public boolean isInArea(final int x, final int y) {
@@ -114,17 +115,6 @@ public class Circle implements Area {
 		return "Circle [" + center + "," + radius + "]";
 	}
 
-
-	/**
-	 * Creates a random {@link Point} within a given circle.
-	 *
-	 * @param  circle the circle you want to get a {@link Point}.
-	 *
-	 * @return a random {@link Point} within a given Area.
-	 */
-	public static Point getRandomPointOfCircleArea(final Circle circle) {
-		return getRandomPointOfCircleArea(circle.center, circle.radius);
-	}
 
 	/**
 	 * Creates a random {@link Point} within a given circle.
