@@ -10,7 +10,7 @@ public class Circle implements Area {
 	/** Circles center */
 	public final Point center;
 	/** Circles radius */
-	public final int radius;
+	public final int radius; 
 
 	/**
 	 * Creates a new Circle object.

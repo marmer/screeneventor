@@ -7,13 +7,13 @@ import org.apache.commons.math3.util.FastMath;
 
 /**
  * Representation of a rectangle.
- *
+ * 
  * @author MarMer
  * @since  2014-11-01
  */
 public class Rectangle implements Area {
 	/** lower Left Corner. */
-	public final Point lowerLeft;
+	public final Point lowerLeft; 
 
 	/** upper Right Corner. */
 	public final Point upperRight;
