@@ -46,7 +46,12 @@ public class ActionConfigPane extends JPanel {
 		add(ActionConfigPanel);
 
 		final GridBagLayout gbl_ActionConfigPanel = new GridBagLayout();
-		gbl_ActionConfigPanel.columnWidths = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_ActionConfigPanel.columnWidths =
+			new int[] {
+ 0, 100, 0, 100, 40,
+		        100,
+				0, 0
+			};
 		gbl_ActionConfigPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_ActionConfigPanel.columnWeights =
 			new double[] {
@@ -77,8 +82,8 @@ public class ActionConfigPane extends JPanel {
 
 		final JLabel lblY = new JLabel("Y-Coordinate");
 		final GridBagConstraints gbc_lblY = new GridBagConstraints();
-		gbc_lblY.insets = new Insets(0, 0, 5, 5);
 		gbc_lblY.anchor = GridBagConstraints.EAST;
+		gbc_lblY.insets = new Insets(0, 0, 5, 5);
 		gbc_lblY.gridx = 2;
 		gbc_lblY.gridy = 1;
 		ActionConfigPanel.add(lblY, gbc_lblY);

@@ -11,7 +11,7 @@ import java.io.Serializable;
  * @author MarMer
  * @since  2014-11-01
  */
-public class Point implements Serializable {
+public class Point implements Serializable, Area {
 	/** Use serialVersionUID for interoperability. */
 	private static final long serialVersionUID = 1L;
 
@@ -93,5 +93,20 @@ public class Point implements Serializable {
 	@Override
 	public String toString() {
 		return "[" + x + "," + y + "]";
+	}
+
+	@Override
+	public boolean isInArea(final int x, final int y) {
+		return (this.x == x) && (this.y == y);
+	}
+
+	@Override
+	public boolean isInArea(final Point point) {
+		return equals(point);
+	}
+
+	@Override
+	public Point getRandomPoint() {
+		return new Point(x, y);
 	}
 }
