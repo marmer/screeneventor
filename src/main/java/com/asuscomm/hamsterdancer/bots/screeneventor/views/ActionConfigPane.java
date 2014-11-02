@@ -48,18 +48,18 @@ public class ActionConfigPane extends JPanel {
 		final GridBagLayout gbl_ActionConfigPanel = new GridBagLayout();
 		gbl_ActionConfigPanel.columnWidths =
 			new int[] {
- 0, 100, 0, 100, 40,
-		        100,
+				0, 100, 0, 100, 40,
+				100,
 				0, 0
 			};
-		gbl_ActionConfigPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_ActionConfigPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_ActionConfigPanel.columnWeights =
 			new double[] {
 				0.0, 0.0, 0.0,
 				0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE
 			};
 		gbl_ActionConfigPanel.rowWeights =
-			new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+			new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		ActionConfigPanel.setLayout(gbl_ActionConfigPanel);
 
 		final JLabel lblX = new JLabel("X-Coordinate");
@@ -106,6 +106,22 @@ public class ActionConfigPane extends JPanel {
 		gbc_lblRepeatCount.gridy = 1;
 		ActionConfigPanel.add(lblRepeatCount, gbc_lblRepeatCount);
 
+		final JCheckBox chckbxSetCursorBack = new JCheckBox("Set cursor back");
+		final GridBagConstraints gbc_chckbxSetCursorBack = new GridBagConstraints();
+		gbc_chckbxSetCursorBack.insets = new Insets(0, 0, 5, 5);
+		gbc_chckbxSetCursorBack.gridwidth = 2;
+		gbc_chckbxSetCursorBack.gridx = 0;
+		gbc_chckbxSetCursorBack.gridy = 2;
+		ActionConfigPanel.add(chckbxSetCursorBack, gbc_chckbxSetCursorBack);
+
+		final JCheckBox chckbxNoCoordinates = new JCheckBox("Perform without Movement");
+		final GridBagConstraints gbc_chckbxNoCoordinates = new GridBagConstraints();
+		gbc_chckbxNoCoordinates.gridwidth = 2;
+		gbc_chckbxNoCoordinates.insets = new Insets(0, 0, 5, 5);
+		gbc_chckbxNoCoordinates.gridx = 2;
+		gbc_chckbxNoCoordinates.gridy = 2;
+		ActionConfigPanel.add(chckbxNoCoordinates, gbc_chckbxNoCoordinates);
+
 		final JSpinner repeatCountSpinner = new JSpinner();
 		final GridBagConstraints gbc_repeatCountSpinner = new GridBagConstraints();
 		gbc_repeatCountSpinner.fill = GridBagConstraints.HORIZONTAL;
@@ -128,12 +144,28 @@ public class ActionConfigPane extends JPanel {
 		gbc_lblRepeatTime.gridy = 3;
 		ActionConfigPanel.add(lblRepeatTime, gbc_lblRepeatTime);
 
+		final JLabel lblInterdalayInMs = new JLabel("Inter-Dalay in ms");
+		final GridBagConstraints gbc_lblInterdalayInMs = new GridBagConstraints();
+		gbc_lblInterdalayInMs.anchor = GridBagConstraints.EAST;
+		gbc_lblInterdalayInMs.insets = new Insets(0, 0, 5, 5);
+		gbc_lblInterdalayInMs.gridx = 2;
+		gbc_lblInterdalayInMs.gridy = 4;
+		ActionConfigPanel.add(lblInterdalayInMs, gbc_lblInterdalayInMs);
+
+		final JSpinner spinner = new JSpinner();
+		final GridBagConstraints gbc_spinner = new GridBagConstraints();
+		gbc_spinner.fill = GridBagConstraints.HORIZONTAL;
+		gbc_spinner.insets = new Insets(0, 0, 5, 5);
+		gbc_spinner.gridx = 3;
+		gbc_spinner.gridy = 4;
+		ActionConfigPanel.add(spinner, gbc_spinner);
+
 		final JLabel lblAction = new JLabel("Action");
 		final GridBagConstraints gbc_lblAction = new GridBagConstraints();
 		gbc_lblAction.anchor = GridBagConstraints.EAST;
 		gbc_lblAction.insets = new Insets(0, 0, 5, 5);
 		gbc_lblAction.gridx = 0;
-		gbc_lblAction.gridy = 2;
+		gbc_lblAction.gridy = 3;
 		ActionConfigPanel.add(lblAction, gbc_lblAction);
 
 		final JComboBox<String> comboBox = new JComboBox<String>();
@@ -147,7 +179,7 @@ public class ActionConfigPane extends JPanel {
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 2;
+		gbc_comboBox.gridy = 3;
 		ActionConfigPanel.add(comboBox, gbc_comboBox);
 
 		final JLabel lblKeys = new JLabel("Keys");
@@ -155,7 +187,7 @@ public class ActionConfigPane extends JPanel {
 		gbc_lblKeys.anchor = GridBagConstraints.EAST;
 		gbc_lblKeys.insets = new Insets(0, 0, 5, 5);
 		gbc_lblKeys.gridx = 2;
-		gbc_lblKeys.gridy = 2;
+		gbc_lblKeys.gridy = 3;
 		ActionConfigPanel.add(lblKeys, gbc_lblKeys);
 
 		txtKeys = new JTextField();
@@ -164,7 +196,7 @@ public class ActionConfigPane extends JPanel {
 		gbc_txtKeys.insets = new Insets(0, 0, 5, 5);
 		gbc_txtKeys.fill = GridBagConstraints.HORIZONTAL;
 		gbc_txtKeys.gridx = 3;
-		gbc_txtKeys.gridy = 2;
+		gbc_txtKeys.gridy = 3;
 		ActionConfigPanel.add(txtKeys, gbc_txtKeys);
 		txtKeys.setColumns(10);
 
@@ -188,12 +220,19 @@ public class ActionConfigPane extends JPanel {
 				null,
 				new Integer(1)));
 
-		final JLabel lblDalayInMs = new JLabel("Dalay in ms");
+		final JLabel lblMinutes = new JLabel("min");
+		final GridBagConstraints gbc_lblMinutes = new GridBagConstraints();
+		gbc_lblMinutes.insets = new Insets(0, 0, 5, 5);
+		gbc_lblMinutes.gridx = 4;
+		gbc_lblMinutes.gridy = 5;
+		ActionConfigPanel.add(lblMinutes, gbc_lblMinutes);
+
+		final JLabel lblDalayInMs = new JLabel("Pre-Dalay in ms");
 		final GridBagConstraints gbc_lblDalayInMs = new GridBagConstraints();
 		gbc_lblDalayInMs.anchor = GridBagConstraints.EAST;
 		gbc_lblDalayInMs.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDalayInMs.gridx = 0;
-		gbc_lblDalayInMs.gridy = 3;
+		gbc_lblDalayInMs.gridy = 4;
 		ActionConfigPanel.add(lblDalayInMs, gbc_lblDalayInMs);
 
 		final JSpinner delaySpinner = new JSpinner();
@@ -201,16 +240,8 @@ public class ActionConfigPane extends JPanel {
 		gbc_delaySpinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_delaySpinner.insets = new Insets(0, 0, 5, 5);
 		gbc_delaySpinner.gridx = 1;
-		gbc_delaySpinner.gridy = 3;
+		gbc_delaySpinner.gridy = 4;
 		ActionConfigPanel.add(delaySpinner, gbc_delaySpinner);
-
-		final JCheckBox chckbxSetCursorBack = new JCheckBox("Set cursor back");
-		final GridBagConstraints gbc_chckbxSetCursorBack = new GridBagConstraints();
-		gbc_chckbxSetCursorBack.insets = new Insets(0, 0, 5, 5);
-		gbc_chckbxSetCursorBack.gridwidth = 2;
-		gbc_chckbxSetCursorBack.gridx = 2;
-		gbc_chckbxSetCursorBack.gridy = 3;
-		ActionConfigPanel.add(chckbxSetCursorBack, gbc_chckbxSetCursorBack);
 
 		final JSpinner minuteSpinner = new JSpinner();
 		final GridBagConstraints gbc_minuteSpinner = new GridBagConstraints();
@@ -225,12 +256,19 @@ public class ActionConfigPane extends JPanel {
 				null,
 				new Integer(1)));
 
+		final JLabel lblSeconds = new JLabel("s");
+		final GridBagConstraints gbc_lblSeconds = new GridBagConstraints();
+		gbc_lblSeconds.insets = new Insets(0, 0, 5, 5);
+		gbc_lblSeconds.gridx = 4;
+		gbc_lblSeconds.gridy = 6;
+		ActionConfigPanel.add(lblSeconds, gbc_lblSeconds);
+
 		final JLabel lblComment = new JLabel("Comment");
 		final GridBagConstraints gbc_lblComment = new GridBagConstraints();
 		gbc_lblComment.anchor = GridBagConstraints.EAST;
 		gbc_lblComment.insets = new Insets(0, 0, 5, 5);
 		gbc_lblComment.gridx = 0;
-		gbc_lblComment.gridy = 4;
+		gbc_lblComment.gridy = 5;
 		ActionConfigPanel.add(lblComment, gbc_lblComment);
 
 		txtComment = new JTextField();
@@ -241,7 +279,7 @@ public class ActionConfigPane extends JPanel {
 		gbc_txtComment.insets = new Insets(0, 0, 5, 5);
 		gbc_txtComment.gridwidth = 3;
 		gbc_txtComment.gridx = 1;
-		gbc_txtComment.gridy = 4;
+		gbc_txtComment.gridy = 5;
 		ActionConfigPanel.add(txtComment, gbc_txtComment);
 		txtComment.setColumns(10);
 
@@ -264,7 +302,7 @@ public class ActionConfigPane extends JPanel {
 		gbc_btnAdd.gridwidth = 2;
 		gbc_btnAdd.insets = new Insets(0, 0, 5, 5);
 		gbc_btnAdd.gridx = 0;
-		gbc_btnAdd.gridy = 5;
+		gbc_btnAdd.gridy = 6;
 		ActionConfigPanel.add(btnAdd, gbc_btnAdd);
 
 		final JButton btnUpdate = new JButton("Update");
@@ -273,41 +311,7 @@ public class ActionConfigPane extends JPanel {
 		gbc_btnUpdate.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnUpdate.gridwidth = 2;
 		gbc_btnUpdate.gridx = 2;
-		gbc_btnUpdate.gridy = 5;
+		gbc_btnUpdate.gridy = 6;
 		ActionConfigPanel.add(btnUpdate, gbc_btnUpdate);
-
-		final JSpinner msSpinner = new JSpinner();
-		final GridBagConstraints gbc_msSpinner = new GridBagConstraints();
-		gbc_msSpinner.fill = GridBagConstraints.HORIZONTAL;
-		gbc_msSpinner.insets = new Insets(0, 0, 0, 5);
-		gbc_msSpinner.gridx = 5;
-		gbc_msSpinner.gridy = 7;
-		ActionConfigPanel.add(msSpinner, gbc_msSpinner);
-		msSpinner.setModel(new SpinnerNumberModel(
-				new Integer(0),
-				new Integer(0),
-				null,
-				new Integer(1)));
-
-		final JLabel lblMinutes = new JLabel("min");
-		final GridBagConstraints gbc_lblMinutes = new GridBagConstraints();
-		gbc_lblMinutes.insets = new Insets(0, 0, 5, 5);
-		gbc_lblMinutes.gridx = 4;
-		gbc_lblMinutes.gridy = 5;
-		ActionConfigPanel.add(lblMinutes, gbc_lblMinutes);
-
-		final JLabel lblSeconds = new JLabel("s");
-		final GridBagConstraints gbc_lblSeconds = new GridBagConstraints();
-		gbc_lblSeconds.insets = new Insets(0, 0, 5, 5);
-		gbc_lblSeconds.gridx = 4;
-		gbc_lblSeconds.gridy = 6;
-		ActionConfigPanel.add(lblSeconds, gbc_lblSeconds);
-
-		final JLabel lblMs = new JLabel("ms");
-		final GridBagConstraints gbc_lblMs = new GridBagConstraints();
-		gbc_lblMs.insets = new Insets(0, 0, 0, 5);
-		gbc_lblMs.gridx = 4;
-		gbc_lblMs.gridy = 7;
-		ActionConfigPanel.add(lblMs, gbc_lblMs);
 	}
 }

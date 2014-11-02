@@ -1,0 +1,122 @@
+package com.asuscomm.hamsterdancer.bots.screeneventor.actions;
+
+import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Area;
+
+import java.awt.AWTException;
+import java.awt.Point;
+import java.awt.Robot;
+
+import java.io.Serializable;
+
+
+/**
+ * Action which can be stored and performed.
+ *
+ * @author MarMer
+ * @since  02.11.2014
+ */
+public abstract class Action implements Serializable {
+	/** serialVersionUID. */
+	private static final long serialVersionUID = 1L;
+
+	/** Area the action can be performed in. */
+	private Area area;
+
+	private int preDelay;
+	private int interDelay;
+	private boolean cursorBack;
+
+	private transient Point preActionCursorLocation;
+
+	private transient Robot robot;
+
+	protected Robot getRobot() {
+		if (robot == null) {
+			try {
+				robot = new Robot();
+			} catch (final AWTException e) {
+				// TODO handle me
+			}
+		}
+
+		return robot;
+	}
+
+	/** Performs the action. */
+	public final void perform() {
+		remindCursorPosition();
+		preDelay();
+		performActionStart();
+		interDelay();
+		performActionEnd();
+		resetCursorPosition();
+	}
+
+	/** What happens at the end of an action (e.g. the key up part of a key press) */
+	protected abstract void performActionEnd();
+
+	/** What happens at the beginning of an action (e.g. the key down part of a key press) */
+	protected abstract void performActionStart();
+
+	private void preDelay() {
+		robot.delay(preDelay);
+	}
+
+	private void interDelay() {
+		robot.delay(interDelay);
+	}
+
+	private void resetCursorPosition() {
+		// TODO Auto-generated method stub
+	}
+
+	private void remindCursorPosition() {
+		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * Returns a name for the type.
+	 *
+	 * @return Returns a name for the type.
+	 */
+	public abstract String getTypeName();
+
+	public Area getArea() {
+		return area;
+	}
+
+	public void setArea(final Area area) {
+		this.area = area;
+	}
+
+	public int getPreDelay() {
+		return preDelay;
+	}
+
+	public void setPreDelay(final int delay) {
+		preDelay = delay;
+	}
+
+	public int getInterDelay() {
+		return interDelay;
+	}
+
+	public void setInterDelay(final int interDelay) {
+		this.interDelay = interDelay;
+	}
+
+	public boolean isCursorBack() {
+		return cursorBack;
+	}
+
+	public void setCursorBack(final boolean cursorBack) {
+		this.cursorBack = cursorBack;
+	}
+
+	@Override
+	public String toString() {
+		return "Action [type=" + getTypeName() + "area=" + area + ", delay=" + preDelay +
+			", cursorBack=" +
+			cursorBack + "]";
+	}
+}
