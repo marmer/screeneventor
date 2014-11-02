@@ -1,4 +1,4 @@
-package com.asuscomm.hamsterdancer.bots.screeneventor.model.geometry;
+package com.asuscomm.hamsterdancer.bots.screeneventor.geometry;
 
 import org.apache.commons.math3.util.FastMath;
 

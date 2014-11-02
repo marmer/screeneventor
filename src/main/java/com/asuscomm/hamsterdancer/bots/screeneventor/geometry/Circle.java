@@ -1,4 +1,4 @@
-package com.asuscomm.hamsterdancer.bots.screeneventor.model.geometry;
+package com.asuscomm.hamsterdancer.bots.screeneventor.geometry;
 
 import java.util.Random;
 

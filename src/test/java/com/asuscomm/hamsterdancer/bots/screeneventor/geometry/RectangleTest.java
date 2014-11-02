@@ -2,8 +2,8 @@ package com.asuscomm.hamsterdancer.bots.screeneventor.geometry;
 
 import org.testng.annotations.Test;
 
-import com.asuscomm.hamsterdancer.bots.screeneventor.model.geometry.Point;
-import com.asuscomm.hamsterdancer.bots.screeneventor.model.geometry.Rectangle;
+import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Point;
+import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Rectangle;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

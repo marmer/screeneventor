@@ -2,8 +2,8 @@ package com.asuscomm.hamsterdancer.bots.screeneventor.geometry;
 
 import org.testng.annotations.Test;
 
-import com.asuscomm.hamsterdancer.bots.screeneventor.model.geometry.Circle;
-import com.asuscomm.hamsterdancer.bots.screeneventor.model.geometry.Point;
+import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Circle;
+import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Point;
 
 
 /**
