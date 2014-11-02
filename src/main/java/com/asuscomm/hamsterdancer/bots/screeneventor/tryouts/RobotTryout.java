@@ -1,7 +1,7 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.tryouts;
 
-import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Point;
-import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Rectangle;
+import com.asuscomm.hamsterdancer.bots.screeneventor.model.geometry.Point;
+import com.asuscomm.hamsterdancer.bots.screeneventor.model.geometry.Rectangle;
 
 import java.awt.AWTException;
 import java.awt.Dimension;

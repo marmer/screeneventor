@@ -1,4 +1,4 @@
-package com.asuscomm.hamsterdancer.bots.screeneventor.geometry;
+package com.asuscomm.hamsterdancer.bots.screeneventor.model.geometry;
 
 /**
  * Area.
