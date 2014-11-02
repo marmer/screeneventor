@@ -107,6 +107,6 @@ public class Point implements Serializable, Area {
 
 	@Override
 	public Point getRandomPoint() {
-		return new Point(x, y);
+		return this;
 	}
 }
