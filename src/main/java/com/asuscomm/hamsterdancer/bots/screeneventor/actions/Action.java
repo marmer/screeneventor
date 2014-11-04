@@ -16,7 +16,7 @@ import java.io.Serializable;
  * @author MarMer
  * @since  02.11.2014
  */
-public abstract class Action implements Serializable {
+public abstract class Action implements Serializable, Cloneable {
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
@@ -29,7 +29,7 @@ public abstract class Action implements Serializable {
 
 	private transient Robot robot;
 
-	private transient java.awt.Point lastMousePosition;
+	private transient java.awt.Point lastCursorPosition;
 
 	protected Robot getRobot() {
 		if (robot == null) {
@@ -77,13 +77,13 @@ public abstract class Action implements Serializable {
 
 	private void resetCursorPosition() {
 		if (cursorBack) {
-			robot.mouseMove(lastMousePosition.x, lastMousePosition.y);
+			robot.mouseMove(lastCursorPosition.x, lastCursorPosition.y);
 		}
 	}
 
 	private void remindCursorPosition() {
 		if (cursorBack) {
-			lastMousePosition = MouseInfo.getPointerInfo().getLocation();
+			lastCursorPosition = MouseInfo.getPointerInfo().getLocation();
 		}
 	}
 
@@ -132,5 +132,56 @@ public abstract class Action implements Serializable {
 			", interDelay=" + interDelay +
 			", cursorBack=" +
 			cursorBack + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((area == null) ? 0 : area.hashCode());
+		result = (prime * result) + (cursorBack ? 1231 : 1237);
+		result = (prime * result) + interDelay;
+		result = (prime * result) + preDelay;
+
+		return result;
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (obj == null) {
+			return false;
+		}
+
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+
+		final Action other = (Action) obj;
+
+		if (area == null) {
+			if (other.area != null) {
+				return false;
+			}
+		} else if (!area.equals(other.area)) {
+			return false;
+		}
+
+		if (cursorBack != other.cursorBack) {
+			return false;
+		}
+
+		if (interDelay != other.interDelay) {
+			return false;
+		}
+
+		if (preDelay != other.preDelay) {
+			return false;
+		}
+
+		return true;
 	}
 }
