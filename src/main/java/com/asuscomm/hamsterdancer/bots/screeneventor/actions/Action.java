@@ -4,6 +4,7 @@ import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Area;
 import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Point;
 
 import java.awt.AWTException;
+import java.awt.MouseInfo;
 import java.awt.Robot;
 
 import java.io.Serializable;
@@ -26,9 +27,9 @@ public abstract class Action implements Serializable {
 	private int interDelay;
 	private boolean cursorBack;
 
-	private transient Point preActionCursorLocation;
-
 	private transient Robot robot;
+
+	private transient java.awt.Point lastMousePosition;
 
 	protected Robot getRobot() {
 		if (robot == null) {
@@ -75,11 +76,15 @@ public abstract class Action implements Serializable {
 	}
 
 	private void resetCursorPosition() {
-		// TODO Auto-generated method stub
+		if (cursorBack) {
+			robot.mouseMove(lastMousePosition.x, lastMousePosition.y);
+		}
 	}
 
 	private void remindCursorPosition() {
-		// TODO Auto-generated method stub
+		if (cursorBack) {
+			lastMousePosition = MouseInfo.getPointerInfo().getLocation();
+		}
 	}
 
 	/**
