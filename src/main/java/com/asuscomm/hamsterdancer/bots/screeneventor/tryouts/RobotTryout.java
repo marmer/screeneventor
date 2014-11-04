@@ -57,7 +57,6 @@ public class RobotTryout {
 
 		final LeftClickAction lca = new LeftClickAction();
 		lca.setArea(new Rectangle(new Point(left, bottom), new Point(right, top)));
-		lca.setCursorBack(true);
 		lca.setPreDelay(delay);
 		lca.perform();
 
