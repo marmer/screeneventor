@@ -1,9 +1,9 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.actions;
 
 import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Area;
+import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Point;
 
 import java.awt.AWTException;
-import java.awt.Point;
 import java.awt.Robot;
 
 import java.io.Serializable;
@@ -45,11 +45,19 @@ public abstract class Action implements Serializable {
 	/** Performs the action. */
 	public final void perform() {
 		remindCursorPosition();
+		moveCursor();
 		preDelay();
 		performActionStart();
 		interDelay();
 		performActionEnd();
 		resetCursorPosition();
+	}
+
+	private void moveCursor() {
+		if (area != null) {
+			final Point point = area.getRandomPoint();
+			getRobot().mouseMove(point.x, point.y);
+		}
 	}
 
 	/** What happens at the end of an action (e.g. the key up part of a key press) */
@@ -59,11 +67,11 @@ public abstract class Action implements Serializable {
 	protected abstract void performActionStart();
 
 	private void preDelay() {
-		robot.delay(preDelay);
+		getRobot().delay(preDelay);
 	}
 
 	private void interDelay() {
-		robot.delay(interDelay);
+		getRobot().delay(interDelay);
 	}
 
 	private void resetCursorPosition() {
@@ -115,7 +123,8 @@ public abstract class Action implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Action [type=" + getTypeName() + "area=" + area + ", delay=" + preDelay +
+		return "Action [type=" + getTypeName() + "area=" + area + ", preDelay=" + preDelay +
+			", interDelay=" + interDelay +
 			", cursorBack=" +
 			cursorBack + "]";
 	}

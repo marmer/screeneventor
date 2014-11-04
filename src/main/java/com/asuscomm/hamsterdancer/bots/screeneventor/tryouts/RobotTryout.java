@@ -1,5 +1,6 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.tryouts;
 
+import com.asuscomm.hamsterdancer.bots.screeneventor.actions.mouse.LeftClickAction;
 import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Point;
 import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Rectangle;
 
@@ -46,7 +47,7 @@ public class RobotTryout {
 		final int top = 400;
 		final int bottom = 725;
 
-		final double timeToClickInMin = 1;
+		final double timeToClickInMin = 0.6;
 		final double timeToClickInSec = timeToClickInMin * 60; // approximate
 		final int timeToClickInMs = (int) timeToClickInSec * 1000;
 		final int delay = 4;
@@ -54,17 +55,16 @@ public class RobotTryout {
 
 		final boolean stop = false;
 
+		final LeftClickAction lca = new LeftClickAction();
+		lca.setArea(new Rectangle(new Point(left, bottom), new Point(right, top)));
+		lca.setCursorBack(true);
+		lca.setPreDelay(delay);
+		lca.perform();
+
 		for (int i = 0; (i < iterations) && !stop; i++) {
-			final Point point = Rectangle.getRandomPointOfRectableArea(left, bottom, right, top);
-			// final Point point = Circle.getRandomPointOfCircleArea(new Point(left, top), 15);
-
-			// moveMouse(r, point);
-			performClick(r, point);
-
-			r.delay(delay);
+			lca.perform();
 		}
 
-		// r.mouseMove(left, bottom);
 		performClick(r, 500, 500);
 	}
 
