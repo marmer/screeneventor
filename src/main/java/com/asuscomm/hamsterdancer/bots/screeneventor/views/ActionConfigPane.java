@@ -1,11 +1,21 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.views;
 
+import com.asuscomm.hamsterdancer.bots.screeneventor.actions.Action;
+import com.asuscomm.hamsterdancer.bots.screeneventor.actions.mouse.LeftClickAction;
+import com.asuscomm.hamsterdancer.bots.screeneventor.actions.mouse.LeftPressAction;
+import com.asuscomm.hamsterdancer.bots.screeneventor.actions.mouse.LeftReleaseAction;
+import com.asuscomm.hamsterdancer.bots.screeneventor.actions.mouse.MiddleClickAction;
+import com.asuscomm.hamsterdancer.bots.screeneventor.actions.mouse.MiddlePressAction;
+import com.asuscomm.hamsterdancer.bots.screeneventor.actions.mouse.MiddleReleaseAction;
+import com.asuscomm.hamsterdancer.bots.screeneventor.actions.mouse.RightClickAction;
+import com.asuscomm.hamsterdancer.bots.screeneventor.actions.mouse.RightPressAction;
+import com.asuscomm.hamsterdancer.bots.screeneventor.actions.mouse.RightReleaseAction;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -18,7 +28,7 @@ import javax.swing.border.TitledBorder;
 
 
 /**
- * TODO: doc
+ * Pane to config actions.
  *
  * @author MarMer
  * @since  2014-11-02
@@ -168,12 +178,9 @@ public class ActionConfigPane extends JPanel {
 		gbc_lblAction.gridy = 3;
 		ActionConfigPanel.add(lblAction, gbc_lblAction);
 
-		final JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setModel(new DefaultComboBoxModel(
-				new String[] {
-					"Left Click", "Right Click", "Left Double Click", "Right Double Click",
-					"Move Mouse", "Keyboard Action"
-				}));
+		final JComboBox<ActionFactoryComboboxItem<? extends Action>> comboBox =
+			new JComboBox<ActionFactoryComboboxItem<? extends Action>>();
+		addActionItems(comboBox);
 
 		final GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
@@ -313,5 +320,43 @@ public class ActionConfigPane extends JPanel {
 		gbc_btnUpdate.gridx = 2;
 		gbc_btnUpdate.gridy = 6;
 		ActionConfigPanel.add(btnUpdate, gbc_btnUpdate);
+	}
+
+	/**
+	 * TODO: doc
+	 *
+	 * @param comboBox TODO: doc
+	 */
+	protected void addActionItems(
+		final JComboBox<ActionFactoryComboboxItem<? extends Action>> comboBox) {
+		comboBox.addItem(new ActionFactoryComboboxItem<LeftClickAction>(
+				LeftClickAction.class,
+				"Mouse Left Click"));
+		comboBox.addItem(new ActionFactoryComboboxItem<LeftPressAction>(
+				LeftPressAction.class,
+				"Mouse Left Press"));
+		comboBox.addItem(new ActionFactoryComboboxItem<LeftReleaseAction>(
+				LeftReleaseAction.class,
+				"Mouse Left Release"));
+
+		comboBox.addItem(new ActionFactoryComboboxItem<RightClickAction>(
+				RightClickAction.class,
+				"Mouse Right Click"));
+		comboBox.addItem(new ActionFactoryComboboxItem<RightPressAction>(
+				RightPressAction.class,
+				"Mouse Right Press"));
+		comboBox.addItem(new ActionFactoryComboboxItem<RightReleaseAction>(
+				RightReleaseAction.class,
+				"Mouse Right Release"));
+
+		comboBox.addItem(new ActionFactoryComboboxItem<MiddleClickAction>(
+				MiddleClickAction.class,
+				"Mouse Middle Click"));
+		comboBox.addItem(new ActionFactoryComboboxItem<MiddlePressAction>(
+				MiddlePressAction.class,
+				"Mouse Middle Press"));
+		comboBox.addItem(new ActionFactoryComboboxItem<MiddleReleaseAction>(
+				MiddleReleaseAction.class,
+				"Mouse Middle Release"));
 	}
 }
