@@ -1,5 +1,6 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.actions;
 
+import com.asuscomm.hamsterdancer.bots.screeneventor.ScreenevatorException;
 import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Area;
 import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Point;
 
@@ -20,6 +21,19 @@ public abstract class Action implements Serializable, Cloneable {
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
+	/** Robot used to perform mouse actions. */
+	protected static transient Robot robot;
+
+	static {
+		if (robot == null) {
+			try {
+				robot = new Robot();
+			} catch (final AWTException e) {
+				throw new ScreenevatorException("Not able to initialize Robot", e);
+			}
+		}
+	}
+
 	/** Area the action can be performed in. */
 	private Area area;
 
@@ -27,21 +41,7 @@ public abstract class Action implements Serializable, Cloneable {
 	private int interDelay;
 	private boolean cursorBack;
 
-	private transient Robot robot;
-
 	private transient java.awt.Point lastCursorPosition;
-
-	protected Robot getRobot() {
-		if (robot == null) {
-			try {
-				robot = new Robot();
-			} catch (final AWTException e) {
-				// TODO handle me
-			}
-		}
-
-		return robot;
-	}
 
 	/** Performs the action. */
 	public final void perform() {
@@ -57,7 +57,7 @@ public abstract class Action implements Serializable, Cloneable {
 	private void moveCursor() {
 		if (area != null) {
 			final Point point = area.getRandomPoint();
-			getRobot().mouseMove(point.x, point.y);
+			robot.mouseMove(point.x, point.y);
 		}
 	}
 
@@ -68,11 +68,11 @@ public abstract class Action implements Serializable, Cloneable {
 	protected abstract void performActionStart();
 
 	private void preDelay() {
-		getRobot().delay(preDelay);
+		robot.delay(preDelay);
 	}
 
 	private void interDelay() {
-		getRobot().delay(interDelay);
+		robot.delay(interDelay);
 	}
 
 	private void resetCursorPosition() {

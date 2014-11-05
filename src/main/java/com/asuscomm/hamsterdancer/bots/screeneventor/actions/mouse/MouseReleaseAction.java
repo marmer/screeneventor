@@ -20,6 +20,6 @@ public abstract class MouseReleaseAction extends Action {
 
 	@Override
 	protected void performActionStart() {
-		getRobot().mouseRelease(getMouseButtonMask());
+		robot.mouseRelease(getMouseButtonMask());
 	}
 }

@@ -20,6 +20,6 @@ public abstract class MousePressAction extends Action {
 
 	@Override
 	protected void performActionStart() {
-		getRobot().mousePress(getMouseButtonMask());
+		robot.mousePress(getMouseButtonMask());
 	}
 }

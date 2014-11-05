@@ -15,13 +15,13 @@ public abstract class MouseClickAction extends Action {
 
 	@Override
 	protected void performActionEnd() {
-		getRobot().mouseRelease(getMouseButtonMask());
+		robot.mouseRelease(getMouseButtonMask());
 	}
 
 	protected abstract int getMouseButtonMask();
 
 	@Override
 	protected void performActionStart() {
-		getRobot().mousePress(getMouseButtonMask());
+		robot.mousePress(getMouseButtonMask());
 	}
 }
