@@ -43,15 +43,6 @@ public abstract class Action implements Serializable, Cloneable {
 
 	private transient java.awt.Point lastCursorPosition;
 
-	/**
-	 * Sets a new robot. Method was created for unit tests.
-	 *
-	 * @param robot Sets a new robot. Method was created for unit tests.
-	 */
-	static void setRobot(final Robot robot) {
-		Action.robot = robot;
-	}
-
 	/** Performs the action. */
 	public final void perform() {
 		remindCursorPosition();
