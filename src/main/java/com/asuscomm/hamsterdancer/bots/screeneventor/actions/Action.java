@@ -34,6 +34,15 @@ public abstract class Action implements Serializable, Cloneable {
 
 	private transient java.awt.Point lastCursorPosition;
 
+	/**
+	 * Constructor used for tests.
+	 *
+	 * @param robot {@link Robot} instance to use.
+	 */
+	public Action(final Robot robot) {
+		this.robot = robot;
+	}
+
 	/** Creates a new Action object. */
 	public Action() {
 		initRobot();
@@ -47,15 +56,6 @@ public abstract class Action implements Serializable, Cloneable {
 				throw new ScreenevatorException("Not able to initialize Robot", e);
 			}
 		}
-	}
-
-	/**
-	 * Sets a {@link Robot}. Method added for tests.
-	 *
-	 * @param robot Robot to set.
-	 */
-	void setRobot(final Robot robot) {
-		this.robot = robot;
 	}
 
 	private void readObject(final java.io.ObjectInputStream in) throws IOException,

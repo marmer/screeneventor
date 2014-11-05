@@ -39,8 +39,11 @@ public class ActionTest {
 		gotActionEnd = true;
 		actionEndRunAt = 0L;
 
+		final Robot robot = Mockito.mock(Robot.class);
+		Mockito.doCallRealMethod().when(robot).delay(Mockito.anyInt());
+
 		classUnderTest =
-			new Action() {
+			new Action(robot) {
 				/** serialVersionUID. */
 				private static final long serialVersionUID = 1L;
 
@@ -61,11 +64,6 @@ public class ActionTest {
 					return ACTION_NAME;
 				}
 			};
-
-		final Robot robot = Mockito.mock(Robot.class);
-		Mockito.doCallRealMethod().when(robot).delay(Mockito.anyInt());
-
-		classUnderTest.setRobot(robot);
 	}
 
 	/** testRandomPointOfAreaIsUsed. */
