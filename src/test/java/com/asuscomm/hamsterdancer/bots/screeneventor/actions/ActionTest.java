@@ -73,7 +73,7 @@ public class ActionTest {
 		Mockito.when(sampleArea.getRandomPoint()).thenReturn(new Point(1, 2));
 		classUnderTest.setArea(sampleArea);
 		classUnderTest.perform();
-		Mockito.verify(sampleArea);
+		Mockito.verify(sampleArea).getRandomPoint();
 	}
 
 	/** areaNotSet. */
