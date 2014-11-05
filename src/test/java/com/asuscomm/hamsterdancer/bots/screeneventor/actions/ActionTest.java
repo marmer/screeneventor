@@ -32,7 +32,7 @@ public class ActionTest {
 
 	private long actionEndRunAt;
 
-	@BeforeMethod(enabled = false)
+	@BeforeMethod
 	public void setUp() {
 		gotActionStart = true;
 		actionStartRunAt = 0L;
@@ -61,10 +61,15 @@ public class ActionTest {
 					return ACTION_NAME;
 				}
 			};
+
+		final Robot robot = Mockito.mock(Robot.class);
+		Mockito.doCallRealMethod().when(robot).delay(Mockito.anyInt());
+
+		classUnderTest.setRobot(robot);
 	}
 
 	/** testRandomPointOfAreaIsUsed. */
-	@Test(enabled = false)
+	@Test
 	public void testRandomPointOfAreaIsUsed() {
 		final Area sampleArea = Mockito.mock(Area.class);
 		Mockito.when(sampleArea.getRandomPoint()).thenReturn(new Point(1, 2));
@@ -74,14 +79,14 @@ public class ActionTest {
 	}
 
 	/** areaNotSet. */
-	@Test(enabled = false)
+	@Test
 	public void areaNotSet() {
 		classUnderTest.setArea(null);
 		classUnderTest.perform(); // expected no nullpointer (or other) exeption is thrown.
 	}
 
 	/** delayInterAndPreDelayTests. */
-	@Test(enabled = false)
+	@Test
 	public void delayInterAndPreDelayTests() {
 		final int expectedPreDelay = 100;
 		final int expectedInterDelay = 200;

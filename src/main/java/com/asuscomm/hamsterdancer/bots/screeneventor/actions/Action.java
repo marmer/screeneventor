@@ -8,6 +8,7 @@ import java.awt.AWTException;
 import java.awt.MouseInfo;
 import java.awt.Robot;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 
@@ -22,17 +23,7 @@ public abstract class Action implements Serializable, Cloneable {
 	private static final long serialVersionUID = 1L;
 
 	/** Robot used to perform mouse actions. */
-	protected static transient Robot robot;
-
-	static {
-		if (robot == null) {
-			try {
-				robot = new Robot();
-			} catch (final AWTException e) {
-				throw new ScreenevatorException("Not able to initialize Robot", e);
-			}
-		}
-	}
+	protected transient Robot robot;
 
 	/** Area the action can be performed in. */
 	private Area area;
@@ -42,6 +33,36 @@ public abstract class Action implements Serializable, Cloneable {
 	private boolean cursorBack;
 
 	private transient java.awt.Point lastCursorPosition;
+
+	/** Creates a new Action object. */
+	public Action() {
+		initRobot();
+	}
+
+	private void initRobot() {
+		if (robot == null) {
+			try {
+				robot = new Robot();
+			} catch (final AWTException e) {
+				throw new ScreenevatorException("Not able to initialize Robot", e);
+			}
+		}
+	}
+
+	/**
+	 * Sets a {@link Robot}. Method added for tests.
+	 *
+	 * @param robot Robot to set.
+	 */
+	void setRobot(final Robot robot) {
+		this.robot = robot;
+	}
+
+	private void readObject(final java.io.ObjectInputStream in) throws IOException,
+		ClassNotFoundException {
+		in.defaultReadObject();
+		initRobot();
+	}
 
 	/** Performs the action. */
 	public final void perform() {
