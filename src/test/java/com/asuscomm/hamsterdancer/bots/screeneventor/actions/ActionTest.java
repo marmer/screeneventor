@@ -101,10 +101,14 @@ public class ActionTest {
 		final long startDelay = actionStartRunAt - startTime;
 		final int tolerance = 5;
 		assert ((expectedPreDelay - tolerance) < startDelay) &&
-			(startDelay < (expectedPreDelay + tolerance));
+			(startDelay < (expectedPreDelay + tolerance)) : "Delay was " + startDelay +
+			" but should be between " + (expectedPreDelay - tolerance) + " and " +
+			(expectedPreDelay + tolerance);
 
 		final long endDelay = actionEndRunAt - actionStartRunAt;
 		assert ((expectedInterDelay - tolerance) < endDelay) &&
-			(endDelay < (expectedInterDelay + tolerance));
+			(endDelay < (expectedInterDelay + tolerance)) : "Delay was " + endDelay +
+			" but should be between " + (expectedInterDelay - tolerance) + " and " +
+			(expectedInterDelay + tolerance);
 	}
 }
