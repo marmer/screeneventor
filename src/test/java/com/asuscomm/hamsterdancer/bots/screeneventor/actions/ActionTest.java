@@ -99,7 +99,7 @@ public class ActionTest {
 		assert gotActionEnd : "end part not performed";
 
 		final long startDelay = actionStartRunAt - startTime;
-		final int tolerance = 5;
+		final int tolerance = 10;
 		assert ((expectedPreDelay - tolerance) < startDelay) &&
 			(startDelay < (expectedPreDelay + tolerance)) : "Delay was " + startDelay +
 			" but should be between " + (expectedPreDelay - tolerance) + " and " +
