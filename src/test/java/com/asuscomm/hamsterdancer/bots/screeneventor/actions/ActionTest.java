@@ -8,6 +8,8 @@ import org.mockito.Mockito;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.awt.Robot;
+
 
 /**
  * General test of actions.
@@ -64,6 +66,9 @@ public class ActionTest {
 	/** testRandomPointOfAreaIsUsed. */
 	@Test
 	public void testRandomPointOfAreaIsUsed() {
+		final Robot robot = Mockito.mock(Robot.class);
+		Action.setRobot(robot);
+
 		final Area sampleArea = Mockito.mock(Area.class);
 		Mockito.when(sampleArea.getRandomPoint()).thenReturn(new Point(1, 2));
 		classUnderTest.setArea(sampleArea);
@@ -72,7 +77,7 @@ public class ActionTest {
 	}
 
 	/** areaNotSet. */
-	@Test(enabled = false)
+	@Test
 	public void areaNotSet() {
 		classUnderTest.setArea(null);
 		classUnderTest.perform(); // expected no nullpointer (or other) exeption is thrown.
