@@ -14,8 +14,6 @@ import java.awt.Robot;
 /**
  * General test of actions.
  *
- * <p>TODO find a way to mock {@link Robot} in test environments without a screen.</p>
- *
  * @author MarMer
  * @since  2014-11-05
  */

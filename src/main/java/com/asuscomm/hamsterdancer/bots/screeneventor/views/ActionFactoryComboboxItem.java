@@ -12,7 +12,7 @@ import com.asuscomm.hamsterdancer.bots.screeneventor.actions.Action;
  * @since  2014-11-04
  */
 /**
- * TODO: doc
+ * Representation of ActionFactories for Combo boxes for an easier handing in views.
  *
  * @author MarMer
  * @since  04.11.2014

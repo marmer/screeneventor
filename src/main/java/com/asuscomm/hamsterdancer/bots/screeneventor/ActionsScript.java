@@ -67,7 +67,7 @@ public class ActionsScript extends ArrayList<Action> implements Serializable {
 	 * Stops the execution of the script. Calling {@link #start()} lets the script run from the
 	 * beginning again.
 	 */
-	public void stop() { // TODO implement me
+	public void stop() {
 		running = false;
 	}
 

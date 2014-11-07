@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 
 
 /**
- * TODO: doc
+ * Tests {@link ActionsScript}.
  *
  * @author MarMer
  * @since  2014-11-07
