@@ -262,4 +262,11 @@ public class ActionsScriptTest {
 		assert timeTaken >= 150 : "Blocking methods would run at least 150 ms here but the time it has taken is: " +
 			timeTaken;
 	}
+
+	/** emptyScriotRun. */
+	@Test(timeOut = 1000, description = "Empty Scripts should not run.")
+	public void emptyScriotRun() {
+		classUnderTest.clear();
+		classUnderTest.start();
+	}
 }

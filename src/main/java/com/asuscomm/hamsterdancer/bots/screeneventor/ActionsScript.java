@@ -5,6 +5,7 @@ import com.asuscomm.hamsterdancer.bots.screeneventor.actions.Action;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 /**
@@ -30,9 +31,11 @@ public class ActionsScript extends ArrayList<Action> implements Serializable {
 	public synchronized void start() {
 		initExecution();
 
-		while (isRunning()) {
-			performIteration();
-			currentIteration++;
+		if (!isEmpty()) {
+			while (isRunning()) {
+				performIteration();
+				currentIteration++;
+			}
 		}
 	}
 
@@ -109,7 +112,57 @@ public class ActionsScript extends ArrayList<Action> implements Serializable {
 	}
 
 	@Override
-	public Object clone() {
+	public synchronized boolean add(final Action e) {
+		return super.add(e);
+	}
+
+	@Override
+	public synchronized void add(final int index, final Action element) {
+		super.add(index, element);
+	}
+
+	@Override
+	public synchronized boolean addAll(final Collection<? extends Action> c) {
+		return super.addAll(c);
+	}
+
+	@Override
+	public synchronized boolean addAll(final int index, final Collection<? extends Action> c) {
+		return super.addAll(index, c);
+	}
+
+	@Override
+	public synchronized void clear() {
+		super.clear();
+	}
+
+	@Override
+	public synchronized Action remove(final int index) {
+		return super.remove(index);
+	}
+
+	@Override
+	public synchronized boolean remove(final Object o) {
+		return super.remove(o);
+	}
+
+	@Override
+	public synchronized boolean removeAll(final Collection<?> c) {
+		return super.removeAll(c);
+	}
+
+	@Override
+	public synchronized boolean retainAll(final Collection<?> c) {
+		return super.retainAll(c);
+	}
+
+	@Override
+	public synchronized Action set(final int index, final Action element) {
+		return super.set(index, element);
+	}
+
+	@Override
+	public synchronized Object clone() {
 		final ActionsScript clone = (ActionsScript) super.clone();
 
 		clone.maxExecutionTime = maxExecutionTime;
