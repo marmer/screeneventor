@@ -67,8 +67,8 @@ public abstract class Action implements Serializable, Cloneable {
 	/** Performs the action. */
 	public final void perform() {
 		remindCursorPosition();
-		moveCursor();
 		preDelay();
+		moveCursor();
 		performActionStart();
 		interDelay();
 		performActionEnd();
