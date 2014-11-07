@@ -2,15 +2,12 @@ package com.asuscomm.hamsterdancer.bots.screeneventor.geometry;
 
 import org.testng.annotations.Test;
 
-import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Point;
-import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Rectangle;
-
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 
 /**
- * TODO: doc
+ * Tests for {@link Rectangle}.
  *
  * @author MarMer
  * @since  2014-11-01
