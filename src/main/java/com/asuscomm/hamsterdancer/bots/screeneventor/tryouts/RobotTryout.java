@@ -11,18 +11,18 @@ import java.awt.event.InputEvent;
 
 
 /**
- * TODO: doc
+ * Just a tryout class.
  *
  * @author MarMer
  * @since  2014-10-30
  */
 public class RobotTryout {
 	/**
-	 * TODO: doc
+	 * Just main.
 	 *
-	 * @param  args TODO: doc
+	 * @param  args just args
 	 *
-	 * @throws AWTException TODO: doc
+	 * @throws AWTException just an exception
 	 */
 	public static void main(final String[] args) throws AWTException {
 		// final Robot r = new Robot();
@@ -59,43 +59,19 @@ public class RobotTryout {
 		script.start();
 	}
 
-	/**
-	 * TODO: doc
-	 *
-	 * @param r     TODO: doc
-	 * @param point TODO: doc
-	 */
-	protected static void moveMouse(final Robot r, final Point point) {
+	private static void moveMouse(final Robot r, final Point point) {
 		r.mouseMove(point.x, point.y);
 	}
 
-	/**
-	 * TODO: doc
-	 *
-	 * @param r     TODO: doc
-	 * @param point TODO: doc
-	 */
 	private static void performClick(final Robot r, final Point point) {
 		performClick(r, point.x, point.y);
 	}
 
-	/**
-	 * TODO: doc
-	 *
-	 * @param r TODO: doc
-	 * @param x TODO: doc
-	 * @param y TODO: doc
-	 */
 	private static void performClick(final Robot r, final int x, final int y) {
 		r.mouseMove(x, y);
 		performClick(r);
 	}
 
-	/**
-	 * TODO: doc
-	 *
-	 * @param r TODO: doc
-	 */
 	private static void performClick(final Robot r) {
 		r.mousePress(InputEvent.BUTTON1_MASK);
 		r.mouseRelease(InputEvent.BUTTON1_MASK);
