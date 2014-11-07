@@ -143,7 +143,7 @@ public class ActionConfigPane extends JPanel {
 		repeatCountSpinner.setModel(new SpinnerNumberModel(
 				new Integer(0),
 				new Integer(0),
-				null,
+				new Integer(Integer.MAX_VALUE),
 				new Integer(1)));
 
 		final JLabel lblRepeatTime = new JLabel("Repeat Time");
@@ -162,13 +162,18 @@ public class ActionConfigPane extends JPanel {
 		gbc_lblInterdalayInMs.gridy = 4;
 		ActionConfigPanel.add(lblInterdalayInMs, gbc_lblInterdalayInMs);
 
-		final JSpinner spinner = new JSpinner();
-		final GridBagConstraints gbc_spinner = new GridBagConstraints();
-		gbc_spinner.fill = GridBagConstraints.HORIZONTAL;
-		gbc_spinner.insets = new Insets(0, 0, 5, 5);
-		gbc_spinner.gridx = 3;
-		gbc_spinner.gridy = 4;
-		ActionConfigPanel.add(spinner, gbc_spinner);
+		final JSpinner interDelaySpinner = new JSpinner();
+		final GridBagConstraints gbc_interDelaySpinner = new GridBagConstraints();
+		gbc_interDelaySpinner.fill = GridBagConstraints.HORIZONTAL;
+		gbc_interDelaySpinner.insets = new Insets(0, 0, 5, 5);
+		gbc_interDelaySpinner.gridx = 3;
+		gbc_interDelaySpinner.gridy = 4;
+		ActionConfigPanel.add(interDelaySpinner, gbc_interDelaySpinner);
+		interDelaySpinner.setModel(new SpinnerNumberModel(
+				new Integer(0),
+				new Integer(0),
+				new Integer(Integer.MAX_VALUE),
+				new Integer(1)));
 
 		final JLabel lblAction = new JLabel("Action");
 		final GridBagConstraints gbc_lblAction = new GridBagConstraints();
@@ -224,7 +229,7 @@ public class ActionConfigPane extends JPanel {
 		hourSpinner.setModel(new SpinnerNumberModel(
 				new Integer(0),
 				new Integer(0),
-				null,
+				new Integer(Integer.MAX_VALUE),
 				new Integer(1)));
 
 		final JLabel lblMinutes = new JLabel("min");
@@ -242,13 +247,18 @@ public class ActionConfigPane extends JPanel {
 		gbc_lblDalayInMs.gridy = 4;
 		ActionConfigPanel.add(lblDalayInMs, gbc_lblDalayInMs);
 
-		final JSpinner delaySpinner = new JSpinner();
-		final GridBagConstraints gbc_delaySpinner = new GridBagConstraints();
-		gbc_delaySpinner.fill = GridBagConstraints.HORIZONTAL;
-		gbc_delaySpinner.insets = new Insets(0, 0, 5, 5);
-		gbc_delaySpinner.gridx = 1;
-		gbc_delaySpinner.gridy = 4;
-		ActionConfigPanel.add(delaySpinner, gbc_delaySpinner);
+		final JSpinner preDelaySpinner = new JSpinner();
+		final GridBagConstraints gbc_preDelaySpinner = new GridBagConstraints();
+		gbc_preDelaySpinner.fill = GridBagConstraints.HORIZONTAL;
+		gbc_preDelaySpinner.insets = new Insets(0, 0, 5, 5);
+		gbc_preDelaySpinner.gridx = 1;
+		gbc_preDelaySpinner.gridy = 4;
+		ActionConfigPanel.add(preDelaySpinner, gbc_preDelaySpinner);
+		preDelaySpinner.setModel(new SpinnerNumberModel(
+				new Integer(0),
+				new Integer(0),
+				new Integer(Integer.MAX_VALUE),
+				new Integer(1)));
 
 		final JSpinner minuteSpinner = new JSpinner();
 		final GridBagConstraints gbc_minuteSpinner = new GridBagConstraints();
@@ -260,7 +270,7 @@ public class ActionConfigPane extends JPanel {
 		minuteSpinner.setModel(new SpinnerNumberModel(
 				new Integer(0),
 				new Integer(0),
-				null,
+				new Integer(Integer.MAX_VALUE),
 				new Integer(1)));
 
 		final JLabel lblSeconds = new JLabel("s");
@@ -300,7 +310,7 @@ public class ActionConfigPane extends JPanel {
 		secondSpinner.setModel(new SpinnerNumberModel(
 				new Integer(0),
 				new Integer(0),
-				null,
+				new Integer(Integer.MAX_VALUE),
 				new Integer(1)));
 
 		final JButton btnAdd = new JButton("Add");
