@@ -154,8 +154,8 @@ public class ActionsScriptTest {
 	private void assertTimeRun(final int expectedTime, final int tollerance, final long timeRun) {
 		final int expectedTimeMin = expectedTime - tollerance;
 		final int expectedTimeMax = expectedTime + tollerance;
-		assert (expectedTimeMin < timeRun) &&
-			(timeRun < expectedTimeMax) : "Expected execution time: " + expectedTime +
+		assert (expectedTimeMin <= timeRun) &&
+			(timeRun <= expectedTimeMax) : "Expected execution time: " + expectedTime +
 			" with tollerance: " + tollerance + " does not fit to real execution time: " + timeRun;
 	}
 
