@@ -37,6 +37,23 @@ public class ActionFactoryComboboxItem<T extends Action> {
 	}
 
 	/**
+	 * Creates an {@link ActionFactoryComboboxItem}.
+	 * 
+	 * @param <A>
+	 *            Generic type the action is related to.
+	 * @param actionType
+	 *            Class of the action type.
+	 * @param description
+	 *            Description as shown within combo boxes.
+	 * @return The created {@link ActionFactoryComboboxItem}.
+	 */
+	public static <A extends Action> ActionFactoryComboboxItem<A> createItem(
+		final Class<A> actionType,
+		final String description) {
+		return new ActionFactoryComboboxItem<A>(actionType, description);
+	}
+
+	/**
 	 * Creates an instance of an action.
 	 *
 	 * @return An instance of the related Action.
