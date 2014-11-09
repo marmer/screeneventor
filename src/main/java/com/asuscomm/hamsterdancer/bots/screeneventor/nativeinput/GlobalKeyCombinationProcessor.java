@@ -173,35 +173,4 @@ public class GlobalKeyCombinationProcessor implements NativeKeyListener {
 	public void nativeKeyTyped(final NativeKeyEvent e) {
 		// it's time to be ignorant (no implementationnot needed here)
 	}
-
-	/**
-	 * TODO: doc
-	 *
-	 * @param  args TODO: doc
-	 *
-	 * @throws InterruptedException TODO: doc
-	 */
-	public static void main(final String[] args) throws InterruptedException {
-		final KeyCombinationListener li =
-			new KeyCombinationListener() {
-				@Override
-				public void keyCombinationPressed(final Integer... keys) {
-					System.out.println("Started key combination");
-				}
-
-				@Override
-				public void keyCombinationReleased(final Integer... keys) {
-					System.out.println("Stopped key combination");
-				}
-			};
-
-		GlobalKeyCombinationProcessor.registerListener(
-			li,
-			NativeKeyEvent.VC_META_L,
-			NativeKeyEvent.VC_CONTROL_L);
-
-		GlobalKeyCombinationProcessor.removeListener(li);
-		Thread.sleep(10000);
-		GlobalScreen.unregisterNativeHook();
-	}
 }
