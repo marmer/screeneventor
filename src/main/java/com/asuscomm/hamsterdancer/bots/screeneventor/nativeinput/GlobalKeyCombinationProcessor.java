@@ -109,6 +109,10 @@ public class GlobalKeyCombinationProcessor implements NativeKeyListener {
 			synchronized (globalScreen) {
 				final GlobalKeyCombinationProcessor processor = listeners.remove(listener);
 				globalScreen.removeNativeKeyListener(processor);
+
+				if (!GlobalScreen.isNativeHookRegistered()) {
+					GlobalScreen.unregisterNativeHook();
+				}
 			}
 		}
 	}
