@@ -25,7 +25,8 @@ public class RobotTryout {
 	 * @throws AWTException just an exception
 	 */
 	public static void main(final String[] args) throws AWTException {
-		// final Robot r = new Robot();
+		final Robot r = new Robot();
+
 		//
 		// r.setAutoDelay(0);
 		//
@@ -57,6 +58,8 @@ public class RobotTryout {
 		script.add(lca);
 
 		script.start();
+
+		performClick(r, 1000, 500);
 	}
 
 	private static void moveMouse(final Robot r, final Point point) {

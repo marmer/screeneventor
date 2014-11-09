@@ -1,5 +1,6 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.views;
 
+import com.asuscomm.hamsterdancer.bots.screeneventor.ActionsScript;
 import com.asuscomm.hamsterdancer.bots.screeneventor.actions.Action;
 import com.asuscomm.hamsterdancer.bots.screeneventor.actions.mouse.LeftClickAction;
 
@@ -9,6 +10,8 @@ import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -24,7 +27,6 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -37,22 +39,33 @@ public class MainFrame extends JFrame {
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPane;
-	private JTable actionsTable;
-	private JTextField txtX;
-	private JTextField txtX2;
-	private JTextField txtY;
-	private JTextField txtY2;
-	private JTextField txtRadius;
-	private JTextField txtComment;
-	private JTextField txtGetcursor;
-	private JTextField txtGetandaddcursor;
-	private JTextField txtStartStopScript;
+	private final JTable actionsTable;
+	private final JTextField txtX1;
+	private final JTextField txtX2;
+	private final JTextField txtY1;
+	private final JTextField txtY2;
+	private final JTextField txtRadius;
+	private final JTextField txtComment;
+	private final JTextField txtGetcursor;
+	private final JTextField txtGetandaddcursor;
+	private final JTextField txtStartStopScript;
+	private final ActionsScript actionsScript;
+	private final JComboBox<ActionFactoryComboboxItem<? extends Action>> actionChooserComboBox;
+	private final JCheckBox chckbxResetCursor;
+	private final JSpinner preDelaySpinner;
+	private final JSpinner interDelaySpinner;
+	private final JSpinner iterationSpinner;
+	private final JButton btnAdd;
+	private final JButton btnUpdate;
+	private final JButton btnMoveUp;
+	private final JButton btnMoveDown;
+	private final ActionTableModel actionTableModel;
 
 	/** Create the frame. */
 	public MainFrame() {
 		setTitle("Screenevator - Let us play your games");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 600);
+		setBounds(100, 100, 800, 650);
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
@@ -118,17 +131,16 @@ public class MainFrame extends JFrame {
 		gbc_lblInterdelayInMs.gridy = 0;
 		actionPane.add(lblInterdelayInMs, gbc_lblInterdelayInMs);
 
-		final JComboBox<ActionFactoryComboboxItem<? extends Action>> comboBox =
-			new JComboBox<ActionFactoryComboboxItem<? extends Action>>();
-		lblAction.setLabelFor(comboBox);
-		populateWithActions(comboBox);
+		actionChooserComboBox = new JComboBox<ActionFactoryComboboxItem<? extends Action>>();
+		lblAction.setLabelFor(actionChooserComboBox);
+		populateWithActions(actionChooserComboBox);
 
-		final GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 0;
-		gbc_comboBox.gridy = 1;
-		actionPane.add(comboBox, gbc_comboBox);
+		final GridBagConstraints gbc_actionChooserComboBox = new GridBagConstraints();
+		gbc_actionChooserComboBox.insets = new Insets(0, 0, 5, 5);
+		gbc_actionChooserComboBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_actionChooserComboBox.gridx = 0;
+		gbc_actionChooserComboBox.gridy = 1;
+		actionPane.add(actionChooserComboBox, gbc_actionChooserComboBox);
 
 		final JLabel lblStart = new JLabel("Start");
 		final GridBagConstraints gbc_lblStart = new GridBagConstraints();
@@ -138,25 +150,25 @@ public class MainFrame extends JFrame {
 		gbc_lblStart.gridy = 1;
 		actionPane.add(lblStart, gbc_lblStart);
 
-		txtX = new JTextField();
+		txtX1 = new JTextField();
 
-		final GridBagConstraints gbc_txtX = new GridBagConstraints();
-		gbc_txtX.insets = new Insets(0, 0, 5, 5);
-		gbc_txtX.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtX.gridx = 2;
-		gbc_txtX.gridy = 1;
-		actionPane.add(txtX, gbc_txtX);
-		txtX.setColumns(10);
+		final GridBagConstraints gbc_txtX1 = new GridBagConstraints();
+		gbc_txtX1.insets = new Insets(0, 0, 5, 5);
+		gbc_txtX1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtX1.gridx = 2;
+		gbc_txtX1.gridy = 1;
+		actionPane.add(txtX1, gbc_txtX1);
+		txtX1.setColumns(10);
 
-		txtY = new JTextField();
+		txtY1 = new JTextField();
 
-		final GridBagConstraints gbc_txtY = new GridBagConstraints();
-		gbc_txtY.insets = new Insets(0, 0, 5, 5);
-		gbc_txtY.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtY.gridx = 3;
-		gbc_txtY.gridy = 1;
-		actionPane.add(txtY, gbc_txtY);
-		txtY.setColumns(10);
+		final GridBagConstraints gbc_txtY1 = new GridBagConstraints();
+		gbc_txtY1.insets = new Insets(0, 0, 5, 5);
+		gbc_txtY1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtY1.gridx = 3;
+		gbc_txtY1.gridy = 1;
+		actionPane.add(txtY1, gbc_txtY1);
+		txtY1.setColumns(10);
 
 		txtRadius = new JTextField();
 		lblRadius.setLabelFor(txtRadius);
@@ -169,7 +181,7 @@ public class MainFrame extends JFrame {
 		actionPane.add(txtRadius, gbc_txtRadius);
 		txtRadius.setColumns(10);
 
-		final JSpinner preDelaySpinner = new JSpinner();
+		preDelaySpinner = new JSpinner();
 		preDelaySpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
 		lblPredelayInMs.setLabelFor(preDelaySpinner);
 
@@ -180,7 +192,7 @@ public class MainFrame extends JFrame {
 		gbc_preDelaySpinner.gridy = 1;
 		actionPane.add(preDelaySpinner, gbc_preDelaySpinner);
 
-		final JSpinner interDelaySpinner = new JSpinner();
+		interDelaySpinner = new JSpinner();
 		interDelaySpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
 		lblInterdelayInMs.setLabelFor(interDelaySpinner);
 
@@ -219,7 +231,8 @@ public class MainFrame extends JFrame {
 		actionPane.add(txtY2, gbc_txtY2);
 		txtY2.setColumns(10);
 
-		final JCheckBox chckbxResetCursor = new JCheckBox("reset Cursor");
+		chckbxResetCursor = new JCheckBox("reset Cursor");
+
 		final GridBagConstraints gbc_chckbxResetCursor = new GridBagConstraints();
 		gbc_chckbxResetCursor.insets = new Insets(0, 0, 0, 5);
 		gbc_chckbxResetCursor.gridx = 4;
@@ -255,48 +268,13 @@ public class MainFrame extends JFrame {
 		contentPane.add(scriptPane, BorderLayout.CENTER);
 		scriptPane.setLayout(new BorderLayout(5, 5));
 
+		actionsScript = new ActionsScript();
+
 		final JScrollPane actionsScrollPane = new JScrollPane();
 		scriptPane.add(actionsScrollPane, BorderLayout.CENTER);
 		actionsTable = new JTable();
-		actionsTable.setModel(new DefaultTableModel(
-				new Object[][] {
-					{ null, null, null, null, null, null, null, null, null, null },
-				},
-				new String[] {
-					"Type", "Area", "X1", "Y1", "X2", "Y2", "R", "Pre Delay", "Inter Delay",
-					"Reset Cursor"
-				}) {
-				/** serialVersionUID. */
-				private static final long serialVersionUID = 1L;
-
-				Class[] columnTypes =
-					new Class[] {
-						String.class, String.class, Integer.class, Integer.class, Integer.class,
-						Integer.class, Integer.class, Integer.class, Integer.class, Boolean.class
-					};
-
-				@Override
-				public Class getColumnClass(final int columnIndex) {
-					return columnTypes[columnIndex];
-				}
-
-				boolean[] columnEditables =
-					new boolean[] {
-						false, false, false, false, false, false, false, false, false, false
-					};
-
-				@Override
-				public boolean isCellEditable(final int row, final int column) {
-					return columnEditables[column];
-				}
-			});
-		actionsTable.getColumnModel().getColumn(2).setPreferredWidth(35);
-		actionsTable.getColumnModel().getColumn(3).setPreferredWidth(35);
-		actionsTable.getColumnModel().getColumn(4).setPreferredWidth(35);
-		actionsTable.getColumnModel().getColumn(5).setPreferredWidth(35);
-		actionsTable.getColumnModel().getColumn(6).setPreferredWidth(35);
-		actionsTable.getColumnModel().getColumn(7).setPreferredWidth(65);
-		actionsTable.getColumnModel().getColumn(8).setPreferredWidth(65);
+		actionTableModel = new ActionTableModel(actionsScript);
+		actionsTable.setModel(actionTableModel);
 		actionsScrollPane.setViewportView(actionsTable);
 
 		final JPanel scriptControlPane = new JPanel();
@@ -305,52 +283,82 @@ public class MainFrame extends JFrame {
 		final GridBagLayout gbl_scriptControlPane = new GridBagLayout();
 		gbl_scriptControlPane.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
 		gbl_scriptControlPane.rowWeights =
-			new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+			new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 		scriptControlPane.setLayout(gbl_scriptControlPane);
 
-		final JButton btnAdd = new JButton("Add");
+		btnAdd = new JButton("Add");
+		btnAdd.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(final ActionEvent arg0) {
+					final ActionFactoryComboboxItem i = actionChooserComboBox.getItemAt(
+							actionChooserComboBox.getSelectedIndex());
+					final Action action = i.createAction();
+					action.setPreDelay((Integer) preDelaySpinner.getValue());
+					actionsScript.add(action);
+
+					// TODO Hier ordentliche Werte her holen
+				}
+			});
+
+		final JButton btnStart = new JButton("Start");
+		btnStart.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(final ActionEvent arg0) {}
+			});
+
+		final GridBagConstraints gbc_btnStart = new GridBagConstraints();
+		gbc_btnStart.insets = new Insets(0, 0, 5, 0);
+		gbc_btnStart.fill = GridBagConstraints.BOTH;
+		gbc_btnStart.gridwidth = 2;
+		gbc_btnStart.gridx = 0;
+		gbc_btnStart.gridy = 0;
+		scriptControlPane.add(btnStart, gbc_btnStart);
+
 		final GridBagConstraints gbc_btnAdd = new GridBagConstraints();
+		gbc_btnAdd.insets = new Insets(0, 0, 5, 0);
 		gbc_btnAdd.gridwidth = 2;
 		gbc_btnAdd.fill = GridBagConstraints.BOTH;
-		gbc_btnAdd.insets = new Insets(0, 0, 5, 0);
 		gbc_btnAdd.gridx = 0;
-		gbc_btnAdd.gridy = 0;
+		gbc_btnAdd.gridy = 1;
 		scriptControlPane.add(btnAdd, gbc_btnAdd);
 
-		final JButton btnUpdate = new JButton("Update");
+		btnUpdate = new JButton("Update");
+
 		final GridBagConstraints gbc_btnUpdate = new GridBagConstraints();
+		gbc_btnUpdate.insets = new Insets(0, 0, 5, 0);
 		gbc_btnUpdate.gridwidth = 2;
 		gbc_btnUpdate.fill = GridBagConstraints.BOTH;
-		gbc_btnUpdate.insets = new Insets(0, 0, 5, 0);
 		gbc_btnUpdate.gridx = 0;
-		gbc_btnUpdate.gridy = 1;
+		gbc_btnUpdate.gridy = 2;
 		scriptControlPane.add(btnUpdate, gbc_btnUpdate);
 
-		final JButton btnMoveUp = new JButton("Move Up");
+		btnMoveUp = new JButton("Move Up");
+
 		final GridBagConstraints gbc_btnMoveUp = new GridBagConstraints();
+		gbc_btnMoveUp.insets = new Insets(0, 0, 5, 0);
 		gbc_btnMoveUp.gridwidth = 2;
 		gbc_btnMoveUp.fill = GridBagConstraints.BOTH;
-		gbc_btnMoveUp.insets = new Insets(0, 0, 5, 0);
 		gbc_btnMoveUp.gridx = 0;
-		gbc_btnMoveUp.gridy = 2;
+		gbc_btnMoveUp.gridy = 3;
 		scriptControlPane.add(btnMoveUp, gbc_btnMoveUp);
 
-		final JButton btnMoveDown = new JButton("Move Down");
+		btnMoveDown = new JButton("Move Down");
+
 		final GridBagConstraints gbc_btnMoveDown = new GridBagConstraints();
+		gbc_btnMoveDown.insets = new Insets(0, 0, 5, 0);
 		gbc_btnMoveDown.gridwidth = 2;
 		gbc_btnMoveDown.fill = GridBagConstraints.BOTH;
-		gbc_btnMoveDown.insets = new Insets(0, 0, 5, 0);
 		gbc_btnMoveDown.gridx = 0;
-		gbc_btnMoveDown.gridy = 3;
+		gbc_btnMoveDown.gridy = 4;
 		scriptControlPane.add(btnMoveDown, gbc_btnMoveDown);
 
 		final JButton btnRemove = new JButton("Remove");
 		final GridBagConstraints gbc_btnRemove = new GridBagConstraints();
-		gbc_btnRemove.gridwidth = 2;
 		gbc_btnRemove.insets = new Insets(0, 0, 5, 0);
+		gbc_btnRemove.gridwidth = 2;
 		gbc_btnRemove.fill = GridBagConstraints.BOTH;
 		gbc_btnRemove.gridx = 0;
-		gbc_btnRemove.gridy = 4;
+		gbc_btnRemove.gridy = 5;
 		scriptControlPane.add(btnRemove, gbc_btnRemove);
 
 		final Component glue = Box.createGlue();
@@ -361,7 +369,7 @@ public class MainFrame extends JFrame {
 		gbc_glue.gridwidth = 2;
 		gbc_glue.insets = new Insets(0, 0, 5, 0);
 		gbc_glue.gridx = 0;
-		gbc_glue.gridy = 5;
+		gbc_glue.gridy = 6;
 		scriptControlPane.add(glue, gbc_glue);
 
 		final JLabel lblMaxIterations = new JLabel("Max Execution Time");
@@ -369,19 +377,19 @@ public class MainFrame extends JFrame {
 		gbc_lblMaxIterations.gridwidth = 2;
 		gbc_lblMaxIterations.insets = new Insets(0, 0, 5, 0);
 		gbc_lblMaxIterations.gridx = 0;
-		gbc_lblMaxIterations.gridy = 6;
+		gbc_lblMaxIterations.gridy = 7;
 		scriptControlPane.add(lblMaxIterations, gbc_lblMaxIterations);
 
-		final JSpinner iterationSpinner = new JSpinner();
+		iterationSpinner = new JSpinner();
 		iterationSpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
 		lblMaxIterations.setLabelFor(iterationSpinner);
 
 		final GridBagConstraints gbc_iterationSpinner = new GridBagConstraints();
 		gbc_iterationSpinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_iterationSpinner.gridwidth = 2;
-		gbc_iterationSpinner.insets = new Insets(0, 0, 5, 5);
+		gbc_iterationSpinner.insets = new Insets(0, 0, 5, 0);
 		gbc_iterationSpinner.gridx = 0;
-		gbc_iterationSpinner.gridy = 7;
+		gbc_iterationSpinner.gridy = 8;
 		scriptControlPane.add(iterationSpinner, gbc_iterationSpinner);
 
 		final JLabel lblMaxRepeatDuration = new JLabel("Max Execution Time");
@@ -392,7 +400,7 @@ public class MainFrame extends JFrame {
 		gbc_lblMaxRepeatDuration.insets = new Insets(0, 0, 5, 0);
 		gbc_lblMaxRepeatDuration.gridwidth = 2;
 		gbc_lblMaxRepeatDuration.gridx = 0;
-		gbc_lblMaxRepeatDuration.gridy = 8;
+		gbc_lblMaxRepeatDuration.gridy = 9;
 		scriptControlPane.add(lblMaxRepeatDuration, gbc_lblMaxRepeatDuration);
 
 		final JLabel lblH = new JLabel("h");
@@ -401,7 +409,7 @@ public class MainFrame extends JFrame {
 		final GridBagConstraints gbc_lblH = new GridBagConstraints();
 		gbc_lblH.insets = new Insets(0, 0, 5, 5);
 		gbc_lblH.gridx = 0;
-		gbc_lblH.gridy = 9;
+		gbc_lblH.gridy = 10;
 		scriptControlPane.add(lblH, gbc_lblH);
 
 		final JSpinner hourSpinner = new JSpinner();
@@ -412,7 +420,7 @@ public class MainFrame extends JFrame {
 		gbc_hourSpinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_hourSpinner.insets = new Insets(0, 0, 5, 0);
 		gbc_hourSpinner.gridx = 1;
-		gbc_hourSpinner.gridy = 9;
+		gbc_hourSpinner.gridy = 10;
 		scriptControlPane.add(hourSpinner, gbc_hourSpinner);
 
 		final JLabel lblMin = new JLabel("min");
@@ -421,7 +429,7 @@ public class MainFrame extends JFrame {
 		final GridBagConstraints gbc_lblMin = new GridBagConstraints();
 		gbc_lblMin.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMin.gridx = 0;
-		gbc_lblMin.gridy = 10;
+		gbc_lblMin.gridy = 11;
 		scriptControlPane.add(lblMin, gbc_lblMin);
 
 		final JSpinner minSpinner = new JSpinner();
@@ -432,14 +440,14 @@ public class MainFrame extends JFrame {
 		gbc_minSpinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_minSpinner.insets = new Insets(0, 0, 5, 0);
 		gbc_minSpinner.gridx = 1;
-		gbc_minSpinner.gridy = 10;
+		gbc_minSpinner.gridy = 11;
 		scriptControlPane.add(minSpinner, gbc_minSpinner);
 
 		final JLabel lblS = new JLabel("s");
 		final GridBagConstraints gbc_lblS = new GridBagConstraints();
 		gbc_lblS.insets = new Insets(0, 0, 5, 5);
 		gbc_lblS.gridx = 0;
-		gbc_lblS.gridy = 11;
+		gbc_lblS.gridy = 12;
 		scriptControlPane.add(lblS, gbc_lblS);
 
 		final JSpinner secondSpinner = new JSpinner();
@@ -451,14 +459,14 @@ public class MainFrame extends JFrame {
 		gbc_secondSpinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_secondSpinner.insets = new Insets(0, 0, 5, 0);
 		gbc_secondSpinner.gridx = 1;
-		gbc_secondSpinner.gridy = 11;
+		gbc_secondSpinner.gridy = 12;
 		scriptControlPane.add(secondSpinner, gbc_secondSpinner);
 
 		final JLabel lblMs = new JLabel("ms");
 		final GridBagConstraints gbc_lblMs = new GridBagConstraints();
 		gbc_lblMs.insets = new Insets(0, 0, 0, 5);
 		gbc_lblMs.gridx = 0;
-		gbc_lblMs.gridy = 12;
+		gbc_lblMs.gridy = 13;
 		scriptControlPane.add(lblMs, gbc_lblMs);
 
 		final JSpinner msSpinner = new JSpinner();
@@ -469,7 +477,7 @@ public class MainFrame extends JFrame {
 		gbc_msSpinner.weightx = 1.0;
 		gbc_msSpinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_msSpinner.gridx = 1;
-		gbc_msSpinner.gridy = 12;
+		gbc_msSpinner.gridy = 13;
 		scriptControlPane.add(msSpinner, gbc_msSpinner);
 
 		final JPanel controlsPane = new JPanel();
