@@ -2,7 +2,6 @@ package com.asuscomm.hamsterdancer.bots.screeneventor.views;
 
 import com.asuscomm.hamsterdancer.bots.screeneventor.ActionsScript;
 import com.asuscomm.hamsterdancer.bots.screeneventor.actions.Action;
-import com.asuscomm.hamsterdancer.bots.screeneventor.actions.mouse.LeftClickAction;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -15,7 +14,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -40,26 +38,17 @@ public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPane;
 	private final JTable actionsTable;
-	private final JTextField txtX1;
-	private final JTextField txtX2;
-	private final JTextField txtY1;
-	private final JTextField txtY2;
-	private final JTextField txtRadius;
-	private final JTextField txtComment;
 	private final JTextField txtGetcursor;
 	private final JTextField txtGetandaddcursor;
 	private final JTextField txtStartStopScript;
 	private final ActionsScript actionsScript;
-	private final JComboBox<ActionFactoryComboboxItem<? extends Action>> actionChooserComboBox;
-	private final JCheckBox chckbxResetCursor;
-	private final JSpinner preDelaySpinner;
-	private final JSpinner interDelaySpinner;
 	private final JSpinner iterationSpinner;
 	private final JButton btnAdd;
 	private final JButton btnUpdate;
 	private final JButton btnMoveUp;
 	private final JButton btnMoveDown;
 	private final ActionTableModel actionTableModel;
+	private final ActionConfigPane actionsPane;
 
 	/** Create the frame. */
 	public MainFrame() {
@@ -70,192 +59,15 @@ public class MainFrame extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 
-		final JPanel actionPane = new JPanel();
-		actionPane.setBorder(new TitledBorder(
-				UIManager.getBorder("TitledBorder.border"),
+		actionsPane = new ActionConfigPane();
+		actionsPane.setBorder(new TitledBorder(
+				null,
 				"Action",
 				TitledBorder.LEADING,
 				TitledBorder.TOP,
 				null,
 				null));
-		contentPane.add(actionPane, BorderLayout.NORTH);
-
-		final GridBagLayout gbl_actionPane = new GridBagLayout();
-		gbl_actionPane.columnWeights =
-			new double[] {
-				1.0, 0.0, 1.0, 1.0,
-				1.0, 1.0, 1.0
-			};
-		gbl_actionPane.rowWeights = new double[] { 0.0, 0.0, 0.0 };
-		actionPane.setLayout(gbl_actionPane);
-
-		final JLabel lblAction = new JLabel("Action");
-		final GridBagConstraints gbc_lblAction = new GridBagConstraints();
-		gbc_lblAction.insets = new Insets(0, 0, 5, 5);
-		gbc_lblAction.gridx = 0;
-		gbc_lblAction.gridy = 0;
-		actionPane.add(lblAction, gbc_lblAction);
-
-		final JLabel lblX = new JLabel("X");
-		final GridBagConstraints gbc_lblX = new GridBagConstraints();
-		gbc_lblX.insets = new Insets(0, 0, 5, 5);
-		gbc_lblX.gridx = 2;
-		gbc_lblX.gridy = 0;
-		actionPane.add(lblX, gbc_lblX);
-
-		final JLabel lblY = new JLabel("Y");
-		final GridBagConstraints gbc_lblY = new GridBagConstraints();
-		gbc_lblY.insets = new Insets(0, 0, 5, 5);
-		gbc_lblY.gridx = 3;
-		gbc_lblY.gridy = 0;
-		actionPane.add(lblY, gbc_lblY);
-
-		final JLabel lblRadius = new JLabel("Radius");
-		final GridBagConstraints gbc_lblRadius = new GridBagConstraints();
-		gbc_lblRadius.insets = new Insets(0, 0, 5, 5);
-		gbc_lblRadius.gridx = 4;
-		gbc_lblRadius.gridy = 0;
-		actionPane.add(lblRadius, gbc_lblRadius);
-
-		final JLabel lblPredelayInMs = new JLabel("Pre-Delay in ms");
-		final GridBagConstraints gbc_lblPredelayInMs = new GridBagConstraints();
-		gbc_lblPredelayInMs.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPredelayInMs.gridx = 5;
-		gbc_lblPredelayInMs.gridy = 0;
-		actionPane.add(lblPredelayInMs, gbc_lblPredelayInMs);
-
-		final JLabel lblInterdelayInMs = new JLabel("Inter-Delay in ms");
-		final GridBagConstraints gbc_lblInterdelayInMs = new GridBagConstraints();
-		gbc_lblInterdelayInMs.insets = new Insets(0, 0, 5, 0);
-		gbc_lblInterdelayInMs.gridx = 6;
-		gbc_lblInterdelayInMs.gridy = 0;
-		actionPane.add(lblInterdelayInMs, gbc_lblInterdelayInMs);
-
-		actionChooserComboBox = new JComboBox<ActionFactoryComboboxItem<? extends Action>>();
-		lblAction.setLabelFor(actionChooserComboBox);
-		populateWithActions(actionChooserComboBox);
-
-		final GridBagConstraints gbc_actionChooserComboBox = new GridBagConstraints();
-		gbc_actionChooserComboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_actionChooserComboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_actionChooserComboBox.gridx = 0;
-		gbc_actionChooserComboBox.gridy = 1;
-		actionPane.add(actionChooserComboBox, gbc_actionChooserComboBox);
-
-		final JLabel lblStart = new JLabel("Start");
-		final GridBagConstraints gbc_lblStart = new GridBagConstraints();
-		gbc_lblStart.anchor = GridBagConstraints.EAST;
-		gbc_lblStart.insets = new Insets(0, 0, 5, 5);
-		gbc_lblStart.gridx = 1;
-		gbc_lblStart.gridy = 1;
-		actionPane.add(lblStart, gbc_lblStart);
-
-		txtX1 = new JTextField();
-
-		final GridBagConstraints gbc_txtX1 = new GridBagConstraints();
-		gbc_txtX1.insets = new Insets(0, 0, 5, 5);
-		gbc_txtX1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtX1.gridx = 2;
-		gbc_txtX1.gridy = 1;
-		actionPane.add(txtX1, gbc_txtX1);
-		txtX1.setColumns(10);
-
-		txtY1 = new JTextField();
-
-		final GridBagConstraints gbc_txtY1 = new GridBagConstraints();
-		gbc_txtY1.insets = new Insets(0, 0, 5, 5);
-		gbc_txtY1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtY1.gridx = 3;
-		gbc_txtY1.gridy = 1;
-		actionPane.add(txtY1, gbc_txtY1);
-		txtY1.setColumns(10);
-
-		txtRadius = new JTextField();
-		lblRadius.setLabelFor(txtRadius);
-
-		final GridBagConstraints gbc_txtRadius = new GridBagConstraints();
-		gbc_txtRadius.insets = new Insets(0, 0, 5, 5);
-		gbc_txtRadius.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtRadius.gridx = 4;
-		gbc_txtRadius.gridy = 1;
-		actionPane.add(txtRadius, gbc_txtRadius);
-		txtRadius.setColumns(10);
-
-		preDelaySpinner = new JSpinner();
-		preDelaySpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-		lblPredelayInMs.setLabelFor(preDelaySpinner);
-
-		final GridBagConstraints gbc_preDelaySpinner = new GridBagConstraints();
-		gbc_preDelaySpinner.fill = GridBagConstraints.HORIZONTAL;
-		gbc_preDelaySpinner.insets = new Insets(0, 0, 5, 5);
-		gbc_preDelaySpinner.gridx = 5;
-		gbc_preDelaySpinner.gridy = 1;
-		actionPane.add(preDelaySpinner, gbc_preDelaySpinner);
-
-		interDelaySpinner = new JSpinner();
-		interDelaySpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-		lblInterdelayInMs.setLabelFor(interDelaySpinner);
-
-		final GridBagConstraints gbc_interDelaySpinner = new GridBagConstraints();
-		gbc_interDelaySpinner.insets = new Insets(0, 0, 5, 0);
-		gbc_interDelaySpinner.fill = GridBagConstraints.HORIZONTAL;
-		gbc_interDelaySpinner.gridx = 6;
-		gbc_interDelaySpinner.gridy = 1;
-		actionPane.add(interDelaySpinner, gbc_interDelaySpinner);
-
-		final JLabel lblEnd = new JLabel("End");
-		final GridBagConstraints gbc_lblEnd = new GridBagConstraints();
-		gbc_lblEnd.anchor = GridBagConstraints.EAST;
-		gbc_lblEnd.insets = new Insets(0, 0, 0, 5);
-		gbc_lblEnd.gridx = 1;
-		gbc_lblEnd.gridy = 2;
-		actionPane.add(lblEnd, gbc_lblEnd);
-
-		txtX2 = new JTextField();
-
-		final GridBagConstraints gbc_txtX2 = new GridBagConstraints();
-		gbc_txtX2.insets = new Insets(0, 0, 0, 5);
-		gbc_txtX2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtX2.gridx = 2;
-		gbc_txtX2.gridy = 2;
-		actionPane.add(txtX2, gbc_txtX2);
-		txtX2.setColumns(10);
-
-		txtY2 = new JTextField();
-
-		final GridBagConstraints gbc_txtY2 = new GridBagConstraints();
-		gbc_txtY2.insets = new Insets(0, 0, 0, 5);
-		gbc_txtY2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtY2.gridx = 3;
-		gbc_txtY2.gridy = 2;
-		actionPane.add(txtY2, gbc_txtY2);
-		txtY2.setColumns(10);
-
-		chckbxResetCursor = new JCheckBox("reset Cursor");
-
-		final GridBagConstraints gbc_chckbxResetCursor = new GridBagConstraints();
-		gbc_chckbxResetCursor.insets = new Insets(0, 0, 0, 5);
-		gbc_chckbxResetCursor.gridx = 4;
-		gbc_chckbxResetCursor.gridy = 2;
-		actionPane.add(chckbxResetCursor, gbc_chckbxResetCursor);
-
-		final JLabel lblComment = new JLabel("Comment");
-		final GridBagConstraints gbc_lblComment = new GridBagConstraints();
-		gbc_lblComment.anchor = GridBagConstraints.EAST;
-		gbc_lblComment.insets = new Insets(0, 0, 0, 5);
-		gbc_lblComment.gridx = 5;
-		gbc_lblComment.gridy = 2;
-		actionPane.add(lblComment, gbc_lblComment);
-
-		txtComment = new JTextField();
-		lblComment.setLabelFor(txtComment);
-
-		final GridBagConstraints gbc_txtComment = new GridBagConstraints();
-		gbc_txtComment.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtComment.gridx = 6;
-		gbc_txtComment.gridy = 2;
-		actionPane.add(txtComment, gbc_txtComment);
-		txtComment.setColumns(10);
+		contentPane.add(actionsPane, BorderLayout.NORTH);
 
 		final JPanel scriptPane = new JPanel();
 		scriptPane.setBorder(new TitledBorder(
@@ -290,13 +102,8 @@ public class MainFrame extends JFrame {
 		btnAdd.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(final ActionEvent arg0) {
-					final ActionFactoryComboboxItem i = actionChooserComboBox.getItemAt(
-							actionChooserComboBox.getSelectedIndex());
-					final Action action = i.createAction();
-					action.setPreDelay((Integer) preDelaySpinner.getValue());
-					actionsScript.add(action);
-
 					// TODO Hier ordentliche Werte her holen
+					actionsTable.revalidate();
 				}
 			});
 
@@ -609,33 +416,7 @@ public class MainFrame extends JFrame {
 	}
 
 	private void populateWithActions(
-		final JComboBox<ActionFactoryComboboxItem<? extends Action>> comboBox) {
-		comboBox.addItem(ActionFactoryComboboxItem.createItem(LeftClickAction.class, "Left Click"));
-		comboBox.addItem(ActionFactoryComboboxItem.createItem(LeftClickAction.class, "Left Press"));
-		comboBox.addItem(ActionFactoryComboboxItem.createItem(
-				LeftClickAction.class,
-				"Left Release"));
-
-		comboBox.addItem(ActionFactoryComboboxItem.createItem(
-				LeftClickAction.class,
-				"Right Click"));
-		comboBox.addItem(ActionFactoryComboboxItem.createItem(
-				LeftClickAction.class,
-				"Right Press"));
-		comboBox.addItem(ActionFactoryComboboxItem.createItem(
-				LeftClickAction.class,
-				"Right Release"));
-
-		comboBox.addItem(ActionFactoryComboboxItem.createItem(
-				LeftClickAction.class,
-				"Middle Click"));
-		comboBox.addItem(ActionFactoryComboboxItem.createItem(
-				LeftClickAction.class,
-				"Middle Press"));
-		comboBox.addItem(ActionFactoryComboboxItem.createItem(
-				LeftClickAction.class,
-				"Middle Release"));
-	}
+		final JComboBox<ActionFactoryComboboxItem<? extends Action>> comboBox) {}
 
 	/**
 	 * Launch the application.
