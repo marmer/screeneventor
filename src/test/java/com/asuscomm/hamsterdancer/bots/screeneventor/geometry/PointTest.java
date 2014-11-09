@@ -2,8 +2,6 @@ package com.asuscomm.hamsterdancer.bots.screeneventor.geometry;
 
 import org.testng.annotations.Test;
 
-import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Point;
-
 
 /**
  * Testclass for {@link Point}.
@@ -20,7 +18,7 @@ public class PointTest {
 	/** toStringTest. */
 	@Test
 	public void toStringTest() {
-		assert "[1,2]".equals(new Point(1, 2).toString());
+		assert "Point [1,2]".equals(new Point(1, 2).toString());
 	}
 
 	/**equalsTestEqual*/
