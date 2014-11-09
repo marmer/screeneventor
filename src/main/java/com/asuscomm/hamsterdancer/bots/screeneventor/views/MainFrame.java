@@ -1,6 +1,7 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.views;
 
 import com.asuscomm.hamsterdancer.bots.screeneventor.ActionsScript;
+import com.asuscomm.hamsterdancer.bots.screeneventor.ScreenevatorException;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -22,6 +23,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
 
 
@@ -419,6 +421,8 @@ public class MainFrame extends JFrame {
 	 * @param args args
 	 */
 	public static void main(final String[] args) {
+		setLookAndFeel();
+
 		EventQueue.invokeLater(new Runnable() {
 				@Override
 				public void run() {
@@ -430,5 +434,20 @@ public class MainFrame extends JFrame {
 					}
 				}
 			});
+	}
+
+	private static void setLookAndFeel() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+				UnsupportedLookAndFeelException e) {
+			try {
+				UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+					UnsupportedLookAndFeelException e1) {
+				throw new ScreenevatorException(
+					"Not able to set a look and feel. Neither the native one nor the cross plattform one.");
+			}
+		}
 	}
 }
