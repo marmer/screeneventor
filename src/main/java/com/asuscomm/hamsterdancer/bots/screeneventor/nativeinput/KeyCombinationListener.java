@@ -18,4 +18,14 @@ public interface KeyCombinationListener {
 	 * @see   NativeKeyEvent
 	 */
 	void keyCombinationPressed(Integer... keys);
+
+	/**
+	 * Method is called when a key combination was triggered and is not active
+	 * anymore.
+	 * 
+	 * @param keys
+	 *            Keys of the key combination.
+	 * @see NativeKeyEvent
+	 */
+	void keyCombinationReleased(Integer... keys);
 }

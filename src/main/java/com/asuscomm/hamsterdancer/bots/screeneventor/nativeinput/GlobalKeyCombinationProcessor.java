@@ -144,13 +144,25 @@ public class GlobalKeyCombinationProcessor implements NativeKeyListener {
 		final Integer flag = keys.get(event.getKeyCode());
 
 		if (isKey(flag)) {
+			if (isActive()) {
+				deactivate();
+			}
+
 			unset(flag);
 		}
 	}
 
+	private void deactivate() {
+		listener.keyCombinationReleased(keys.keySet().toArray(new Integer[0]));
+		combinationActive = false;
+	}
+
+	private boolean isActive() {
+		return combinationActive && (expectedKeyFlags == currentlyPressedKeys);
+	}
+
 	private void unset(final Integer flag) {
 		currentlyPressedKeys &= ~flag;
-		combinationActive = false;
 	}
 
 	private boolean isKey(final Integer flag) {
@@ -174,7 +186,12 @@ public class GlobalKeyCombinationProcessor implements NativeKeyListener {
 			new KeyCombinationListener() {
 				@Override
 				public void keyCombinationPressed(final Integer... keys) {
-					System.out.println("Git it :D");
+					System.out.println("Started key combination");
+				}
+
+				@Override
+				public void keyCombinationReleased(final Integer... keys) {
+					System.out.println("Stopped key combination");
 				}
 			};
 
@@ -184,6 +201,7 @@ public class GlobalKeyCombinationProcessor implements NativeKeyListener {
 			NativeKeyEvent.VC_CONTROL_L);
 
 		GlobalKeyCombinationProcessor.removeListener(li);
+		Thread.sleep(10000);
 		GlobalScreen.unregisterNativeHook();
 	}
 }
