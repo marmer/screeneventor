@@ -28,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
 
 
 /**
- * TODO: doc
+ * Main Window.
  *
  * @author MarMer
  * @since  2014-11-02
@@ -44,6 +44,9 @@ public class MainFrame extends JFrame {
 	private JTextField txtY2;
 	private JTextField txtRadius;
 	private JTextField txtComment;
+	private JTextField txtGetcursor;
+	private JTextField txtGetandaddcursor;
+	private JTextField txtStartStopScript;
 
 	/** Create the frame. */
 	public MainFrame() {
@@ -167,7 +170,7 @@ public class MainFrame extends JFrame {
 		txtRadius.setColumns(10);
 
 		final JSpinner preDelaySpinner = new JSpinner();
-		preDelaySpinner.setModel(new SpinnerNumberModel(0, 0, 42, 1));
+		preDelaySpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
 		lblPredelayInMs.setLabelFor(preDelaySpinner);
 
 		final GridBagConstraints gbc_preDelaySpinner = new GridBagConstraints();
@@ -178,7 +181,7 @@ public class MainFrame extends JFrame {
 		actionPane.add(preDelaySpinner, gbc_preDelaySpinner);
 
 		final JSpinner interDelaySpinner = new JSpinner();
-		interDelaySpinner.setModel(new SpinnerNumberModel(0, 0, 42, 1));
+		interDelaySpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
 		lblInterdelayInMs.setLabelFor(interDelaySpinner);
 
 		final GridBagConstraints gbc_interDelaySpinner = new GridBagConstraints();
@@ -370,7 +373,7 @@ public class MainFrame extends JFrame {
 		scriptControlPane.add(lblMaxIterations, gbc_lblMaxIterations);
 
 		final JSpinner iterationSpinner = new JSpinner();
-		iterationSpinner.setModel(new SpinnerNumberModel(0, 0, 42, 1));
+		iterationSpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
 		lblMaxIterations.setLabelFor(iterationSpinner);
 
 		final GridBagConstraints gbc_iterationSpinner = new GridBagConstraints();
@@ -402,7 +405,7 @@ public class MainFrame extends JFrame {
 		scriptControlPane.add(lblH, gbc_lblH);
 
 		final JSpinner hourSpinner = new JSpinner();
-		hourSpinner.setModel(new SpinnerNumberModel(0, 0, 42, 1));
+		hourSpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
 
 		final GridBagConstraints gbc_hourSpinner = new GridBagConstraints();
 		gbc_hourSpinner.weightx = 1.0;
@@ -422,7 +425,7 @@ public class MainFrame extends JFrame {
 		scriptControlPane.add(lblMin, gbc_lblMin);
 
 		final JSpinner minSpinner = new JSpinner();
-		minSpinner.setModel(new SpinnerNumberModel(0, 0, 42, 1));
+		minSpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
 
 		final GridBagConstraints gbc_minSpinner = new GridBagConstraints();
 		gbc_minSpinner.weightx = 1.0;
@@ -440,7 +443,7 @@ public class MainFrame extends JFrame {
 		scriptControlPane.add(lblS, gbc_lblS);
 
 		final JSpinner secondSpinner = new JSpinner();
-		secondSpinner.setModel(new SpinnerNumberModel(0, 0, 42, 1));
+		secondSpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
 		lblS.setLabelFor(secondSpinner);
 
 		final GridBagConstraints gbc_secondSpinner = new GridBagConstraints();
@@ -460,7 +463,7 @@ public class MainFrame extends JFrame {
 
 		final JSpinner msSpinner = new JSpinner();
 		lblMs.setLabelFor(msSpinner);
-		msSpinner.setModel(new SpinnerNumberModel(0, 0, 42, 1));
+		msSpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
 
 		final GridBagConstraints gbc_msSpinner = new GridBagConstraints();
 		gbc_msSpinner.weightx = 1.0;
@@ -480,7 +483,7 @@ public class MainFrame extends JFrame {
 		contentPane.add(controlsPane, BorderLayout.SOUTH);
 
 		final GridBagLayout gbl_controlsPane = new GridBagLayout();
-		gbl_controlsPane.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0 };
+		gbl_controlsPane.columnWeights = new double[] { 1.0, 1.0, 1.0, 1.0, 1.0 };
 		gbl_controlsPane.rowWeights = new double[] { 0.0, 0.0, 0.0 };
 		controlsPane.setLayout(gbl_controlsPane);
 
@@ -492,34 +495,41 @@ public class MainFrame extends JFrame {
 		gbc_lblGetAndAddMousePosition.gridy = 0;
 		controlsPane.add(lblGetAndAddMousePosition, gbc_lblGetAndAddMousePosition);
 
-		final JCheckBox chckbxGetAndAddCtrl = new JCheckBox("Ctrl");
-		final GridBagConstraints gbc_chckbxGetAndAddCtrl = new GridBagConstraints();
-		gbc_chckbxGetAndAddCtrl.insets = new Insets(0, 0, 5, 5);
-		gbc_chckbxGetAndAddCtrl.gridx = 1;
-		gbc_chckbxGetAndAddCtrl.gridy = 0;
-		controlsPane.add(chckbxGetAndAddCtrl, gbc_chckbxGetAndAddCtrl);
+		txtGetandaddcursor = new JTextField();
 
-		final JCheckBox chckbxGetAndAddAlt = new JCheckBox("Alt");
-		final GridBagConstraints gbc_chckbxGetAndAddAlt = new GridBagConstraints();
-		gbc_chckbxGetAndAddAlt.insets = new Insets(0, 0, 5, 5);
-		gbc_chckbxGetAndAddAlt.gridx = 2;
-		gbc_chckbxGetAndAddAlt.gridy = 0;
-		controlsPane.add(chckbxGetAndAddAlt, gbc_chckbxGetAndAddAlt);
+		final GridBagConstraints gbc_txtGetandaddcursor = new GridBagConstraints();
+		gbc_txtGetandaddcursor.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtGetandaddcursor.insets = new Insets(0, 0, 5, 5);
+		gbc_txtGetandaddcursor.gridx = 1;
+		gbc_txtGetandaddcursor.gridy = 0;
+		controlsPane.add(txtGetandaddcursor, gbc_txtGetandaddcursor);
+		txtGetandaddcursor.setColumns(10);
 
-		final JCheckBox chckbxGetAndAddShift = new JCheckBox("Shift");
-		final GridBagConstraints gbc_chckbxGetAndAddShift = new GridBagConstraints();
-		gbc_chckbxGetAndAddShift.insets = new Insets(0, 0, 5, 5);
-		gbc_chckbxGetAndAddShift.gridx = 3;
-		gbc_chckbxGetAndAddShift.gridy = 0;
-		controlsPane.add(chckbxGetAndAddShift, gbc_chckbxGetAndAddShift);
+		final JButton btnGetAndAddCursorAssign = new JButton("Assign");
+		final GridBagConstraints gbc_btnGetAndAddCursorAssign = new GridBagConstraints();
+		gbc_btnGetAndAddCursorAssign.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnGetAndAddCursorAssign.insets = new Insets(0, 0, 5, 5);
+		gbc_btnGetAndAddCursorAssign.gridx = 2;
+		gbc_btnGetAndAddCursorAssign.gridy = 0;
+		controlsPane.add(btnGetAndAddCursorAssign, gbc_btnGetAndAddCursorAssign);
 
-		final JComboBox getAndAddKeyCombo = new JComboBox();
-		final GridBagConstraints gbc_getAndAddKeyCombo = new GridBagConstraints();
-		gbc_getAndAddKeyCombo.insets = new Insets(0, 0, 5, 0);
-		gbc_getAndAddKeyCombo.fill = GridBagConstraints.HORIZONTAL;
-		gbc_getAndAddKeyCombo.gridx = 4;
-		gbc_getAndAddKeyCombo.gridy = 0;
-		controlsPane.add(getAndAddKeyCombo, gbc_getAndAddKeyCombo);
+		final JButton btnGetAndAddCursorClear = new JButton("Clear");
+		final GridBagConstraints gbc_btnGetAndAddCursorClear = new GridBagConstraints();
+		gbc_btnGetAndAddCursorClear.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnGetAndAddCursorClear.insets = new Insets(0, 0, 5, 5);
+		gbc_btnGetAndAddCursorClear.gridx = 3;
+		gbc_btnGetAndAddCursorClear.gridy = 0;
+		controlsPane.add(btnGetAndAddCursorClear, gbc_btnGetAndAddCursorClear);
+
+		final Component controlsGlueRight = Box.createGlue();
+		final GridBagConstraints gbc_controlsGlueRight = new GridBagConstraints();
+		gbc_controlsGlueRight.weightx = 1.0;
+		gbc_controlsGlueRight.gridheight = 3;
+		gbc_controlsGlueRight.fill = GridBagConstraints.HORIZONTAL;
+		gbc_controlsGlueRight.insets = new Insets(0, 0, 5, 0);
+		gbc_controlsGlueRight.gridx = 4;
+		gbc_controlsGlueRight.gridy = 0;
+		controlsPane.add(controlsGlueRight, gbc_controlsGlueRight);
 
 		final JLabel lblGetMousePosition = new JLabel("Get Mouse Position");
 		final GridBagConstraints gbc_lblGetMousePosition = new GridBagConstraints();
@@ -529,34 +539,31 @@ public class MainFrame extends JFrame {
 		gbc_lblGetMousePosition.gridy = 1;
 		controlsPane.add(lblGetMousePosition, gbc_lblGetMousePosition);
 
-		final JCheckBox chckbxGetCtrl = new JCheckBox("Ctrl");
-		final GridBagConstraints gbc_chckbxGetCtrl = new GridBagConstraints();
-		gbc_chckbxGetCtrl.insets = new Insets(0, 0, 5, 5);
-		gbc_chckbxGetCtrl.gridx = 1;
-		gbc_chckbxGetCtrl.gridy = 1;
-		controlsPane.add(chckbxGetCtrl, gbc_chckbxGetCtrl);
+		txtGetcursor = new JTextField();
 
-		final JCheckBox chckbxGetAlt = new JCheckBox("Alt");
-		final GridBagConstraints gbc_chckbxGetAlt = new GridBagConstraints();
-		gbc_chckbxGetAlt.insets = new Insets(0, 0, 5, 5);
-		gbc_chckbxGetAlt.gridx = 2;
-		gbc_chckbxGetAlt.gridy = 1;
-		controlsPane.add(chckbxGetAlt, gbc_chckbxGetAlt);
+		final GridBagConstraints gbc_txtGetcursor = new GridBagConstraints();
+		gbc_txtGetcursor.insets = new Insets(0, 0, 5, 5);
+		gbc_txtGetcursor.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtGetcursor.gridx = 1;
+		gbc_txtGetcursor.gridy = 1;
+		controlsPane.add(txtGetcursor, gbc_txtGetcursor);
+		txtGetcursor.setColumns(10);
 
-		final JCheckBox chckbxGetShift = new JCheckBox("Shift");
-		final GridBagConstraints gbc_chckbxGetShift = new GridBagConstraints();
-		gbc_chckbxGetShift.insets = new Insets(0, 0, 5, 5);
-		gbc_chckbxGetShift.gridx = 3;
-		gbc_chckbxGetShift.gridy = 1;
-		controlsPane.add(chckbxGetShift, gbc_chckbxGetShift);
+		final JButton btnGetCursorAssign = new JButton("Assign");
+		final GridBagConstraints gbc_btnGetCursorAssign = new GridBagConstraints();
+		gbc_btnGetCursorAssign.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnGetCursorAssign.insets = new Insets(0, 0, 5, 5);
+		gbc_btnGetCursorAssign.gridx = 2;
+		gbc_btnGetCursorAssign.gridy = 1;
+		controlsPane.add(btnGetCursorAssign, gbc_btnGetCursorAssign);
 
-		final JComboBox getKeyCombo = new JComboBox();
-		final GridBagConstraints gbc_getKeyCombo = new GridBagConstraints();
-		gbc_getKeyCombo.insets = new Insets(0, 0, 5, 0);
-		gbc_getKeyCombo.fill = GridBagConstraints.HORIZONTAL;
-		gbc_getKeyCombo.gridx = 4;
-		gbc_getKeyCombo.gridy = 1;
-		controlsPane.add(getKeyCombo, gbc_getKeyCombo);
+		final JButton btnGetCursorClear = new JButton("Clear");
+		final GridBagConstraints gbc_btnGetCursorClear = new GridBagConstraints();
+		gbc_btnGetCursorClear.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnGetCursorClear.insets = new Insets(0, 0, 5, 5);
+		gbc_btnGetCursorClear.gridx = 3;
+		gbc_btnGetCursorClear.gridy = 1;
+		controlsPane.add(btnGetCursorClear, gbc_btnGetCursorClear);
 
 		final JLabel lblStartStopScript = new JLabel("Start/Stop Script");
 		final GridBagConstraints gbc_lblStartStopScript = new GridBagConstraints();
@@ -566,33 +573,31 @@ public class MainFrame extends JFrame {
 		gbc_lblStartStopScript.gridy = 2;
 		controlsPane.add(lblStartStopScript, gbc_lblStartStopScript);
 
-		final JCheckBox chckbxStartStopScriptCtrl = new JCheckBox("Ctrl");
-		final GridBagConstraints gbc_chckbxStartStopScriptCtrl = new GridBagConstraints();
-		gbc_chckbxStartStopScriptCtrl.insets = new Insets(0, 0, 0, 5);
-		gbc_chckbxStartStopScriptCtrl.gridx = 1;
-		gbc_chckbxStartStopScriptCtrl.gridy = 2;
-		controlsPane.add(chckbxStartStopScriptCtrl, gbc_chckbxStartStopScriptCtrl);
+		txtStartStopScript = new JTextField();
 
-		final JCheckBox chckbxStartStopScriptCAkt = new JCheckBox("Alt");
-		final GridBagConstraints gbc_chckbxStartStopScriptCAkt = new GridBagConstraints();
-		gbc_chckbxStartStopScriptCAkt.insets = new Insets(0, 0, 0, 5);
-		gbc_chckbxStartStopScriptCAkt.gridx = 2;
-		gbc_chckbxStartStopScriptCAkt.gridy = 2;
-		controlsPane.add(chckbxStartStopScriptCAkt, gbc_chckbxStartStopScriptCAkt);
+		final GridBagConstraints gbc_txtStartStopScript = new GridBagConstraints();
+		gbc_txtStartStopScript.insets = new Insets(0, 0, 0, 5);
+		gbc_txtStartStopScript.fill = GridBagConstraints.HORIZONTAL;
+		gbc_txtStartStopScript.gridx = 1;
+		gbc_txtStartStopScript.gridy = 2;
+		controlsPane.add(txtStartStopScript, gbc_txtStartStopScript);
+		txtStartStopScript.setColumns(10);
 
-		final JCheckBox chckbxStartStopScriptShift = new JCheckBox("Shift");
-		final GridBagConstraints gbc_chckbxStartStopScriptShift = new GridBagConstraints();
-		gbc_chckbxStartStopScriptShift.insets = new Insets(0, 0, 0, 5);
-		gbc_chckbxStartStopScriptShift.gridx = 3;
-		gbc_chckbxStartStopScriptShift.gridy = 2;
-		controlsPane.add(chckbxStartStopScriptShift, gbc_chckbxStartStopScriptShift);
+		final JButton btnStartStopScriptAssign = new JButton("Assign");
+		final GridBagConstraints gbc_btnStartStopScriptAssign = new GridBagConstraints();
+		gbc_btnStartStopScriptAssign.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnStartStopScriptAssign.insets = new Insets(0, 0, 0, 5);
+		gbc_btnStartStopScriptAssign.gridx = 2;
+		gbc_btnStartStopScriptAssign.gridy = 2;
+		controlsPane.add(btnStartStopScriptAssign, gbc_btnStartStopScriptAssign);
 
-		final JComboBox startStopKeyCombo = new JComboBox();
-		final GridBagConstraints gbc_startStopKeyCombo = new GridBagConstraints();
-		gbc_startStopKeyCombo.fill = GridBagConstraints.HORIZONTAL;
-		gbc_startStopKeyCombo.gridx = 4;
-		gbc_startStopKeyCombo.gridy = 2;
-		controlsPane.add(startStopKeyCombo, gbc_startStopKeyCombo);
+		final JButton btnStartStopScriptClear = new JButton("Clear");
+		final GridBagConstraints gbc_btnStartStopScriptClear = new GridBagConstraints();
+		gbc_btnStartStopScriptClear.insets = new Insets(0, 0, 0, 5);
+		gbc_btnStartStopScriptClear.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnStartStopScriptClear.gridx = 3;
+		gbc_btnStartStopScriptClear.gridy = 2;
+		controlsPane.add(btnStartStopScriptClear, gbc_btnStartStopScriptClear);
 	}
 
 	private void populateWithActions(
@@ -627,7 +632,7 @@ public class MainFrame extends JFrame {
 	/**
 	 * Launch the application.
 	 *
-	 * @param args TODO: doc
+	 * @param args args
 	 */
 	public static void main(final String[] args) {
 		EventQueue.invokeLater(new Runnable() {
