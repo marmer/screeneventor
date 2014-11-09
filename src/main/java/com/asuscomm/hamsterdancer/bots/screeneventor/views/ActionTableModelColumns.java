@@ -1,7 +1,5 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.views;
 
-import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Area;
-
 import javax.swing.table.TableModel;
 
 
@@ -12,9 +10,9 @@ import javax.swing.table.TableModel;
  * @since  2014-11-09
  */
 enum ActionTableModelColumns {
-	TYPE("Type", String.class, false), AREA("Area", Area.class, false),
+	TYPE("Type", String.class, false), AREA("Area", String.class, false),
 	PRE_DELAY("Pre-Delay", Integer.class, true), INTER_DELAY("Inter-Delay", Integer.class, true),
-	RESET_CURSOR("Reset Cursor", Boolean.class, true);
+	RESET_CURSOR("Reset Cursor", Boolean.class, true), COMMENT("Comment", String.class, true);
 
 	private String columnName;
 	private Class<?> type;

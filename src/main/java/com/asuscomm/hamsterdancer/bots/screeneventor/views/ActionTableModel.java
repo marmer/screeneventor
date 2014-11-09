@@ -66,7 +66,7 @@ final class ActionTableModel extends AbstractTableModel {
 
 			final Area area = action.getArea();
 
-			return (area == null) ? null : area.getClass().getSimpleName();
+			return (area == null) ? null : area.toString();
 
 		case PRE_DELAY:
 			return action.getPreDelay();
@@ -76,6 +76,9 @@ final class ActionTableModel extends AbstractTableModel {
 
 		case RESET_CURSOR:
 			return action.isCursorBack();
+
+		case COMMENT:
+			return action.getComment();
 
 		default:
 			throw new ScreenevatorException("Inconsistent Model in Class " +
@@ -106,6 +109,10 @@ final class ActionTableModel extends AbstractTableModel {
 
 		case RESET_CURSOR:
 			action.setCursorBack((Boolean) newValue);
+			break;
+
+		case COMMENT:
+			action.setComment((String) newValue);
 			break;
 
 		default:

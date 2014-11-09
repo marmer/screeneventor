@@ -1,5 +1,6 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.views;
 
+import com.asuscomm.hamsterdancer.bots.screeneventor.ScreenevatorException;
 import com.asuscomm.hamsterdancer.bots.screeneventor.actions.Action;
 import com.asuscomm.hamsterdancer.bots.screeneventor.actions.mouse.LeftClickAction;
 import com.asuscomm.hamsterdancer.bots.screeneventor.actions.mouse.LeftPressAction;
@@ -38,23 +39,25 @@ public class ActionConfigPane extends JPanel {
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	private final JComboBox<ObjectFactoryComboboxItem<? extends Action>> actionChooserComboBox;
-	private final JTextField txtX1;
-	private final JTextField txtY1;
-	private final JTextField txtRadius;
+	private final JSpinner x1Spinner;
+	private final JSpinner y1Spinner;
+	private final JSpinner radiusSpinner;
 	private final JSpinner preDelaySpinner;
 	private final JSpinner interDelaySpinner;
-	private final JTextField txtX2;
-	private final JTextField txtY2;
+	private final JSpinner x2Spinner;
+	private final JSpinner y2Spinner;
 	private final JCheckBox chckbxResetCursor;
 	private final JTextField txtComment;
 
-	private transient Action currentActionInstance;
+	private transient Action action;
 	private final JLabel lblArea;
+	private final JComboBox<ObjectFactoryComboboxItem<? extends Area>> areaChooserComboBox;
 
 	/** Create the panel. */
 	public ActionConfigPane() {
 		final GridBagLayout gbl_actionPane = new GridBagLayout();
-		gbl_actionPane.columnWeights = new double[] { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 };
+		gbl_actionPane.columnWidths = new int[] { 75, 0, 75, 75, 75, 75 };
+		gbl_actionPane.columnWeights = new double[] { 1.0, 0.0, 1.0, 1.0, 1.0, 1.0 };
 		gbl_actionPane.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0 };
 		this.setLayout(gbl_actionPane);
 
@@ -112,25 +115,25 @@ public class ActionConfigPane extends JPanel {
 		gbc_lblStart.gridy = 1;
 		this.add(lblStart, gbc_lblStart);
 
-		txtX1 = new JTextField();
+		x1Spinner = new JSpinner();
+		x1Spinner.setModel(new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1));
 
-		final GridBagConstraints gbc_txtX1 = new GridBagConstraints();
-		gbc_txtX1.insets = new Insets(0, 0, 5, 5);
-		gbc_txtX1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtX1.gridx = 2;
-		gbc_txtX1.gridy = 1;
-		this.add(txtX1, gbc_txtX1);
-		txtX1.setColumns(10);
+		final GridBagConstraints gbc_x1Spinner = new GridBagConstraints();
+		gbc_x1Spinner.insets = new Insets(0, 0, 5, 5);
+		gbc_x1Spinner.fill = GridBagConstraints.HORIZONTAL;
+		gbc_x1Spinner.gridx = 2;
+		gbc_x1Spinner.gridy = 1;
+		this.add(x1Spinner, gbc_x1Spinner);
 
-		txtY1 = new JTextField();
+		y1Spinner = new JSpinner();
+		y1Spinner.setModel(new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1));
 
-		final GridBagConstraints gbc_txtY1 = new GridBagConstraints();
-		gbc_txtY1.insets = new Insets(0, 0, 5, 5);
-		gbc_txtY1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtY1.gridx = 3;
-		gbc_txtY1.gridy = 1;
-		this.add(txtY1, gbc_txtY1);
-		txtY1.setColumns(10);
+		final GridBagConstraints gbc_y1Spinner = new GridBagConstraints();
+		gbc_y1Spinner.insets = new Insets(0, 0, 5, 5);
+		gbc_y1Spinner.fill = GridBagConstraints.HORIZONTAL;
+		gbc_y1Spinner.gridx = 3;
+		gbc_y1Spinner.gridy = 1;
+		this.add(y1Spinner, gbc_y1Spinner);
 
 		preDelaySpinner = new JSpinner();
 		preDelaySpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
@@ -170,25 +173,25 @@ public class ActionConfigPane extends JPanel {
 		gbc_lblEnd.gridy = 2;
 		this.add(lblEnd, gbc_lblEnd);
 
-		txtX2 = new JTextField();
+		x2Spinner = new JSpinner();
+		x2Spinner.setModel(new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1));
 
-		final GridBagConstraints gbc_txtX2 = new GridBagConstraints();
-		gbc_txtX2.insets = new Insets(0, 0, 5, 5);
-		gbc_txtX2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtX2.gridx = 2;
-		gbc_txtX2.gridy = 2;
-		this.add(txtX2, gbc_txtX2);
-		txtX2.setColumns(10);
+		final GridBagConstraints gbc_x2Spinner = new GridBagConstraints();
+		gbc_x2Spinner.insets = new Insets(0, 0, 5, 5);
+		gbc_x2Spinner.fill = GridBagConstraints.HORIZONTAL;
+		gbc_x2Spinner.gridx = 2;
+		gbc_x2Spinner.gridy = 2;
+		this.add(x2Spinner, gbc_x2Spinner);
 
-		txtY2 = new JTextField();
+		y2Spinner = new JSpinner();
+		y2Spinner.setModel(new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1));
 
-		final GridBagConstraints gbc_txtY2 = new GridBagConstraints();
-		gbc_txtY2.insets = new Insets(0, 0, 5, 5);
-		gbc_txtY2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtY2.gridx = 3;
-		gbc_txtY2.gridy = 2;
-		this.add(txtY2, gbc_txtY2);
-		txtY2.setColumns(10);
+		final GridBagConstraints gbc_y2Spinner = new GridBagConstraints();
+		gbc_y2Spinner.insets = new Insets(0, 0, 5, 5);
+		gbc_y2Spinner.fill = GridBagConstraints.HORIZONTAL;
+		gbc_y2Spinner.gridx = 3;
+		gbc_y2Spinner.gridy = 2;
+		this.add(y2Spinner, gbc_y2Spinner);
 
 		final JLabel lblComment = new JLabel("Comment");
 		final GridBagConstraints gbc_lblComment = new GridBagConstraints();
@@ -198,8 +201,8 @@ public class ActionConfigPane extends JPanel {
 		gbc_lblComment.gridy = 2;
 		this.add(lblComment, gbc_lblComment);
 
-		final JComboBox<ObjectFactoryComboboxItem<? extends Area>> areaChooserComboBox =
-			new JComboBox();
+		areaChooserComboBox = new JComboBox<ObjectFactoryComboboxItem<? extends Area>>();
+
 		final GridBagConstraints gbc_areaChooserComboBox = new GridBagConstraints();
 		gbc_areaChooserComboBox.insets = new Insets(0, 0, 0, 5);
 		gbc_areaChooserComboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -209,15 +212,15 @@ public class ActionConfigPane extends JPanel {
 
 		populateWithAreas(areaChooserComboBox);
 
-		txtRadius = new JTextField();
+		radiusSpinner = new JSpinner();
+		radiusSpinner.setModel(new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1));
 
-		final GridBagConstraints gbc_txtRadius = new GridBagConstraints();
-		gbc_txtRadius.insets = new Insets(0, 0, 0, 5);
-		gbc_txtRadius.fill = GridBagConstraints.HORIZONTAL;
-		gbc_txtRadius.gridx = 2;
-		gbc_txtRadius.gridy = 3;
-		this.add(txtRadius, gbc_txtRadius);
-		txtRadius.setColumns(10);
+		final GridBagConstraints gbc_radiusSpinner = new GridBagConstraints();
+		gbc_radiusSpinner.insets = new Insets(0, 0, 0, 5);
+		gbc_radiusSpinner.fill = GridBagConstraints.HORIZONTAL;
+		gbc_radiusSpinner.gridx = 2;
+		gbc_radiusSpinner.gridy = 3;
+		this.add(radiusSpinner, gbc_radiusSpinner);
 
 		final JLabel lblRadius = new JLabel("Radius");
 		final GridBagConstraints gbc_lblRadius = new GridBagConstraints();
@@ -226,7 +229,7 @@ public class ActionConfigPane extends JPanel {
 		gbc_lblRadius.gridx = 1;
 		gbc_lblRadius.gridy = 3;
 		this.add(lblRadius, gbc_lblRadius);
-		lblRadius.setLabelFor(txtRadius);
+		lblRadius.setLabelFor(radiusSpinner);
 
 		chckbxResetCursor = new JCheckBox("reset Cursor");
 
@@ -288,10 +291,100 @@ public class ActionConfigPane extends JPanel {
 				"Mouse Middle Release"));
 	}
 
-	public Action getAction() {
-		final ObjectFactoryComboboxItem<? extends Action> cleanAction =
-			actionChooserComboBox.getItemAt(actionChooserComboBox.getSelectedIndex());
+	public synchronized Action getAction() {
+		if (!actionSetForUpdate()) {
+			prepareCleanAction();
+		}
 
-		return null;
+		populateAction();
+
+		return getAndResetAction();
+	}
+
+	private Action getAndResetAction() {
+		final Action populatedAction = action;
+		action = null;
+
+		return populatedAction;
+	}
+
+	private void populateAction() {
+		populateWithArea();
+		populateWithCursorReset();
+		populateWithComment();
+		populateWithPreDelay();
+		populateWithInterDelay();
+	}
+
+	private void populateWithInterDelay() {
+		action.setInterDelay((Integer) interDelaySpinner.getValue());
+	}
+
+	private void populateWithPreDelay() {
+		action.setPreDelay((Integer) preDelaySpinner.getValue());
+	}
+
+	private void populateWithComment() {
+		action.setComment(txtComment.getText());
+	}
+
+	private void populateWithCursorReset() {
+		action.setCursorBack(chckbxResetCursor.isSelected());
+	}
+
+	private void populateWithArea() {
+		final Class<? extends Area> areaClass = getAreaClass();
+
+		if (areaClass == Point.class) {
+			action.setArea(getPoint1());
+		} else if (areaClass == Circle.class) {
+			action.setArea(getCircle());
+		} else if (areaClass == Rectangle.class) {
+			action.setArea(getRectangle());
+		} else {
+			throw new ScreenevatorException("Someone forgot to implement the area handing here");
+		}
+	}
+
+	private Point getPoint1() {
+		return getPoint(x1Spinner, y1Spinner);
+	}
+
+	private Point getPoint2() {
+		return getPoint(x2Spinner, y2Spinner);
+	}
+
+	private Rectangle getRectangle() {
+		return new Rectangle(getPoint1(), getPoint2());
+	}
+
+	private Circle getCircle() {
+		return new Circle(getPoint1(), getRatius());
+	}
+
+	private Integer getRatius() {
+		return (Integer) radiusSpinner.getValue();
+	}
+
+	private Point getPoint(final JSpinner xSpinner, final JSpinner ySpinner) {
+		return new Point((Integer) xSpinner.getValue(), (Integer) ySpinner.getValue());
+	}
+
+	private Class<? extends Area> getAreaClass() {
+		final ObjectFactoryComboboxItem<? extends Area> areaItem = areaChooserComboBox.getItemAt(
+				areaChooserComboBox.getSelectedIndex());
+		final Class<? extends Area> areaClass = areaItem.getObjectClass();
+
+		return areaClass;
+	}
+
+	private void prepareCleanAction() {
+		final ObjectFactoryComboboxItem<? extends Action> actionItem =
+			actionChooserComboBox.getItemAt(actionChooserComboBox.getSelectedIndex());
+		action = actionItem.createInstance();
+	}
+
+	private boolean actionSetForUpdate() {
+		return action != null;
 	}
 }

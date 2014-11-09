@@ -8,13 +8,11 @@ package com.asuscomm.hamsterdancer.bots.screeneventor.geometry;
  */
 public interface Area {
 	/**
-	 * Checks whether a given Point is part of the area including the areas
-	 * border.
-	 * 
-	 * @param x
-	 *            X-Coordinate of the point to perform the check for.
-	 * @param y
-	 *            X-Coordinate of the point to perform the check for.
+	 * Checks whether a given Point is part of the area including the areas border.
+	 *
+	 * @param  x X-Coordinate of the point to perform the check for.
+	 * @param  y X-Coordinate of the point to perform the check for.
+	 *
 	 * @return true if the point is within the area.
 	 */
 	boolean isInArea(final int x, final int y);
@@ -34,4 +32,11 @@ public interface Area {
 	 * @return Returns a random point within the area. Border Points are possible.
 	 */
 	Point getRandomPoint();
+
+	/**
+	 * Numeric area description with squared brackets around.
+	 *
+	 * @return numeric area description with squared brackets around.
+	 */
+	String getAreaCoordinates();
 }

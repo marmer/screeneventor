@@ -92,7 +92,7 @@ public class Point implements Serializable, Area {
 
 	@Override
 	public String toString() {
-		return "[" + x + "," + y + "]";
+		return "Point " + getAreaCoordinates();
 	}
 
 	@Override
@@ -108,5 +108,10 @@ public class Point implements Serializable, Area {
 	@Override
 	public Point getRandomPoint() {
 		return this;
+	}
+
+	@Override
+	public String getAreaCoordinates() {
+		return "[" + x + "," + y + "]";
 	}
 }

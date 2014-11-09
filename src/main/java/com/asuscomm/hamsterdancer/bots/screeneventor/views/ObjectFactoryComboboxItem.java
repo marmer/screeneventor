@@ -46,21 +46,22 @@ public class ObjectFactoryComboboxItem<T> {
 	}
 
 	/**
-	 * Creates an instance of an action.
+	 * Creates an instance of an object, if it has a default constructor.
 	 *
-	 * @return An instance of the related Action.
+	 * @return An instance of the related Objects.
 	 *
 	 * @throws ScreenevatorException Thrown if something goes wrong with the initialization.
 	 */
-	public T createAction() {
+	public T createInstance() {
 		try {
 			return itemClass.newInstance();
 		} catch (InstantiationException | IllegalAccessException e) {
-			throw new ScreenevatorException("Not able to create action of class: " + itemClass, e);
+			throw new ScreenevatorException("Not able to create instance of class: " + itemClass,
+				e);
 		}
 	}
 
-	public Class<T> getActionClass() {
+	public Class<T> getObjectClass() {
 		return this.itemClass;
 	}
 

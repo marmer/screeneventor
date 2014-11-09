@@ -102,7 +102,7 @@ public class MainFrame extends JFrame {
 		btnAdd.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(final ActionEvent arg0) {
-					// TODO Hier ordentliche Werte her holen
+					actionsScript.add(actionsPane.getAction());
 					actionsTable.revalidate();
 				}
 			});

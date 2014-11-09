@@ -56,7 +56,7 @@ public class Circle implements Area {
 	/**
 	 * Checks whether the given Point is in the circles area (including the
 	 * borders itself).
-	 * 
+	 *
 	 * @param x
 	 *            X-Coordinate of point to check.
 	 * @param y
@@ -112,7 +112,7 @@ public class Circle implements Area {
 
 	@Override
 	public String toString() {
-		return "Circle [" + center + "," + radius + "]";
+		return "Circle " + getAreaCoordinates();
 	}
 
 
@@ -141,7 +141,6 @@ public class Circle implements Area {
 	 */
 	public static Point getRandomPointOfCircleArea(final int x, final int y, final int radius) {
 		return getRandomPointOfCircleArea(new Point(x, y), radius);
-
 	}
 
 	@Override
@@ -151,5 +150,10 @@ public class Circle implements Area {
 
 		return new Point(center.x + (int) FastMath.round(r * Math.cos(theta)),
 		        center.y + (int) Math.round(r * FastMath.sin(theta)));
+	}
+
+	@Override
+	public String getAreaCoordinates() {
+		return "[" + center.getAreaCoordinates() + "," + radius + "]";
 	}
 }

@@ -90,7 +90,7 @@ public class Rectangle implements Area {
 
 	@Override
 	public String toString() {
-		return "Rectangle [" + lowerLeft + "," + upperRight + "]";
+		return "Rectangle " + getAreaCoordinates();
 	}
 
 	@Override
@@ -158,5 +158,10 @@ public class Rectangle implements Area {
 		final int y = lowerLeft.y + random.nextInt((upperRight.y - lowerLeft.y) + 1);
 
 		return new Point(x, y);
+	}
+
+	@Override
+	public String getAreaCoordinates() {
+		return "[" + lowerLeft.getAreaCoordinates() + "," + upperRight.getAreaCoordinates() + "]";
 	}
 }
