@@ -32,6 +32,8 @@ public abstract class Action implements Serializable, Cloneable {
 	private int interDelay;
 	private boolean cursorBack;
 
+	private String comment;
+
 	private transient java.awt.Point lastCursorPosition;
 
 	/**
@@ -152,7 +154,9 @@ public abstract class Action implements Serializable, Cloneable {
 		return "Action [type=" + getTypeName() + "area=" + area + ", preDelay=" + preDelay +
 			", interDelay=" + interDelay +
 			", cursorBack=" +
-			cursorBack + "]";
+			cursorBack +
+			", comment=" +
+			comment + "]";
 	}
 
 	@Override
@@ -163,6 +167,7 @@ public abstract class Action implements Serializable, Cloneable {
 		result = (prime * result) + (cursorBack ? 1231 : 1237);
 		result = (prime * result) + interDelay;
 		result = (prime * result) + preDelay;
+		result = (prime * result) + ((comment == null) ? 0 : comment.hashCode());
 
 		return result;
 	}
@@ -203,6 +208,18 @@ public abstract class Action implements Serializable, Cloneable {
 			return false;
 		}
 
+		if (comment != other.comment) {
+			return false;
+		}
+
 		return true;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(final String comment) {
+		this.comment = comment;
 	}
 }
