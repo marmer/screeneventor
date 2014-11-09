@@ -1,7 +1,6 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.views;
 
 import com.asuscomm.hamsterdancer.bots.screeneventor.ActionsScript;
-import com.asuscomm.hamsterdancer.bots.screeneventor.actions.Action;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -14,7 +13,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -414,9 +412,6 @@ public class MainFrame extends JFrame {
 		gbc_btnStartStopScriptClear.gridy = 2;
 		controlsPane.add(btnStartStopScriptClear, gbc_btnStartStopScriptClear);
 	}
-
-	private void populateWithActions(
-		final JComboBox<ActionFactoryComboboxItem<? extends Action>> comboBox) {}
 
 	/**
 	 * Launch the application.

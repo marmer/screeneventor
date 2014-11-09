@@ -1,23 +1,18 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.views;
 
 import com.asuscomm.hamsterdancer.bots.screeneventor.ScreenevatorException;
-import com.asuscomm.hamsterdancer.bots.screeneventor.actions.Action;
+
+import javax.swing.JComboBox;
 
 
 /**
- * An item used to display a not instantiated {@link Action} in a {@link JComboBox} or other fitting
- * views.
- *
- * @author MarMer
- * @since  2014-11-04
- */
-/**
- * Representation of ActionFactories for Combo boxes for an easier handing in views.
+ * <p>An item used to display a not instantiated Object in a {@link JComboBox} or other fitting
+ * views.</p>
  *
  * @author MarMer
  * @since  04.11.2014
  */
-public class ActionFactoryComboboxItem<T extends Action> {
+public class ObjectFactoryComboboxItem<T> {
 	private final Class<T> itemClass;
 	private final String description;
 
@@ -27,7 +22,7 @@ public class ActionFactoryComboboxItem<T extends Action> {
 	 * @param clazz       Class related to the item.
 	 * @param description Description used to display
 	 */
-	public ActionFactoryComboboxItem(final Class<T> clazz, final String description) {
+	public ObjectFactoryComboboxItem(final Class<T> clazz, final String description) {
 		this.itemClass = clazz;
 		this.description = description;
 	}
@@ -37,20 +32,17 @@ public class ActionFactoryComboboxItem<T extends Action> {
 	}
 
 	/**
-	 * Creates an {@link ActionFactoryComboboxItem}.
-	 * 
-	 * @param <A>
-	 *            Generic type the action is related to.
-	 * @param actionType
-	 *            Class of the action type.
-	 * @param description
-	 *            Description as shown within combo boxes.
-	 * @return The created {@link ActionFactoryComboboxItem}.
+	 * Creates an {@link ObjectFactoryComboboxItem}.
+	 *
+	 * @param  <A>         Generic type the action is related to.
+	 * @param  actionType  Class of the action type.
+	 * @param  description Description as shown within combo boxes.
+	 *
+	 * @return The created {@link ObjectFactoryComboboxItem}.
 	 */
-	public static <A extends Action> ActionFactoryComboboxItem<A> createItem(
-		final Class<A> actionType,
+	public static <A> ObjectFactoryComboboxItem<A> createItem(final Class<A> actionType,
 		final String description) {
-		return new ActionFactoryComboboxItem<A>(actionType, description);
+		return new ObjectFactoryComboboxItem<A>(actionType, description);
 	}
 
 	/**

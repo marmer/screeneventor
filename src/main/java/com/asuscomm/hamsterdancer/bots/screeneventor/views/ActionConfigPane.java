@@ -10,6 +10,10 @@ import com.asuscomm.hamsterdancer.bots.screeneventor.actions.mouse.MiddleRelease
 import com.asuscomm.hamsterdancer.bots.screeneventor.actions.mouse.RightClickAction;
 import com.asuscomm.hamsterdancer.bots.screeneventor.actions.mouse.RightPressAction;
 import com.asuscomm.hamsterdancer.bots.screeneventor.actions.mouse.RightReleaseAction;
+import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Area;
+import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Circle;
+import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Point;
+import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Rectangle;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -33,7 +37,7 @@ import javax.swing.SpinnerNumberModel;
 public class ActionConfigPane extends JPanel {
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	private final JComboBox<ActionFactoryComboboxItem<? extends Action>> actionChooserComboBox;
+	private final JComboBox<ObjectFactoryComboboxItem<? extends Action>> actionChooserComboBox;
 	private final JTextField txtX1;
 	private final JTextField txtY1;
 	private final JTextField txtRadius;
@@ -89,7 +93,7 @@ public class ActionConfigPane extends JPanel {
 		gbc_lblInterdelayInMs.gridy = 0;
 		this.add(lblInterdelayInMs, gbc_lblInterdelayInMs);
 
-		actionChooserComboBox = new JComboBox<ActionFactoryComboboxItem<? extends Action>>();
+		actionChooserComboBox = new JComboBox<ObjectFactoryComboboxItem<? extends Action>>();
 		lblAction.setLabelFor(actionChooserComboBox);
 		populateWithActions(actionChooserComboBox);
 
@@ -194,7 +198,7 @@ public class ActionConfigPane extends JPanel {
 		gbc_lblComment.gridy = 2;
 		this.add(lblComment, gbc_lblComment);
 
-		final JComboBox<ActionFactoryComboboxItem<? extends Action>> areaChooserComboBox =
+		final JComboBox<ObjectFactoryComboboxItem<? extends Area>> areaChooserComboBox =
 			new JComboBox();
 		final GridBagConstraints gbc_areaChooserComboBox = new GridBagConstraints();
 		gbc_areaChooserComboBox.insets = new Insets(0, 0, 0, 5);
@@ -202,6 +206,8 @@ public class ActionConfigPane extends JPanel {
 		gbc_areaChooserComboBox.gridx = 0;
 		gbc_areaChooserComboBox.gridy = 3;
 		add(areaChooserComboBox, gbc_areaChooserComboBox);
+
+		populateWithAreas(areaChooserComboBox);
 
 		txtRadius = new JTextField();
 
@@ -242,41 +248,48 @@ public class ActionConfigPane extends JPanel {
 		txtComment.setColumns(10);
 	}
 
+	private void populateWithAreas(
+		final JComboBox<ObjectFactoryComboboxItem<? extends Area>> comboBox) {
+		comboBox.addItem(ObjectFactoryComboboxItem.createItem(Point.class, "Single Point"));
+		comboBox.addItem(ObjectFactoryComboboxItem.createItem(Rectangle.class, "Rectangle Area"));
+		comboBox.addItem(ObjectFactoryComboboxItem.createItem(Circle.class, "Circle Area"));
+	}
+
 	private void populateWithActions(
-		final JComboBox<ActionFactoryComboboxItem<? extends Action>> comboBox) {
-		comboBox.addItem(ActionFactoryComboboxItem.createItem(
+		final JComboBox<ObjectFactoryComboboxItem<? extends Action>> comboBox) {
+		comboBox.addItem(ObjectFactoryComboboxItem.createItem(
 				LeftClickAction.class,
 				"Mouse Left Click"));
-		comboBox.addItem(ActionFactoryComboboxItem.createItem(
+		comboBox.addItem(ObjectFactoryComboboxItem.createItem(
 				LeftPressAction.class,
 				"Mouse Left Press"));
-		comboBox.addItem(ActionFactoryComboboxItem.createItem(
+		comboBox.addItem(ObjectFactoryComboboxItem.createItem(
 				LeftReleaseAction.class,
 				"Mouse Left Release"));
 
-		comboBox.addItem(ActionFactoryComboboxItem.createItem(
+		comboBox.addItem(ObjectFactoryComboboxItem.createItem(
 				RightClickAction.class,
 				"Mouse Right Click"));
-		comboBox.addItem(ActionFactoryComboboxItem.createItem(
+		comboBox.addItem(ObjectFactoryComboboxItem.createItem(
 				RightPressAction.class,
 				"Mouse Right Press"));
-		comboBox.addItem(ActionFactoryComboboxItem.createItem(
+		comboBox.addItem(ObjectFactoryComboboxItem.createItem(
 				RightReleaseAction.class,
 				"Mouse Right Release"));
 
-		comboBox.addItem(ActionFactoryComboboxItem.createItem(
+		comboBox.addItem(ObjectFactoryComboboxItem.createItem(
 				MiddleClickAction.class,
 				"Mouse Middle Click"));
-		comboBox.addItem(ActionFactoryComboboxItem.createItem(
+		comboBox.addItem(ObjectFactoryComboboxItem.createItem(
 				MiddlePressAction.class,
 				"Mouse Middle Press"));
-		comboBox.addItem(ActionFactoryComboboxItem.createItem(
+		comboBox.addItem(ObjectFactoryComboboxItem.createItem(
 				MiddleReleaseAction.class,
 				"Mouse Middle Release"));
 	}
 
 	public Action getAction() {
-		final ActionFactoryComboboxItem<? extends Action> cleanAction =
+		final ObjectFactoryComboboxItem<? extends Action> cleanAction =
 			actionChooserComboBox.getItemAt(actionChooserComboBox.getSelectedIndex());
 
 		return null;
