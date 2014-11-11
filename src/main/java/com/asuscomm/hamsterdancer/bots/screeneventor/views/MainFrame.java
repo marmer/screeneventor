@@ -3,6 +3,9 @@ package com.asuscomm.hamsterdancer.bots.screeneventor.views;
 import com.asuscomm.hamsterdancer.bots.screeneventor.ActionsScript;
 import com.asuscomm.hamsterdancer.bots.screeneventor.ScreenevatorException;
 
+import org.apache.commons.lang3.SerializationException;
+import org.apache.commons.lang3.SerializationUtils;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.EventQueue;
@@ -11,6 +14,15 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -35,6 +47,9 @@ import javax.swing.border.TitledBorder;
  * @since  2014-11-02
  */
 public class MainFrame extends JFrame {
+	/** Name of the save file. */
+	private static final String SAVE_FILE_NAME = "saveFile";
+
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPane;
@@ -57,6 +72,21 @@ public class MainFrame extends JFrame {
 
 	/** Create the frame. */
 	public MainFrame() {
+		addWindowListener(new WindowAdapter() {
+				@Override
+				public void windowClosing(final WindowEvent e) {
+					try {
+						SerializationUtils.serialize(
+							actionsScript,
+							new FileOutputStream(SAVE_FILE_NAME));
+					} catch (final FileNotFoundException | IllegalArgumentException |
+							SerializationException | SecurityException e1) {
+						// no need to handle. It's just not possible to save the script
+					}
+
+					// TODO provide a better way to save the states and save states
+				}
+			});
 		setTitle("Screenevator - Let us play your games");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 650);
@@ -85,7 +115,7 @@ public class MainFrame extends JFrame {
 		contentPane.add(scriptPane, BorderLayout.CENTER);
 		scriptPane.setLayout(new BorderLayout(5, 5));
 
-		actionsScript = new ActionsScript();
+		actionsScript = loadActionsScript();
 
 		final JScrollPane actionsScrollPane = new JScrollPane();
 		scriptPane.add(actionsScrollPane, BorderLayout.CENTER);
@@ -445,6 +475,20 @@ public class MainFrame extends JFrame {
 		gbc_btnStartStopScriptClear.gridx = 3;
 		gbc_btnStartStopScriptClear.gridy = 2;
 		controlsPane.add(btnStartStopScriptClear, gbc_btnStartStopScriptClear);
+	}
+
+	private ActionsScript loadActionsScript() {
+		if (Files.exists(Paths.get(SAVE_FILE_NAME))) {
+			try {
+				return (ActionsScript) SerializationUtils.deserialize(new FileInputStream(
+							SAVE_FILE_NAME));
+			} catch (FileNotFoundException | IllegalArgumentException | SerializationException |
+					SecurityException e) {
+				// maybe file is not readable or does not exist
+			}
+		}
+
+		return new ActionsScript();
 	}
 
 	/**
