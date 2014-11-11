@@ -12,6 +12,9 @@ import java.util.Random;
  * @since  2014-11-01
  */
 public class Rectangle implements Area {
+	/** serialVersionUID. */
+	private static final long serialVersionUID = 1L;
+
 	private static Random random = new Random();
 
 	/** lower Left Corner. */

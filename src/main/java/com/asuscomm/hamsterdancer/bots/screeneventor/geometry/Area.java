@@ -1,12 +1,15 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.geometry;
 
+import java.io.Serializable;
+
+
 /**
  * Area.
  *
  * @author MarMer
  * @since  01.11.2014
  */
-public interface Area {
+public interface Area extends Serializable {
 	/**
 	 * Checks whether a given Point is part of the area including the areas border.
 	 *

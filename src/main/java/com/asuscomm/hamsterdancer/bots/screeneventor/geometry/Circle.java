@@ -1,21 +1,27 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.geometry;
 
-import java.util.Random;
-
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.MathUtils;
+
+import java.util.Random;
+
 
 /**
  * Representation of a circle.
  *
  * @author MarMer
- * @since 2014-11-01
+ * @since  2014-11-01
  */
 public class Circle implements Area {
+	/** serialVersionUID. */
+	private static final long serialVersionUID = 1L;
+
 	private static Random random = new Random();
-	/** Circles center */
+
+	/** Circles center. */
 	public final Point center;
-	/** Circles radius */
+
+	/** Circles radius. */
 	public final int radius;
 
 	/**
@@ -54,15 +60,14 @@ public class Circle implements Area {
 	}
 
 	/**
-	 * Checks whether the given Point is in the circles area (including the
-	 * borders itself).
+	 * Checks whether the given Point is in the circles area (including the borders itself).
 	 *
-	 * @param x
-	 *            X-Coordinate of point to check.
-	 * @param y
-	 *            Y-Coordinate of point to check.
+	 * @param  x X-Coordinate of point to check.
+	 * @param  y Y-Coordinate of point to check.
+	 *
 	 * @return True if the given Point is in the circles area.
-	 * @see {@link #isInArea(Point)
+	 *
+	 * @see    {@link #isInArea(Point)}
 	 */
 	@Override
 	public boolean isInArea(final int x, final int y) {
@@ -115,7 +120,6 @@ public class Circle implements Area {
 		return "Circle " + getAreaCoordinates();
 	}
 
-
 	/**
 	 * Creates a random {@link Point} within a given circle.
 	 *
@@ -131,12 +135,10 @@ public class Circle implements Area {
 	/**
 	 * Creates es a random Point within a given circle.
 	 *
-	 * @param x
-	 *            X Coordinate of the center of the circle.
-	 * @param y
-	 *            Y Coordinate of the center of the circle.
-	 * @param radius
-	 *            Radius of the circle.
+	 * @param  x      X Coordinate of the center of the circle.
+	 * @param  y      Y Coordinate of the center of the circle.
+	 * @param  radius Radius of the circle.
+	 *
 	 * @return a random Point within a given Area.
 	 */
 	public static Point getRandomPointOfCircleArea(final int x, final int y, final int radius) {
@@ -149,7 +151,7 @@ public class Circle implements Area {
 		final double theta = MathUtils.TWO_PI * Math.random();
 
 		return new Point(center.x + (int) FastMath.round(r * Math.cos(theta)),
-		        center.y + (int) Math.round(r * FastMath.sin(theta)));
+				center.y + (int) Math.round(r * FastMath.sin(theta)));
 	}
 
 	@Override
