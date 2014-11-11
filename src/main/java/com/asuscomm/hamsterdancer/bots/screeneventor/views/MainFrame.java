@@ -35,9 +35,6 @@ import javax.swing.border.TitledBorder;
  * @since  2014-11-02
  */
 public class MainFrame extends JFrame {
-	private static final String START_BTN_TEXT = "Start";
-	private static final String STOP_BTN_TEXT = "Stop";
-
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPane;
