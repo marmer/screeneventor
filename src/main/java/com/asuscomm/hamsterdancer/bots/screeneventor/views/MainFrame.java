@@ -213,8 +213,24 @@ public class MainFrame extends JFrame {
 		btnRemove.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(final ActionEvent arg0) {
-					final int selectedRow = scriptTable.getSelectedRow();
+					deleteCurrentlySelectedRow();
+				}
 
+				private void deleteCurrentlySelectedRow() {
+					final int selectedRow = scriptTable.getSelectedRow();
+					deleteRow(selectedRow);
+					fixRowSelection(selectedRow);
+				}
+
+				private void fixRowSelection(final int selectedRow) {
+					if (!actionsScript.isEmpty() && (selectedRow >= actionsScript.size())) {
+						scriptTable.setRowSelectionInterval(
+							actionsScript.size() - 1,
+							actionsScript.size() - 1);
+					}
+				}
+
+				private void deleteRow(final int selectedRow) {
 					if (selectedRow < (actionsScript.size())) {
 						actionsScript.remove(selectedRow);
 						scriptTable.revalidate();
