@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -34,10 +35,13 @@ import javax.swing.border.TitledBorder;
  * @since  2014-11-02
  */
 public class MainFrame extends JFrame {
+	private static final String START_BTN_TEXT = "Start";
+	private static final String STOP_BTN_TEXT = "Stop";
+
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPane;
-	private final JTable actionsTable;
+	private final JTable scriptTable;
 	private final JTextField txtGetcursor;
 	private final JTextField txtGetandaddcursor;
 	private final JTextField txtStartStopScript;
@@ -49,6 +53,10 @@ public class MainFrame extends JFrame {
 	private final JButton btnMoveDown;
 	private final ActionTableModel actionTableModel;
 	private final ActionConfigPane actionsPane;
+	private final JSpinner msSpinner;
+	private final JSpinner secondSpinner;
+	private final JSpinner minSpinner;
+	private final JSpinner hourSpinner;
 
 	/** Create the frame. */
 	public MainFrame() {
@@ -84,10 +92,11 @@ public class MainFrame extends JFrame {
 
 		final JScrollPane actionsScrollPane = new JScrollPane();
 		scriptPane.add(actionsScrollPane, BorderLayout.CENTER);
-		actionsTable = new JTable();
+		scriptTable = new JTable();
+		scriptTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		actionTableModel = new ActionTableModel(actionsScript);
-		actionsTable.setModel(actionTableModel);
-		actionsScrollPane.setViewportView(actionsTable);
+		scriptTable.setModel(actionTableModel);
+		actionsScrollPane.setViewportView(scriptTable);
 
 		final JPanel scriptControlPane = new JPanel();
 		scriptPane.add(scriptControlPane, BorderLayout.EAST);
@@ -103,14 +112,28 @@ public class MainFrame extends JFrame {
 				@Override
 				public void actionPerformed(final ActionEvent arg0) {
 					actionsScript.add(actionsPane.getAction());
-					actionsTable.revalidate();
+					scriptTable.revalidate();
 				}
 			});
 
-		final JButton btnStart = new JButton("Start");
-		btnStart.addActionListener(new ActionListener() {
+		final JButton btnStartStop = new JButton("Start/Stop");
+		btnStartStop.addActionListener(new ActionListener() {
 				@Override
-				public void actionPerformed(final ActionEvent arg0) {}
+				public void actionPerformed(final ActionEvent arg0) {
+					if (actionsScript.isRunning()) {
+						actionsScript.stop();
+					} else {
+						actionsScript.setMaxIterations((Integer) iterationSpinner.getValue());
+						actionsScript.setMaxExecutionTime(
+							(Integer) msSpinner.getValue() +
+							(1000 *
+								((Integer) secondSpinner.getValue() +
+									(60 *
+										((Integer) minSpinner.getValue() +
+											(60 * ((Integer) hourSpinner.getValue())))))));
+						actionsScript.start();
+					}
+				}
 			});
 
 		final GridBagConstraints gbc_btnStart = new GridBagConstraints();
@@ -119,7 +142,7 @@ public class MainFrame extends JFrame {
 		gbc_btnStart.gridwidth = 2;
 		gbc_btnStart.gridx = 0;
 		gbc_btnStart.gridy = 0;
-		scriptControlPane.add(btnStart, gbc_btnStart);
+		scriptControlPane.add(btnStartStop, gbc_btnStart);
 
 		final GridBagConstraints gbc_btnAdd = new GridBagConstraints();
 		gbc_btnAdd.insets = new Insets(0, 0, 5, 0);
@@ -160,6 +183,18 @@ public class MainFrame extends JFrame {
 		scriptControlPane.add(btnMoveDown, gbc_btnMoveDown);
 
 		final JButton btnRemove = new JButton("Remove");
+		btnRemove.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(final ActionEvent arg0) {
+					final int selectedRow = scriptTable.getSelectedRow();
+
+					if (selectedRow < (actionsScript.size())) {
+						actionsScript.remove(selectedRow);
+						scriptTable.revalidate();
+					}
+				}
+			});
+
 		final GridBagConstraints gbc_btnRemove = new GridBagConstraints();
 		gbc_btnRemove.insets = new Insets(0, 0, 5, 0);
 		gbc_btnRemove.gridwidth = 2;
@@ -219,7 +254,7 @@ public class MainFrame extends JFrame {
 		gbc_lblH.gridy = 10;
 		scriptControlPane.add(lblH, gbc_lblH);
 
-		final JSpinner hourSpinner = new JSpinner();
+		hourSpinner = new JSpinner();
 		hourSpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
 
 		final GridBagConstraints gbc_hourSpinner = new GridBagConstraints();
@@ -239,7 +274,7 @@ public class MainFrame extends JFrame {
 		gbc_lblMin.gridy = 11;
 		scriptControlPane.add(lblMin, gbc_lblMin);
 
-		final JSpinner minSpinner = new JSpinner();
+		minSpinner = new JSpinner();
 		minSpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
 
 		final GridBagConstraints gbc_minSpinner = new GridBagConstraints();
@@ -257,7 +292,7 @@ public class MainFrame extends JFrame {
 		gbc_lblS.gridy = 12;
 		scriptControlPane.add(lblS, gbc_lblS);
 
-		final JSpinner secondSpinner = new JSpinner();
+		secondSpinner = new JSpinner();
 		secondSpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
 		lblS.setLabelFor(secondSpinner);
 
@@ -276,7 +311,7 @@ public class MainFrame extends JFrame {
 		gbc_lblMs.gridy = 13;
 		scriptControlPane.add(lblMs, gbc_lblMs);
 
-		final JSpinner msSpinner = new JSpinner();
+		msSpinner = new JSpinner();
 		lblMs.setLabelFor(msSpinner);
 		msSpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
 
