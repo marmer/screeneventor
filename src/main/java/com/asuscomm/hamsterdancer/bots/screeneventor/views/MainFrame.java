@@ -52,16 +52,7 @@ public class MainFrame extends JFrame {
 		addWindowListener(new WindowAdapter() {
 				@Override
 				public void windowClosing(final WindowEvent e) {
-					try {
-						SerializationUtils.serialize(
-							actionsScript,
-							new FileOutputStream(SAVE_FILE_NAME));
-					} catch (final FileNotFoundException | IllegalArgumentException |
-							SerializationException | SecurityException e1) {
-						// no need to handle. It's just not possible to save the script
-					}
-
-					// TODO provide a better way to save the states and save states
+					storeActionsScript();
 				}
 			});
 		setTitle("Screenevator - Let us play your games");
@@ -117,6 +108,17 @@ public class MainFrame extends JFrame {
 		}
 
 		return new ActionsScript();
+	}
+
+	private void storeActionsScript() {
+		try {
+			SerializationUtils.serialize(actionsScript, new FileOutputStream(SAVE_FILE_NAME));
+		} catch (final FileNotFoundException | IllegalArgumentException | SerializationException |
+				SecurityException e1) {
+			// no need to handle. It's just not possible to save the script
+		}
+
+		// TODO provide a better way to save the states and save states
 	}
 
 	/**

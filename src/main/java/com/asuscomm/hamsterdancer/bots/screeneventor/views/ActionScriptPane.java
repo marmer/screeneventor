@@ -19,6 +19,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -32,6 +34,12 @@ import javax.swing.event.ListSelectionListener;
 public class ActionScriptPane extends JPanel {
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+
+	private static final int MS_PER_SEC = 1000;
+
+	private static final int SEC_PER_MIN = 60;
+
+	private static final int MIN_PER_HOUR = 60;
 
 	private final JTable scriptTable;
 	private final JSpinner iterationSpinner;
@@ -47,17 +55,14 @@ public class ActionScriptPane extends JPanel {
 
 	private final ActionsScript actionsScript;
 
-	private final ActionConfigPane actionsPane;
-
 	/**
 	 * Creates a new ActionScriptPane object.
 	 *
-	 * @param actionsScript TODO: doc
-	 * @param actionsPane   TODO: doc
+	 * @param actionsScript Real {@link ActionsScript}.
+	 * @param actionsPane   Actions pane which used to update or add new actions.
 	 */
 	public ActionScriptPane(final ActionsScript actionsScript, final ActionConfigPane actionsPane) {
 		this.actionsScript = actionsScript;
-		this.actionsPane = actionsPane;
 
 		this.setLayout(new BorderLayout(5, 5));
 
@@ -104,14 +109,7 @@ public class ActionScriptPane extends JPanel {
 					if (actionsScript.isRunning()) {
 						actionsScript.stop();
 					} else {
-						actionsScript.setMaxIterations((Integer) iterationSpinner.getValue());
-						actionsScript.setMaxExecutionTime(
-							(Integer) msSpinner.getValue() +
-							(1000 *
-								((Integer) secondSpinner.getValue() +
-									(60 *
-										((Integer) minSpinner.getValue() +
-											(60 * ((Integer) hourSpinner.getValue())))))));
+						refreshStopConditions();
 						actionsScript.start();
 					}
 				}
@@ -318,5 +316,79 @@ public class ActionScriptPane extends JPanel {
 		gbc_msSpinner.gridx = 1;
 		gbc_msSpinner.gridy = 13;
 		scriptControlPane.add(msSpinner, gbc_msSpinner);
+
+		configureStopConditions();
+
+		iterationSpinner.addChangeListener(new ChangeListener() {
+				@Override
+				public void stateChanged(final ChangeEvent arg0) {
+					refreshStopConditions();
+				}
+			});
+		hourSpinner.addChangeListener(new ChangeListener() {
+				@Override
+				public void stateChanged(final ChangeEvent arg0) {
+					refreshStopConditions();
+				}
+			});
+		minSpinner.addChangeListener(new ChangeListener() {
+				@Override
+				public void stateChanged(final ChangeEvent arg0) {
+					refreshStopConditions();
+				}
+			});
+		secondSpinner.addChangeListener(new ChangeListener() {
+				@Override
+				public void stateChanged(final ChangeEvent arg0) {
+					refreshStopConditions();
+				}
+			});
+		msSpinner.addChangeListener(new ChangeListener() {
+				@Override
+				public void stateChanged(final ChangeEvent arg0) {
+					refreshStopConditions();
+				}
+			});
+	}
+
+	private void refreshStopConditions() {
+		refreshIterationStopCondition();
+		refreshTimeStopCondition();
+	}
+
+	private void refreshTimeStopCondition() {
+		actionsScript.setMaxExecutionTime((Integer) msSpinner.getValue() +
+			(1000 *
+				((Integer) secondSpinner.getValue() +
+					(60 *
+						((Integer) minSpinner.getValue() +
+							(60 * ((Integer) hourSpinner.getValue())))))));
+	}
+
+	private void refreshIterationStopCondition() {
+		actionsScript.setMaxIterations((Integer) iterationSpinner.getValue());
+	}
+
+	private void configureStopConditions() {
+		iterationSpinner.setValue(actionsScript.getMaxIterations());
+
+		final int executionTimeInMs = actionsScript.getMaxExecutionTime();
+
+		final int HOURS_DIVISOR = MIN_PER_HOUR * SEC_PER_MIN * MS_PER_SEC;
+		final int hours = executionTimeInMs / HOURS_DIVISOR;
+		hourSpinner.setValue(hours);
+
+		int rest = executionTimeInMs % HOURS_DIVISOR;
+
+		final int MINUTES_DIVISOR = SEC_PER_MIN * MS_PER_SEC;
+		final int minutes = rest / MINUTES_DIVISOR;
+		rest = executionTimeInMs % MINUTES_DIVISOR;
+		minSpinner.setValue(minutes);
+
+		final int SECONDS_DIVISOR = MS_PER_SEC;
+		final int seconds = rest / MS_PER_SEC;
+		rest %= SECONDS_DIVISOR;
+		secondSpinner.setValue(seconds);
+		msSpinner.setValue(rest);
 	}
 }
