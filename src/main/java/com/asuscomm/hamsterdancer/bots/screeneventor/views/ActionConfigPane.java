@@ -19,6 +19,8 @@ import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Rectangle;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -249,6 +251,42 @@ public class ActionConfigPane extends JPanel {
 		gbc_txtComment.gridy = 3;
 		this.add(txtComment, gbc_txtComment);
 		txtComment.setColumns(10);
+
+		updateCoordinateFieldActivation();
+
+		areaChooserComboBox.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(final ActionEvent e) {
+					updateCoordinateFieldActivation();
+				}
+			});
+	}
+
+	private void updateCoordinateFieldActivation() {
+		final Class<? extends Area> area = getAreaClass();
+
+		if (area == Point.class) {
+			setCoordinateActivation(true, true, false, false, false);
+		} else if (area == Circle.class) {
+			setCoordinateActivation(true, true, false, false, true);
+		} else if (area == Rectangle.class) {
+			setCoordinateActivation(true, true, true, true, false);
+		} else {
+			throw new ScreenevatorException("No handling implemented here yet for class " +
+				area.getClass());
+		}
+	}
+
+	private void setCoordinateActivation(final boolean x1Active,
+		final boolean y1Active,
+		final boolean x2Active,
+		final boolean y2Active,
+		final boolean radiusActive) {
+		x1Spinner.setEnabled(x1Active);
+		y1Spinner.setEnabled(y1Active);
+		x2Spinner.setEnabled(x2Active);
+		y2Spinner.setEnabled(y2Active);
+		radiusSpinner.setEnabled(radiusActive);
 	}
 
 	private void populateWithAreas(
@@ -439,6 +477,8 @@ public class ActionConfigPane extends JPanel {
 			throw new ScreenevatorException("No handling implemented here yet for class " +
 				area.getClass());
 		}
+
+		updateCoordinateFieldActivation();
 	}
 
 	private void setTypeFrom(final Action action) {
