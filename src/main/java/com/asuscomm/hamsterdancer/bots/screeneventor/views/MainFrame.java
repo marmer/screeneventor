@@ -7,13 +7,7 @@ import org.apache.commons.lang3.SerializationException;
 import org.apache.commons.lang3.SerializationUtils;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.EventQueue;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -24,21 +18,11 @@ import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import javax.swing.Box;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 
 /**
@@ -53,23 +37,15 @@ public class MainFrame extends JFrame {
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+	private final JPanel contentPane;
+
 	private final ActionConfigPane actionsPane;
 
-	private final JPanel contentPane;
-	private final JTable scriptTable;
 	private final ActionsScript actionsScript;
-	private final JSpinner iterationSpinner;
-	private final JButton btnAdd;
-	private final JButton btnUpdate;
-	private final JButton btnMoveUp;
-	private final JButton btnMoveDown;
-	private final ActionTableModel actionTableModel;
-	private final JSpinner msSpinner;
-	private final JSpinner secondSpinner;
-	private final JSpinner minSpinner;
-	private final JSpinner hourSpinner;
 
 	private final KeyConfigPane controlsPane;
+
+	private final ActionScriptPane scriptPane;
 
 	/** Create the frame. */
 	public MainFrame() {
@@ -91,9 +67,12 @@ public class MainFrame extends JFrame {
 		setTitle("Screenevator - Let us play your games");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 650);
+
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+
+		actionsScript = loadActionsScript();
 
 		actionsPane = new ActionConfigPane();
 		actionsPane.setBorder(new TitledBorder(
@@ -105,9 +84,7 @@ public class MainFrame extends JFrame {
 				null));
 		contentPane.add(actionsPane, BorderLayout.NORTH);
 
-		actionsScript = loadActionsScript();
-
-		final JPanel scriptPane = new JPanel();
+		scriptPane = new ActionScriptPane(actionsScript, actionsPane);
 		scriptPane.setBorder(new TitledBorder(
 				null,
 				"Script",
@@ -116,268 +93,15 @@ public class MainFrame extends JFrame {
 				null,
 				null));
 		contentPane.add(scriptPane, BorderLayout.CENTER);
-		scriptPane.setLayout(new BorderLayout(5, 5));
-
-		final JScrollPane actionsScrollPane = new JScrollPane();
-		scriptPane.add(actionsScrollPane, BorderLayout.CENTER);
-		scriptTable = new JTable();
-		scriptTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-				@Override
-				public void valueChanged(final ListSelectionEvent arg0) {
-					refreshActionConfigPane();
-				}
-
-				private void refreshActionConfigPane() {
-					actionsPane.setAction(actionsScript.get(scriptTable.getSelectedRow()));
-				}
-			});
-		scriptTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		actionTableModel = new ActionTableModel(actionsScript);
-		scriptTable.setModel(actionTableModel);
-		actionsScrollPane.setViewportView(scriptTable);
-
-		final JPanel scriptControlPane = new JPanel();
-		scriptPane.add(scriptControlPane, BorderLayout.EAST);
-
-		final GridBagLayout gbl_scriptControlPane = new GridBagLayout();
-		gbl_scriptControlPane.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gbl_scriptControlPane.rowWeights =
-			new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
-		scriptControlPane.setLayout(gbl_scriptControlPane);
-
-		btnAdd = new JButton("Add");
-		btnAdd.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(final ActionEvent arg0) {
-					actionsScript.add(actionsPane.getAction());
-					scriptTable.revalidate();
-				}
-			});
-
-		final JButton btnStartStop = new JButton("Start/Stop");
-		btnStartStop.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(final ActionEvent arg0) {
-					if (actionsScript.isRunning()) {
-						actionsScript.stop();
-					} else {
-						actionsScript.setMaxIterations((Integer) iterationSpinner.getValue());
-						actionsScript.setMaxExecutionTime(
-							(Integer) msSpinner.getValue() +
-							(1000 *
-								((Integer) secondSpinner.getValue() +
-									(60 *
-										((Integer) minSpinner.getValue() +
-											(60 * ((Integer) hourSpinner.getValue())))))));
-						actionsScript.start();
-					}
-				}
-			});
-
-		final GridBagConstraints gbc_btnStart = new GridBagConstraints();
-		gbc_btnStart.insets = new Insets(0, 0, 5, 0);
-		gbc_btnStart.fill = GridBagConstraints.BOTH;
-		gbc_btnStart.gridwidth = 2;
-		gbc_btnStart.gridx = 0;
-		gbc_btnStart.gridy = 0;
-		scriptControlPane.add(btnStartStop, gbc_btnStart);
-
-		final GridBagConstraints gbc_btnAdd = new GridBagConstraints();
-		gbc_btnAdd.insets = new Insets(0, 0, 5, 0);
-		gbc_btnAdd.gridwidth = 2;
-		gbc_btnAdd.fill = GridBagConstraints.BOTH;
-		gbc_btnAdd.gridx = 0;
-		gbc_btnAdd.gridy = 1;
-		scriptControlPane.add(btnAdd, gbc_btnAdd);
-
-		btnUpdate = new JButton("Update");
-
-		final GridBagConstraints gbc_btnUpdate = new GridBagConstraints();
-		gbc_btnUpdate.insets = new Insets(0, 0, 5, 0);
-		gbc_btnUpdate.gridwidth = 2;
-		gbc_btnUpdate.fill = GridBagConstraints.BOTH;
-		gbc_btnUpdate.gridx = 0;
-		gbc_btnUpdate.gridy = 2;
-		scriptControlPane.add(btnUpdate, gbc_btnUpdate);
-
-		btnMoveUp = new JButton("Move Up");
-
-		final GridBagConstraints gbc_btnMoveUp = new GridBagConstraints();
-		gbc_btnMoveUp.insets = new Insets(0, 0, 5, 0);
-		gbc_btnMoveUp.gridwidth = 2;
-		gbc_btnMoveUp.fill = GridBagConstraints.BOTH;
-		gbc_btnMoveUp.gridx = 0;
-		gbc_btnMoveUp.gridy = 3;
-		scriptControlPane.add(btnMoveUp, gbc_btnMoveUp);
-
-		btnMoveDown = new JButton("Move Down");
-
-		final GridBagConstraints gbc_btnMoveDown = new GridBagConstraints();
-		gbc_btnMoveDown.insets = new Insets(0, 0, 5, 0);
-		gbc_btnMoveDown.gridwidth = 2;
-		gbc_btnMoveDown.fill = GridBagConstraints.BOTH;
-		gbc_btnMoveDown.gridx = 0;
-		gbc_btnMoveDown.gridy = 4;
-		scriptControlPane.add(btnMoveDown, gbc_btnMoveDown);
-
-		final JButton btnRemove = new JButton("Remove");
-		btnRemove.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(final ActionEvent arg0) {
-					deleteCurrentlySelectedRow();
-				}
-
-				private void deleteCurrentlySelectedRow() {
-					final int selectedRow = scriptTable.getSelectedRow();
-					deleteRow(selectedRow);
-					fixRowSelection(selectedRow);
-				}
-
-				private void fixRowSelection(final int selectedRow) {
-					if (!actionsScript.isEmpty() && (selectedRow >= actionsScript.size())) {
-						scriptTable.setRowSelectionInterval(
-							actionsScript.size() - 1,
-							actionsScript.size() - 1);
-					}
-				}
-
-				private void deleteRow(final int selectedRow) {
-					if (selectedRow < (actionsScript.size())) {
-						actionsScript.remove(selectedRow);
-						scriptTable.revalidate();
-					}
-				}
-			});
-
-		final GridBagConstraints gbc_btnRemove = new GridBagConstraints();
-		gbc_btnRemove.insets = new Insets(0, 0, 5, 0);
-		gbc_btnRemove.gridwidth = 2;
-		gbc_btnRemove.fill = GridBagConstraints.BOTH;
-		gbc_btnRemove.gridx = 0;
-		gbc_btnRemove.gridy = 5;
-		scriptControlPane.add(btnRemove, gbc_btnRemove);
-
-		final Component glue = Box.createGlue();
-		final GridBagConstraints gbc_glue = new GridBagConstraints();
-		gbc_glue.weighty = 1.0;
-		gbc_glue.weightx = 1.0;
-		gbc_glue.fill = GridBagConstraints.BOTH;
-		gbc_glue.gridwidth = 2;
-		gbc_glue.insets = new Insets(0, 0, 5, 0);
-		gbc_glue.gridx = 0;
-		gbc_glue.gridy = 6;
-		scriptControlPane.add(glue, gbc_glue);
-
-		final JLabel lblMaxIterations = new JLabel("Max Execution Time");
-		final GridBagConstraints gbc_lblMaxIterations = new GridBagConstraints();
-		gbc_lblMaxIterations.gridwidth = 2;
-		gbc_lblMaxIterations.insets = new Insets(0, 0, 5, 0);
-		gbc_lblMaxIterations.gridx = 0;
-		gbc_lblMaxIterations.gridy = 7;
-		scriptControlPane.add(lblMaxIterations, gbc_lblMaxIterations);
-
-		iterationSpinner = new JSpinner();
-		iterationSpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-		lblMaxIterations.setLabelFor(iterationSpinner);
-
-		final GridBagConstraints gbc_iterationSpinner = new GridBagConstraints();
-		gbc_iterationSpinner.fill = GridBagConstraints.HORIZONTAL;
-		gbc_iterationSpinner.gridwidth = 2;
-		gbc_iterationSpinner.insets = new Insets(0, 0, 5, 0);
-		gbc_iterationSpinner.gridx = 0;
-		gbc_iterationSpinner.gridy = 8;
-		scriptControlPane.add(iterationSpinner, gbc_iterationSpinner);
-
-		final JLabel lblMaxRepeatDuration = new JLabel("Max Execution Time");
-		final GridBagConstraints gbc_lblMaxRepeatDuration = new GridBagConstraints();
-		gbc_lblMaxRepeatDuration.ipady = 5;
-		gbc_lblMaxRepeatDuration.ipadx = 5;
-		gbc_lblMaxRepeatDuration.weightx = 1.0;
-		gbc_lblMaxRepeatDuration.insets = new Insets(0, 0, 5, 0);
-		gbc_lblMaxRepeatDuration.gridwidth = 2;
-		gbc_lblMaxRepeatDuration.gridx = 0;
-		gbc_lblMaxRepeatDuration.gridy = 9;
-		scriptControlPane.add(lblMaxRepeatDuration, gbc_lblMaxRepeatDuration);
-
-		final JLabel lblH = new JLabel("h");
-		lblH.setLabelFor(lblH);
-
-		final GridBagConstraints gbc_lblH = new GridBagConstraints();
-		gbc_lblH.insets = new Insets(0, 0, 5, 5);
-		gbc_lblH.gridx = 0;
-		gbc_lblH.gridy = 10;
-		scriptControlPane.add(lblH, gbc_lblH);
-
-		hourSpinner = new JSpinner();
-		hourSpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-
-		final GridBagConstraints gbc_hourSpinner = new GridBagConstraints();
-		gbc_hourSpinner.weightx = 1.0;
-		gbc_hourSpinner.fill = GridBagConstraints.HORIZONTAL;
-		gbc_hourSpinner.insets = new Insets(0, 0, 5, 0);
-		gbc_hourSpinner.gridx = 1;
-		gbc_hourSpinner.gridy = 10;
-		scriptControlPane.add(hourSpinner, gbc_hourSpinner);
-
-		final JLabel lblMin = new JLabel("min");
-		lblMin.setLabelFor(lblMin);
-
-		final GridBagConstraints gbc_lblMin = new GridBagConstraints();
-		gbc_lblMin.insets = new Insets(0, 0, 5, 5);
-		gbc_lblMin.gridx = 0;
-		gbc_lblMin.gridy = 11;
-		scriptControlPane.add(lblMin, gbc_lblMin);
-
-		minSpinner = new JSpinner();
-		minSpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-
-		final GridBagConstraints gbc_minSpinner = new GridBagConstraints();
-		gbc_minSpinner.weightx = 1.0;
-		gbc_minSpinner.fill = GridBagConstraints.HORIZONTAL;
-		gbc_minSpinner.insets = new Insets(0, 0, 5, 0);
-		gbc_minSpinner.gridx = 1;
-		gbc_minSpinner.gridy = 11;
-		scriptControlPane.add(minSpinner, gbc_minSpinner);
-
-		final JLabel lblS = new JLabel("s");
-		final GridBagConstraints gbc_lblS = new GridBagConstraints();
-		gbc_lblS.insets = new Insets(0, 0, 5, 5);
-		gbc_lblS.gridx = 0;
-		gbc_lblS.gridy = 12;
-		scriptControlPane.add(lblS, gbc_lblS);
-
-		secondSpinner = new JSpinner();
-		secondSpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-		lblS.setLabelFor(secondSpinner);
-
-		final GridBagConstraints gbc_secondSpinner = new GridBagConstraints();
-		gbc_secondSpinner.weightx = 1.0;
-		gbc_secondSpinner.fill = GridBagConstraints.HORIZONTAL;
-		gbc_secondSpinner.insets = new Insets(0, 0, 5, 0);
-		gbc_secondSpinner.gridx = 1;
-		gbc_secondSpinner.gridy = 12;
-		scriptControlPane.add(secondSpinner, gbc_secondSpinner);
-
-		final JLabel lblMs = new JLabel("ms");
-		final GridBagConstraints gbc_lblMs = new GridBagConstraints();
-		gbc_lblMs.insets = new Insets(0, 0, 0, 5);
-		gbc_lblMs.gridx = 0;
-		gbc_lblMs.gridy = 13;
-		scriptControlPane.add(lblMs, gbc_lblMs);
-
-		msSpinner = new JSpinner();
-		lblMs.setLabelFor(msSpinner);
-		msSpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-
-		final GridBagConstraints gbc_msSpinner = new GridBagConstraints();
-		gbc_msSpinner.weightx = 1.0;
-		gbc_msSpinner.fill = GridBagConstraints.HORIZONTAL;
-		gbc_msSpinner.gridx = 1;
-		gbc_msSpinner.gridy = 13;
-		scriptControlPane.add(msSpinner, gbc_msSpinner);
 
 		controlsPane = new KeyConfigPane();
-
+		controlsPane.setBorder(new TitledBorder(
+				UIManager.getBorder("TitledBorder.border"),
+				"Controls",
+				TitledBorder.LEADING,
+				TitledBorder.TOP,
+				null,
+				null));
 		contentPane.add(controlsPane, BorderLayout.SOUTH);
 	}
 

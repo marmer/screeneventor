@@ -10,8 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.border.TitledBorder;
 
 
 /**
@@ -28,28 +26,20 @@ public class KeyConfigPane extends JPanel {
 	private final JTextField txtGetandaddcursor;
 	private final JTextField txtStartStopScript;
 
-	private JButton btnGetAndAddCursorAssign;
+	private final JButton btnGetAndAddCursorAssign;
 
-	private JButton btnGetAndAddCursorClear;
+	private final JButton btnGetAndAddCursorClear;
 
-	private JButton btnGetCursorAssign;
+	private final JButton btnGetCursorAssign;
 
-	private JButton btnGetCursorClear;
+	private final JButton btnGetCursorClear;
 
-	private JButton btnStartStopScriptAssign;
+	private final JButton btnStartStopScriptAssign;
 
-	private JButton btnStartStopScriptClear;
+	private final JButton btnStartStopScriptClear;
 
 	/** Creates a new KeyConfigPane object. */
 	public KeyConfigPane() {
-		this.setBorder(new TitledBorder(
-				UIManager.getBorder("TitledBorder.border"),
-				"Controls",
-				TitledBorder.LEADING,
-				TitledBorder.TOP,
-				null,
-				null));
-
 		final GridBagLayout gbl_controlsPane = new GridBagLayout();
 		gbl_controlsPane.columnWeights = new double[] { 1.0, 1.0, 1.0, 1.0, 1.0 };
 		gbl_controlsPane.rowWeights = new double[] { 0.0, 0.0, 0.0 };
@@ -74,6 +64,7 @@ public class KeyConfigPane extends JPanel {
 		txtGetandaddcursor.setColumns(10);
 
 		btnGetAndAddCursorAssign = new JButton("Assign");
+
 		final GridBagConstraints gbc_btnGetAndAddCursorAssign = new GridBagConstraints();
 		gbc_btnGetAndAddCursorAssign.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnGetAndAddCursorAssign.insets = new Insets(0, 0, 5, 5);
@@ -82,6 +73,7 @@ public class KeyConfigPane extends JPanel {
 		this.add(btnGetAndAddCursorAssign, gbc_btnGetAndAddCursorAssign);
 
 		btnGetAndAddCursorClear = new JButton("Clear");
+
 		final GridBagConstraints gbc_btnGetAndAddCursorClear = new GridBagConstraints();
 		gbc_btnGetAndAddCursorClear.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnGetAndAddCursorClear.insets = new Insets(0, 0, 5, 5);
@@ -118,6 +110,7 @@ public class KeyConfigPane extends JPanel {
 		txtGetcursor.setColumns(10);
 
 		btnGetCursorAssign = new JButton("Assign");
+
 		final GridBagConstraints gbc_btnGetCursorAssign = new GridBagConstraints();
 		gbc_btnGetCursorAssign.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnGetCursorAssign.insets = new Insets(0, 0, 5, 5);
@@ -126,6 +119,7 @@ public class KeyConfigPane extends JPanel {
 		this.add(btnGetCursorAssign, gbc_btnGetCursorAssign);
 
 		btnGetCursorClear = new JButton("Clear");
+
 		final GridBagConstraints gbc_btnGetCursorClear = new GridBagConstraints();
 		gbc_btnGetCursorClear.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnGetCursorClear.insets = new Insets(0, 0, 5, 5);
@@ -152,6 +146,7 @@ public class KeyConfigPane extends JPanel {
 		txtStartStopScript.setColumns(10);
 
 		btnStartStopScriptAssign = new JButton("Assign");
+
 		final GridBagConstraints gbc_btnStartStopScriptAssign = new GridBagConstraints();
 		gbc_btnStartStopScriptAssign.fill = GridBagConstraints.HORIZONTAL;
 		gbc_btnStartStopScriptAssign.insets = new Insets(0, 0, 0, 5);
@@ -160,6 +155,7 @@ public class KeyConfigPane extends JPanel {
 		this.add(btnStartStopScriptAssign, gbc_btnStartStopScriptAssign);
 
 		btnStartStopScriptClear = new JButton("Clear");
+
 		final GridBagConstraints gbc_btnStartStopScriptClear = new GridBagConstraints();
 		gbc_btnStartStopScriptClear.insets = new Insets(0, 0, 0, 5);
 		gbc_btnStartStopScriptClear.fill = GridBagConstraints.HORIZONTAL;
