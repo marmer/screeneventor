@@ -387,4 +387,88 @@ public class ActionConfigPane extends JPanel {
 	private boolean actionSetForUpdate() {
 		return action != null;
 	}
+
+	public void setAction(final Action action) {
+		setTypeFrom(action);
+		setAreaFrom(action);
+		setResetCursorFrom(action);
+		setPreDelayFrom(action);
+		setInterDelayFrom(action);
+		setCommentFrom(action);
+	}
+
+	private void setCommentFrom(final Action action) {
+		action.setComment(txtComment.getText());
+	}
+
+	private void setInterDelayFrom(final Action action) {
+		interDelaySpinner.setValue(action.getInterDelay());
+	}
+
+	private void setPreDelayFrom(final Action action) {
+		preDelaySpinner.setValue(action.getPreDelay());
+	}
+
+	private void setResetCursorFrom(final Action action) {
+		chckbxResetCursor.setSelected(action.isCursorBack());
+	}
+
+	private void setAreaFrom(final Action action) {
+		final Area area = action.getArea();
+		chooseFittingComboboxItem(area, areaChooserComboBox);
+		setCoordinatesFrom(area);
+	}
+
+	private void setCoordinatesFrom(final Area area) {
+		if (area instanceof Point) {
+			final Point point = (Point) area;
+			x1Spinner.setValue(point.x);
+			y1Spinner.setValue(point.y);
+		} else if (area instanceof Circle) {
+			final Circle circle = (Circle) area;
+			x1Spinner.setValue(circle.center.x);
+			y1Spinner.setValue(circle.center.y);
+			radiusSpinner.setValue(circle.radius);
+		} else if (area instanceof Rectangle) {
+			final Rectangle rectangle = (Rectangle) area;
+			x1Spinner.setValue(rectangle.lowerLeft.x);
+			y1Spinner.setValue(rectangle.lowerLeft.y);
+			x2Spinner.setValue(rectangle.upperRight.x);
+			y2Spinner.setValue(rectangle.upperRight.y);
+		} else {
+			throw new ScreenevatorException("No handling implemented here yet for class " +
+				area.getClass());
+		}
+	}
+
+	private void setTypeFrom(final Action action) {
+		chooseFittingComboboxItem(action, actionChooserComboBox);
+	}
+
+	private <T> void chooseFittingComboboxItem(final T action,
+		final JComboBox<ObjectFactoryComboboxItem<? extends T>> comboBox) {
+		comboBox.setSelectedIndex(getFittingComboboxIndex(action, comboBox));
+	}
+
+	private <T> int getFittingComboboxIndex(final Object action,
+		final JComboBox<ObjectFactoryComboboxItem<? extends T>> comboBox) {
+		for (int index = 0; index < comboBox.getItemCount(); index++) {
+			final ObjectFactoryComboboxItem<? extends T> item = comboBox.getItemAt(index);
+
+			if (isClassEqual(action, item)) {
+				return index;
+			}
+		}
+
+		return -1;
+	}
+
+	private boolean isClassEqual(final Object action, final ObjectFactoryComboboxItem<?> item) {
+		return item.getObjectClass() == action.getClass();
+	}
+
+	public void setActionForUpdate(final Action action) {
+		this.action = action;
+		setAction(action);
+	}
 }

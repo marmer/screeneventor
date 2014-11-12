@@ -38,6 +38,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 
 /**
@@ -120,6 +122,16 @@ public class MainFrame extends JFrame {
 		final JScrollPane actionsScrollPane = new JScrollPane();
 		scriptPane.add(actionsScrollPane, BorderLayout.CENTER);
 		scriptTable = new JTable();
+		scriptTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+				@Override
+				public void valueChanged(final ListSelectionEvent arg0) {
+					refreshActionConfigPane();
+				}
+
+				private void refreshActionConfigPane() {
+					actionsPane.setAction(actionsScript.get(scriptTable.getSelectedRow()));
+				}
+			});
 		scriptTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		actionTableModel = new ActionTableModel(actionsScript);
 		scriptTable.setModel(actionTableModel);
