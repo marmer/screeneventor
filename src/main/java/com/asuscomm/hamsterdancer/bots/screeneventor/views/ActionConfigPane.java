@@ -22,6 +22,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -54,6 +55,7 @@ public class ActionConfigPane extends JPanel {
 	private transient Action action;
 	private final JLabel lblArea;
 	private final JComboBox<ObjectFactoryComboboxItem<? extends Area>> areaChooserComboBox;
+	private final JButton btnReset;
 
 	/** Create the panel. */
 	public ActionConfigPane() {
@@ -197,11 +199,34 @@ public class ActionConfigPane extends JPanel {
 
 		final JLabel lblComment = new JLabel("Comment");
 		final GridBagConstraints gbc_lblComment = new GridBagConstraints();
-		gbc_lblComment.gridwidth = 2;
-		gbc_lblComment.insets = new Insets(0, 0, 5, 0);
+		gbc_lblComment.insets = new Insets(0, 0, 5, 5);
 		gbc_lblComment.gridx = 4;
 		gbc_lblComment.gridy = 2;
 		this.add(lblComment, gbc_lblComment);
+
+		btnReset = new JButton("Reset");
+		btnReset.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(final ActionEvent arg0) {
+					x1Spinner.setValue(0);
+					y1Spinner.setValue(0);
+					x2Spinner.setValue(0);
+					y2Spinner.setValue(0);
+					radiusSpinner.setValue(0);
+					preDelaySpinner.setValue(0);
+					interDelaySpinner.setValue(0);
+					txtComment.setText("");
+
+					chckbxResetCursor.setSelected(false);
+				}
+			});
+
+		final GridBagConstraints gbc_btnReset = new GridBagConstraints();
+		gbc_btnReset.fill = GridBagConstraints.HORIZONTAL;
+		gbc_btnReset.insets = new Insets(0, 0, 5, 0);
+		gbc_btnReset.gridx = 5;
+		gbc_btnReset.gridy = 2;
+		add(btnReset, gbc_btnReset);
 
 		areaChooserComboBox = new JComboBox<ObjectFactoryComboboxItem<? extends Area>>();
 
