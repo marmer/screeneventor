@@ -8,6 +8,7 @@ import org.apache.commons.lang3.SerializationUtils;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.GridBagLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -85,6 +86,10 @@ public class MainFrame extends JFrame {
 				null));
 		contentPane.add(scriptPane, BorderLayout.CENTER);
 
+		final JPanel southPane = new JPanel();
+		contentPane.add(southPane, BorderLayout.SOUTH);
+		southPane.setLayout(new BorderLayout(0, 0));
+
 		controlsPane = new KeyConfigPane();
 		controlsPane.setBorder(new TitledBorder(
 				UIManager.getBorder("TitledBorder.border"),
@@ -93,7 +98,12 @@ public class MainFrame extends JFrame {
 				TitledBorder.TOP,
 				null,
 				null));
-		contentPane.add(controlsPane, BorderLayout.SOUTH);
+		southPane.add(controlsPane);
+
+		final JPanel statusPane = new StatusPane(actionsScript);
+		final GridBagLayout gridBagLayout = (GridBagLayout) statusPane.getLayout();
+		gridBagLayout.columnWeights = new double[] { 1.0, 1.0, 1.0 };
+		southPane.add(statusPane, BorderLayout.SOUTH);
 	}
 
 	private ActionsScript loadActionsScript() {

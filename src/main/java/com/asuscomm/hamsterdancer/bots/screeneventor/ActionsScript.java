@@ -222,4 +222,20 @@ public class ActionsScript extends ArrayList<Action> implements Serializable {
 			", actions=" + super.toString() +
 			"]";
 	}
+
+	public int getIterationsLeft() {
+		final int iterationsLeft = maxIterations - currentIteration;
+
+		return (iterationsLeft > 0) ? (iterationsLeft) : 0;
+	}
+
+	public long getTimeLeft() {
+		if (running) {
+			final long timeLeft = System.currentTimeMillis() - startTime;
+
+			return (timeLeft > 0) ? timeLeft : 0;
+		} else {
+			return maxExecutionTime;
+		}
+	}
 }
