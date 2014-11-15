@@ -197,13 +197,6 @@ public class ActionConfigPane extends JPanel {
 		gbc_y2Spinner.gridy = 2;
 		this.add(y2Spinner, gbc_y2Spinner);
 
-		final JLabel lblComment = new JLabel("Comment");
-		final GridBagConstraints gbc_lblComment = new GridBagConstraints();
-		gbc_lblComment.insets = new Insets(0, 0, 5, 5);
-		gbc_lblComment.gridx = 4;
-		gbc_lblComment.gridy = 2;
-		this.add(lblComment, gbc_lblComment);
-
 		btnReset = new JButton("Reset");
 		btnReset.addActionListener(new ActionListener() {
 				@Override
@@ -220,6 +213,14 @@ public class ActionConfigPane extends JPanel {
 					chckbxResetCursor.setSelected(false);
 				}
 			});
+
+		chckbxResetCursor = new JCheckBox("reset Cursor");
+
+		final GridBagConstraints gbc_chckbxResetCursor = new GridBagConstraints();
+		gbc_chckbxResetCursor.insets = new Insets(0, 0, 5, 5);
+		gbc_chckbxResetCursor.gridx = 4;
+		gbc_chckbxResetCursor.gridy = 2;
+		this.add(chckbxResetCursor, gbc_chckbxResetCursor);
 
 		final GridBagConstraints gbc_btnReset = new GridBagConstraints();
 		gbc_btnReset.fill = GridBagConstraints.HORIZONTAL;
@@ -258,16 +259,7 @@ public class ActionConfigPane extends JPanel {
 		this.add(lblRadius, gbc_lblRadius);
 		lblRadius.setLabelFor(radiusSpinner);
 
-		chckbxResetCursor = new JCheckBox("reset Cursor");
-
-		final GridBagConstraints gbc_chckbxResetCursor = new GridBagConstraints();
-		gbc_chckbxResetCursor.insets = new Insets(0, 0, 0, 5);
-		gbc_chckbxResetCursor.gridx = 3;
-		gbc_chckbxResetCursor.gridy = 3;
-		this.add(chckbxResetCursor, gbc_chckbxResetCursor);
-
 		txtComment = new JTextField();
-		lblComment.setLabelFor(txtComment);
 
 		final GridBagConstraints gbc_txtComment = new GridBagConstraints();
 		gbc_txtComment.gridwidth = 2;
@@ -276,6 +268,14 @@ public class ActionConfigPane extends JPanel {
 		gbc_txtComment.gridy = 3;
 		this.add(txtComment, gbc_txtComment);
 		txtComment.setColumns(10);
+
+		final JLabel lblComment = new JLabel("Comment");
+		final GridBagConstraints gbc_lblComment = new GridBagConstraints();
+		gbc_lblComment.insets = new Insets(0, 0, 0, 5);
+		gbc_lblComment.gridx = 3;
+		gbc_lblComment.gridy = 3;
+		this.add(lblComment, gbc_lblComment);
+		lblComment.setLabelFor(txtComment);
 
 		updateCoordinateFieldActivation();
 
