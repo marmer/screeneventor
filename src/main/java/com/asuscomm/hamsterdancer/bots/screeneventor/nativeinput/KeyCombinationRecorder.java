@@ -90,6 +90,11 @@ public class KeyCombinationRecorder implements NativeKeyListener {
 		lasEventWasPress = true;
 	}
 
+	/** Resets the last recorded key combo. */
+	public void reset() {
+		possibleCombo.clear();
+	}
+
 	private void displayPossibleComboInComponent() {
 		String displayText = "";
 		boolean first = true;
