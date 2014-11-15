@@ -1,11 +1,8 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.nativeinput;
 
-import com.asuscomm.hamsterdancer.bots.screeneventor.ScreenevatorException;
-
 import org.apache.commons.collections4.CollectionUtils;
 
 import org.jnativehook.GlobalScreen;
-import org.jnativehook.NativeHookException;
 
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
@@ -74,19 +71,9 @@ public class GlobalKeyCombinationProcessor implements NativeKeyListener {
 		if (!CollectionUtils.isEmpty(cleanKeys)) {
 			final GlobalScreen globalScreen = GlobalScreen.getInstance();
 
-			synchronized (globalScreen) {
-				try {
-					GlobalScreen.registerNativeHook();
-				} catch (final NativeHookException ex) {
-					throw new ScreenevatorException(
-						"There was a problem registering the native hook.",
-						ex);
-				}
-
-				final GlobalKeyCombinationProcessor processor =
-					new GlobalKeyCombinationProcessor(listener, cleanKeys);
-				globalScreen.addNativeKeyListener(processor);
-			}
+			final GlobalKeyCombinationProcessor processor =
+				new GlobalKeyCombinationProcessor(listener, cleanKeys);
+			globalScreen.addNativeKeyListener(processor);
 		}
 	}
 
@@ -109,10 +96,6 @@ public class GlobalKeyCombinationProcessor implements NativeKeyListener {
 			synchronized (globalScreen) {
 				final GlobalKeyCombinationProcessor processor = listeners.remove(listener);
 				globalScreen.removeNativeKeyListener(processor);
-
-				if (!GlobalScreen.isNativeHookRegistered()) {
-					GlobalScreen.unregisterNativeHook();
-				}
 			}
 		}
 	}
