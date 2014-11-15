@@ -436,7 +436,7 @@ public class ActionConfigPane extends JPanel {
 	}
 
 	private void setCommentFrom(final Action action) {
-		action.setComment(txtComment.getText());
+		txtComment.setText(action.getComment());
 	}
 
 	private void setInterDelayFrom(final Action action) {
