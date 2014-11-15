@@ -180,6 +180,22 @@ public class ActionScriptPane extends JPanel {
 		scriptControlPane.add(btnMoveUp, gbc_btnMoveUp);
 
 		btnMoveDown = new JButton("Move Down");
+		btnMoveDown.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(final ActionEvent arg0) {
+					final int selectedRow = scriptTable.getSelectedRow();
+
+					if ((selectedRow >= 0) && (selectedRow < (actionsScript.size() - 1))) {
+						final Action action = actionsScript.remove(selectedRow);
+						final int newSelection = selectedRow + 1;
+						actionsScript.add(newSelection, action);
+						scriptTable.revalidate();
+						scriptTable.getSelectionModel().setSelectionInterval(
+							newSelection,
+							newSelection);
+					}
+				}
+			});
 
 		final GridBagConstraints gbc_btnMoveDown = new GridBagConstraints();
 		gbc_btnMoveDown.insets = new Insets(0, 0, 5, 0);
