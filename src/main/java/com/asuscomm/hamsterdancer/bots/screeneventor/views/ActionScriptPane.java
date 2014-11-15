@@ -44,7 +44,7 @@ public class ActionScriptPane extends JPanel {
 	private final JTable scriptTable;
 	private final JSpinner iterationSpinner;
 	private final JButton btnAdd;
-	private final JButton btnUpdate;
+	private final JButton btnInsert;
 	private final JButton btnMoveUp;
 	private final JButton btnMoveDown;
 	private final ActionTableModel actionTableModel;
@@ -131,7 +131,18 @@ public class ActionScriptPane extends JPanel {
 		gbc_btnAdd.gridy = 1;
 		scriptControlPane.add(btnAdd, gbc_btnAdd);
 
-		btnUpdate = new JButton("Update");
+		btnInsert = new JButton("Insert");
+		btnInsert.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(final ActionEvent arg0) {
+					final int selectedRow = scriptTable.getSelectedRow();
+
+					if (selectedRow != -1) {
+						actionsScript.add(selectedRow, actionsPane.getAction());
+						scriptTable.revalidate();
+					}
+				}
+			});
 
 		final GridBagConstraints gbc_btnUpdate = new GridBagConstraints();
 		gbc_btnUpdate.insets = new Insets(0, 0, 5, 0);
@@ -139,7 +150,7 @@ public class ActionScriptPane extends JPanel {
 		gbc_btnUpdate.fill = GridBagConstraints.BOTH;
 		gbc_btnUpdate.gridx = 0;
 		gbc_btnUpdate.gridy = 2;
-		scriptControlPane.add(btnUpdate, gbc_btnUpdate);
+		scriptControlPane.add(btnInsert, gbc_btnUpdate);
 
 		btnMoveUp = new JButton("Move Up");
 
