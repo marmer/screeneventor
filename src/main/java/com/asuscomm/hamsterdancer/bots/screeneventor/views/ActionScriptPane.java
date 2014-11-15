@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -57,6 +58,8 @@ public class ActionScriptPane extends JPanel {
 
 	private final ActionsScript actionsScript;
 
+	private final JCheckBox chckbxPlaySoundWhenDone;
+
 	/**
 	 * Creates a new ActionScriptPane object.
 	 *
@@ -92,7 +95,9 @@ public class ActionScriptPane extends JPanel {
 		final GridBagLayout gbl_scriptControlPane = new GridBagLayout();
 		gbl_scriptControlPane.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
 		gbl_scriptControlPane.rowWeights =
-			new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+			new double[] {
+				0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+			};
 		scriptControlPane.setLayout(gbl_scriptControlPane);
 
 		btnAdd = new JButton("Add");
@@ -113,7 +118,10 @@ public class ActionScriptPane extends JPanel {
 					} else {
 						refreshStopConditions();
 						actionsScript.start();
-						Toolkit.getDefaultToolkit().beep();
+
+						if (chckbxPlaySoundWhenDone.isSelected()) {
+							Toolkit.getDefaultToolkit().beep();
+						}
 					}
 				}
 			});
@@ -255,6 +263,15 @@ public class ActionScriptPane extends JPanel {
 		gbc_glue.gridy = 6;
 		scriptControlPane.add(glue, gbc_glue);
 
+		chckbxPlaySoundWhenDone = new JCheckBox("play sound when done");
+		chckbxPlaySoundWhenDone.setSelected(true);
+
+		final GridBagConstraints gbc_chckbxPlaySoundWhenDone = new GridBagConstraints();
+		gbc_chckbxPlaySoundWhenDone.gridwidth = 2;
+		gbc_chckbxPlaySoundWhenDone.gridx = 0;
+		gbc_chckbxPlaySoundWhenDone.gridy = 14;
+		scriptControlPane.add(chckbxPlaySoundWhenDone, gbc_chckbxPlaySoundWhenDone);
+
 		final JLabel lblMaxIterations = new JLabel("Max Execution Time");
 		final GridBagConstraints gbc_lblMaxIterations = new GridBagConstraints();
 		gbc_lblMaxIterations.gridwidth = 2;
@@ -347,7 +364,7 @@ public class ActionScriptPane extends JPanel {
 
 		final JLabel lblMs = new JLabel("ms");
 		final GridBagConstraints gbc_lblMs = new GridBagConstraints();
-		gbc_lblMs.insets = new Insets(0, 0, 0, 5);
+		gbc_lblMs.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMs.gridx = 0;
 		gbc_lblMs.gridy = 13;
 		scriptControlPane.add(lblMs, gbc_lblMs);
@@ -357,6 +374,7 @@ public class ActionScriptPane extends JPanel {
 		msSpinner.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
 
 		final GridBagConstraints gbc_msSpinner = new GridBagConstraints();
+		gbc_msSpinner.insets = new Insets(0, 0, 5, 0);
 		gbc_msSpinner.weightx = 1.0;
 		gbc_msSpinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_msSpinner.gridx = 1;
