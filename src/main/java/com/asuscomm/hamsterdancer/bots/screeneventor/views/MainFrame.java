@@ -6,6 +6,9 @@ import com.asuscomm.hamsterdancer.bots.screeneventor.ScreenevatorException;
 import org.apache.commons.lang3.SerializationException;
 import org.apache.commons.lang3.SerializationUtils;
 
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridBagLayout;
@@ -18,6 +21,8 @@ import java.io.FileOutputStream;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import java.util.logging.Level;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -38,6 +43,11 @@ public class MainFrame extends JFrame {
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
+
+	static {
+		java.util.logging.Logger.getLogger("org.jnativehook").setLevel(Level.OFF);
+	}
+
 	private final JPanel contentPane;
 
 	private final ActionConfigPane actionsPane;
@@ -138,6 +148,7 @@ public class MainFrame extends JFrame {
 	 */
 	public static void main(final String[] args) {
 		setLookAndFeel();
+		registerNativeKeyHook();
 
 		EventQueue.invokeLater(new Runnable() {
 				@Override
@@ -150,6 +161,16 @@ public class MainFrame extends JFrame {
 					}
 				}
 			});
+	}
+
+	private static void registerNativeKeyHook() {
+		try {
+			if (!GlobalScreen.isNativeHookRegistered()) {
+				GlobalScreen.registerNativeHook();
+			}
+		} catch (final NativeHookException ex) {
+			throw new ScreenevatorException("There was a problem registering the native hook.", ex);
+		}
 	}
 
 	private static void setLookAndFeel() {
