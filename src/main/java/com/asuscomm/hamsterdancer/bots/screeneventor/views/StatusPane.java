@@ -8,8 +8,6 @@ import java.awt.Insets;
 import java.awt.MouseInfo;
 import java.awt.Point;
 
-import java.util.logging.Level;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
@@ -30,10 +28,6 @@ public class StatusPane extends JPanel {
 
 	/** Use serialVersionUID for interoperability. */
 	private static final long serialVersionUID = 1L;
-
-	static {
-		java.util.logging.Logger.getLogger("org.jnativehook").setLevel(Level.OFF);
-	}
 
 	private final ActionsScript actionScript;
 	private final JLabel lblTimeLeft;
