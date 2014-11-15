@@ -58,7 +58,7 @@ public class MainFrame extends JFrame {
 			});
 		setTitle("Screenevator - Let us play your games");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 650);
+		setBounds(100, 100, 800, 675);
 
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout(0, 0));
