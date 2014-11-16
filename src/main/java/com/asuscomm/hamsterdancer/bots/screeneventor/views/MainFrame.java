@@ -17,6 +17,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridBagLayout;
 import java.awt.MouseInfo;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -69,6 +70,8 @@ public class MainFrame extends JFrame {
 
 	/** Create the frame. */
 	public MainFrame() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				MainFrame.class.getResource("/icon.png")));
 		addWindowListener(new WindowAdapter() {
 				@Override
 				public void windowClosing(final WindowEvent e) {
