@@ -2,6 +2,7 @@ package com.asuscomm.hamsterdancer.bots.screeneventor.views;
 
 import com.asuscomm.hamsterdancer.bots.screeneventor.ActionsScript;
 import com.asuscomm.hamsterdancer.bots.screeneventor.ScreenevatorException;
+import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Point;
 import com.asuscomm.hamsterdancer.bots.screeneventor.nativeinput.KeyCombinationListener;
 
 import org.apache.commons.lang3.SerializationException;
@@ -15,6 +16,7 @@ import org.jnativehook.keyboard.NativeKeyEvent;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridBagLayout;
+import java.awt.MouseInfo;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -117,46 +119,13 @@ public class MainFrame extends JFrame {
 				null));
 		controlsPane.addKeyCombi(
 			"Get Mouse Position",
-			new KeyCombinationListener() {
-				@Override
-				public void keyCombinationPressed(final Integer... keys) {
-					// TODO Auto-generated method stub
-				}
-
-				@Override
-				public void keyCombinationReleased(final Integer... keys) {
-					// TODO Auto-generated method stub
-				}
-			},
+			new ActionPreparator(false),
 			NativeKeyEvent.VC_F6);
 		controlsPane.addKeyCombi(
 			"Get Mouse Position & Add Action",
-			new KeyCombinationListener() {
-				@Override
-				public void keyCombinationReleased(final Integer... keys) {
-					// TODO Auto-generated method stub
-				}
-
-				@Override
-				public void keyCombinationPressed(final Integer... keys) {
-					// TODO Auto-generated method stub
-				}
-			},
+			new ActionPreparator(true),
 			NativeKeyEvent.VC_F7);
-		controlsPane.addKeyCombi(
-			"Start/Stop Script",
-			new KeyCombinationListener() {
-				@Override
-				public void keyCombinationPressed(final Integer... keys) {
-					scriptPane.startStop();
-				}
-
-				@Override
-				public void keyCombinationReleased(final Integer... keys) {
-					// nothing todo
-				}
-			},
-			NativeKeyEvent.VC_F8);
+		controlsPane.addKeyCombi("Start/Stop Script", new ScriptStarter(), NativeKeyEvent.VC_F8);
 		southPane.add(controlsPane);
 
 		final JPanel statusPane = new StatusPane(actionsScript);
@@ -234,6 +203,49 @@ public class MainFrame extends JFrame {
 				throw new ScreenevatorException(
 					"Not able to set a look and feel. Neither the native one nor the cross plattform one.");
 			}
+		}
+	}
+
+	private final class ActionPreparator implements KeyCombinationListener {
+		private java.awt.Point startPoint;
+		private java.awt.Point endPoint;
+		private final boolean addAfterPreparation;
+
+		/**
+		 * Creates a new ActionPreparator object.
+		 *
+		 * @param addAfterPreparation TODO: doc
+		 */
+		public ActionPreparator(final boolean addAfterPreparation) {
+			this.addAfterPreparation = addAfterPreparation;
+		}
+
+		@Override
+		public void keyCombinationPressed(final Integer... keys) {
+			startPoint = MouseInfo.getPointerInfo().getLocation();
+		}
+
+		@Override
+		public void keyCombinationReleased(final Integer... keys) {
+			endPoint = MouseInfo.getPointerInfo().getLocation();
+			actionsPane.prepareAction(new Point(startPoint.x, startPoint.y),
+				new Point(endPoint.x, endPoint.y));
+
+			if (addAfterPreparation) {
+				scriptPane.addCurrentConfig();
+			}
+		}
+	}
+
+	private final class ScriptStarter implements KeyCombinationListener {
+		@Override
+		public void keyCombinationPressed(final Integer... keys) {
+			scriptPane.startStop();
+		}
+
+		@Override
+		public void keyCombinationReleased(final Integer... keys) {
+			// nothing todo
 		}
 	}
 }

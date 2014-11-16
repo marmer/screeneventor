@@ -16,6 +16,8 @@ import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Circle;
 import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Point;
 import com.asuscomm.hamsterdancer.bots.screeneventor.geometry.Rectangle;
 
+import org.apache.commons.math3.util.FastMath;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -535,5 +537,21 @@ public class ActionConfigPane extends JPanel {
 	public void setActionForUpdate(final Action action) {
 		this.action = action;
 		setAction(action);
+	}
+
+	/**
+	 * Adds a point for preparation. This one can be added after further configurations.
+	 *
+	 * @param startPoint First part of an area description.
+	 * @param endPoint   Second part of an area description.
+	 */
+	public void prepareAction(final Point startPoint, final Point endPoint) {
+		x1Spinner.setValue(startPoint.x);
+		y1Spinner.setValue(startPoint.y);
+		x2Spinner.setValue(endPoint.x);
+		y2Spinner.setValue(endPoint.y);
+		radiusSpinner.setValue((int) FastMath.sqrt(
+				((endPoint.x - startPoint.x) * (endPoint.x - startPoint.x)) +
+				((endPoint.y - startPoint.y) * (endPoint.y - startPoint.y))));
 	}
 }

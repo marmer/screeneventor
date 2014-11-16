@@ -60,6 +60,8 @@ public class ActionScriptPane extends JPanel {
 
 	private final JCheckBox chckbxPlaySoundWhenDone;
 
+	private final ActionConfigPane actionsPane;
+
 	/**
 	 * Creates a new ActionScriptPane object.
 	 *
@@ -68,6 +70,7 @@ public class ActionScriptPane extends JPanel {
 	 */
 	public ActionScriptPane(final ActionsScript actionsScript, final ActionConfigPane actionsPane) {
 		this.actionsScript = actionsScript;
+		this.actionsPane = actionsPane;
 
 		this.setLayout(new BorderLayout(5, 5));
 
@@ -104,8 +107,7 @@ public class ActionScriptPane extends JPanel {
 		btnAdd.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(final ActionEvent arg0) {
-					actionsScript.add(actionsPane.getAction());
-					scriptTable.revalidate();
+					addCurrentConfig();
 				}
 			});
 
@@ -469,5 +471,11 @@ public class ActionScriptPane extends JPanel {
 
 	public boolean isRunning() {
 		return actionsScript.isRunning();
+	}
+
+	/** Gets the currently configured Action and adds it to the script. */
+	public void addCurrentConfig() {
+		actionsScript.add(actionsPane.getAction());
+		scriptTable.revalidate();
 	}
 }
