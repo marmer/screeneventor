@@ -113,16 +113,7 @@ public class ActionScriptPane extends JPanel {
 		btnStartStop.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(final ActionEvent arg0) {
-					if (actionsScript.isRunning()) {
-						actionsScript.stop();
-					} else {
-						refreshStopConditions();
-						actionsScript.start();
-
-						if (chckbxPlaySoundWhenDone.isSelected()) {
-							Toolkit.getDefaultToolkit().beep();
-						}
-					}
+					startStop();
 				}
 			});
 
@@ -454,5 +445,29 @@ public class ActionScriptPane extends JPanel {
 		rest %= SECONDS_DIVISOR;
 		secondSpinner.setValue(seconds);
 		msSpinner.setValue(rest);
+	}
+
+	/** Starts or stops the script depending on whether it's running allready. */
+	public void startStop() {
+		if (actionsScript.isRunning()) {
+			actionsScript.stop();
+		} else {
+			refreshStopConditions();
+			new Thread(new Runnable() {
+					@Override
+					public void run() {
+						actionsScript.start();
+						refreshStopConditions();
+
+						if (chckbxPlaySoundWhenDone.isSelected()) {
+							Toolkit.getDefaultToolkit().beep();
+						}
+					}
+				}, "actionsscript thread").start();
+		}
+	}
+
+	public boolean isRunning() {
+		return actionsScript.isRunning();
 	}
 }

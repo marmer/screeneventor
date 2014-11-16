@@ -147,12 +147,12 @@ public class MainFrame extends JFrame {
 			new KeyCombinationListener() {
 				@Override
 				public void keyCombinationPressed(final Integer... keys) {
-					System.out.println("pressed");
+					scriptPane.startStop();
 				}
 
 				@Override
 				public void keyCombinationReleased(final Integer... keys) {
-					System.out.println("released");
+					// nothing todo
 				}
 			},
 			NativeKeyEvent.VC_F8,

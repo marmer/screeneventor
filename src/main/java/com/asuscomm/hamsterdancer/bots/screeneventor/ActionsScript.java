@@ -90,6 +90,7 @@ public class ActionsScript extends ArrayList<Action> implements Serializable {
 
 	public void setMaxIterations(final int maxIterations) {
 		this.maxIterations = (maxIterations < 0) ? 1 : maxIterations;
+		currentIteration = 0;
 	}
 
 	public int getMaxIterations() {
@@ -231,7 +232,7 @@ public class ActionsScript extends ArrayList<Action> implements Serializable {
 
 	public long getTimeLeft() {
 		if (running) {
-			final long timeLeft = System.currentTimeMillis() - startTime;
+			final long timeLeft = maxExecutionTime - (System.currentTimeMillis() - startTime);
 
 			return (timeLeft > 0) ? timeLeft : 0;
 		} else {
