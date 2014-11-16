@@ -1,11 +1,16 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.views;
 
+import com.asuscomm.hamsterdancer.bots.screeneventor.nativeinput.GlobalKeyCombinationProcessor;
 import com.asuscomm.hamsterdancer.bots.screeneventor.nativeinput.KeyCombinationListener;
 import com.asuscomm.hamsterdancer.bots.screeneventor.nativeinput.KeyCombinationRecorder;
+
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -64,7 +69,17 @@ public class KeyConfigPane extends JPanel {
 		this.add(txtKeyCombination, gbc_txtKeyCombination);
 		txtKeyCombination.setColumns(10);
 
+		if (!ArrayUtils.isEmpty(defaultKeyCombi)) {
+			register(action, keyRecorder);
+		}
+
 		final JButton btnAssign = new JButton("Assign");
+		btnAssign.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(final ActionEvent arg0) {
+					register(action, keyRecorder);
+				}
+			});
 
 		final GridBagConstraints gbc_btnAssign = new GridBagConstraints();
 		gbc_btnAssign.fill = GridBagConstraints.HORIZONTAL;
@@ -74,6 +89,12 @@ public class KeyConfigPane extends JPanel {
 		this.add(btnAssign, gbc_btnAssign);
 
 		final JButton btnClear = new JButton("Clear");
+		btnClear.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(final ActionEvent arg0) {
+					unregister(action, keyRecorder);
+				}
+			});
 
 		final GridBagConstraints gbc_btnClear = new GridBagConstraints();
 		gbc_btnClear.fill = GridBagConstraints.HORIZONTAL;
@@ -83,5 +104,18 @@ public class KeyConfigPane extends JPanel {
 		this.add(btnClear, gbc_btnClear);
 
 		elementCounter++;
+	}
+
+	private void register(final KeyCombinationListener action,
+		final KeyCombinationRecorder keyRecorder) {
+		GlobalKeyCombinationProcessor.registerListener(
+			action,
+			keyRecorder.getKeyCombinationToListenFor());
+	}
+
+	private void unregister(final KeyCombinationListener action,
+		final KeyCombinationRecorder keyRecorder) {
+		GlobalKeyCombinationProcessor.removeListener(action);
+		keyRecorder.reset();
 	}
 }

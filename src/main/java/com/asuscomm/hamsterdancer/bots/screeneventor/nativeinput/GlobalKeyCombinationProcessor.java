@@ -66,9 +66,12 @@ public class GlobalKeyCombinationProcessor implements NativeKeyListener {
 		if (!CollectionUtils.isEmpty(cleanKeys)) {
 			final GlobalScreen globalScreen = GlobalScreen.getInstance();
 
-			final GlobalKeyCombinationProcessor processor =
-				new GlobalKeyCombinationProcessor(listener, cleanKeys);
-			globalScreen.addNativeKeyListener(processor);
+			synchronized (globalScreen) {
+				final GlobalKeyCombinationProcessor processor =
+					new GlobalKeyCombinationProcessor(listener, cleanKeys);
+				listeners.put(listener, processor);
+				globalScreen.addNativeKeyListener(processor);
+			}
 		}
 	}
 

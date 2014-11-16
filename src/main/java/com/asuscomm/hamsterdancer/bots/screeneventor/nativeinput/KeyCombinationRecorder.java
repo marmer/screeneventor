@@ -75,8 +75,8 @@ public class KeyCombinationRecorder implements NativeKeyListener {
 	 *
 	 * @return The recorded keys.
 	 */
-	public int[] getKeyCombinationToListenFor() {
-		return ArrayUtils.toPrimitive(possibleCombo.toArray(new Integer[0]));
+	public Integer[] getKeyCombinationToListenFor() {
+		return possibleCombo.toArray(new Integer[0]);
 	}
 
 	@Override
@@ -98,6 +98,7 @@ public class KeyCombinationRecorder implements NativeKeyListener {
 	/** Resets the last recorded key combo. */
 	public void reset() {
 		possibleCombo.clear();
+		inputSource.setText("");
 	}
 
 	private void displayPossibleComboInComponent() {
