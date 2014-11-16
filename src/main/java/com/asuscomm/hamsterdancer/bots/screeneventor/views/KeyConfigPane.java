@@ -1,5 +1,6 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.views;
 
+import com.asuscomm.hamsterdancer.bots.screeneventor.nativeinput.KeyCombinationListener;
 import com.asuscomm.hamsterdancer.bots.screeneventor.nativeinput.KeyCombinationRecorder;
 
 import java.awt.GridBagConstraints;
@@ -32,12 +33,16 @@ public class KeyConfigPane extends JPanel {
 	}
 
 	/**
-	 * Adds a TODO XYZ to prepare it for being able to get configured for execution at key
-	 * combinations.
+	 * Adds an action in form of a {@link KeyCombinationListener} to prepare it for being able to
+	 * get configured for execution at key combinations.
 	 *
-	 * @param label Label of the TODO: XYZ
+	 * @param label           Label of the action
+	 * @param action          Actions to be performed when key combination was configured and hit.
+	 * @param defaultKeyCombi TODO: doc
 	 */
-	public void addKeyCombi(final String label) {
+	public void addKeyCombi(final String label,
+		final KeyCombinationListener action,
+		final int... defaultKeyCombi) {
 		final JLabel lblDesctiption = new JLabel(label);
 		final GridBagConstraints gbc_lblDescription = new GridBagConstraints();
 		gbc_lblDescription.anchor = GridBagConstraints.EAST;

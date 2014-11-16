@@ -2,12 +2,15 @@ package com.asuscomm.hamsterdancer.bots.screeneventor.views;
 
 import com.asuscomm.hamsterdancer.bots.screeneventor.ActionsScript;
 import com.asuscomm.hamsterdancer.bots.screeneventor.ScreenevatorException;
+import com.asuscomm.hamsterdancer.bots.screeneventor.nativeinput.KeyCombinationListener;
 
 import org.apache.commons.lang3.SerializationException;
 import org.apache.commons.lang3.SerializationUtils;
 
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
+
+import org.jnativehook.keyboard.NativeKeyEvent;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -108,9 +111,49 @@ public class MainFrame extends JFrame {
 				TitledBorder.TOP,
 				null,
 				null));
-		controlsPane.addKeyCombi("Get Mouse Position & Add Action");
-		controlsPane.addKeyCombi("Get Mouse Position");
-		controlsPane.addKeyCombi("Start/Stop Script");
+		controlsPane.addKeyCombi(
+			"Get Mouse Position & Add Action",
+			new KeyCombinationListener() {
+				@Override
+				public void keyCombinationReleased(final Integer... keys) {
+					// TODO Auto-generated method stub
+				}
+
+				@Override
+				public void keyCombinationPressed(final Integer... keys) {
+					// TODO Auto-generated method stub
+				}
+			},
+			NativeKeyEvent.VC_F7);
+		controlsPane.addKeyCombi(
+			"Get Mouse Position",
+			new KeyCombinationListener() {
+				@Override
+				public void keyCombinationPressed(final Integer... keys) {
+					// TODO Auto-generated method stub
+				}
+
+				@Override
+				public void keyCombinationReleased(final Integer... keys) {
+					// TODO Auto-generated method stub
+				}
+			},
+			NativeKeyEvent.VC_F6);
+		controlsPane.addKeyCombi(
+			"Start/Stop Script",
+			new KeyCombinationListener() {
+				@Override
+				public void keyCombinationPressed(final Integer... keys) {
+					// TODO Auto-generated method stub
+				}
+
+				@Override
+				public void keyCombinationReleased(final Integer... keys) {
+					// TODO Auto-generated method stub
+				}
+			},
+			NativeKeyEvent.VC_F8,
+			NativeKeyEvent.VC_CONTROL_L);
 		southPane.add(controlsPane);
 
 		final JPanel statusPane = new StatusPane(actionsScript);
