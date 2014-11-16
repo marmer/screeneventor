@@ -108,6 +108,9 @@ public class MainFrame extends JFrame {
 				TitledBorder.TOP,
 				null,
 				null));
+		controlsPane.addKeyCombi("Get Mouse Position & Add Action");
+		controlsPane.addKeyCombi("Get Mouse Position");
+		controlsPane.addKeyCombi("Start/Stop Script");
 		southPane.add(controlsPane);
 
 		final JPanel statusPane = new StatusPane(actionsScript);
