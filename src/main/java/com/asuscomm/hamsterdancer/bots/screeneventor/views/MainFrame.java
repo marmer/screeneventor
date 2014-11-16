@@ -47,7 +47,7 @@ import javax.swing.border.TitledBorder;
  */
 public class MainFrame extends JFrame {
 	/** Name of the save file. */
-	private static final String SAVE_FILE_NAME = "saveFile";
+	private static final String SAVE_FILE_NAME = "screenevator.sav";
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
