@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.logging.Level;
 
 import javax.swing.text.JTextComponent;
 
@@ -26,10 +25,6 @@ import javax.swing.text.JTextComponent;
  * @since  2014-11-15
  */
 public class KeyCombinationRecorder implements NativeKeyListener {
-	static {
-		java.util.logging.Logger.getLogger("org.jnativehook").setLevel(Level.OFF);
-	}
-
 	private Set<Integer> possibleCombo = new LinkedHashSet<Integer>();
 	private final Set<Integer> currentlyPressed = new LinkedHashSet<Integer>();
 

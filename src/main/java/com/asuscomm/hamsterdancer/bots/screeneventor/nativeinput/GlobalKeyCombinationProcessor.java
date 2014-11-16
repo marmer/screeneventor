@@ -12,7 +12,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
 
 
 /**
@@ -24,10 +23,6 @@ import java.util.logging.Level;
 public class GlobalKeyCombinationProcessor implements NativeKeyListener {
 	private static Map<KeyCombinationListener, GlobalKeyCombinationProcessor> listeners =
 		new LinkedHashMap<KeyCombinationListener, GlobalKeyCombinationProcessor>();
-
-	static {
-		java.util.logging.Logger.getLogger("org.jnativehook").setLevel(Level.OFF);
-	}
 
 	/** <key,flag>. */
 	private final Map<Integer, Integer> keys;

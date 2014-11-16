@@ -26,6 +26,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -48,7 +50,9 @@ public class MainFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	static {
-		java.util.logging.Logger.getLogger("org.jnativehook").setLevel(Level.OFF);
+		final Logger logger = Logger.getLogger(GlobalScreen.class.getPackage().getName());
+		LogManager.getLogManager().reset();
+		logger.setLevel(Level.OFF);
 	}
 
 	private final JPanel contentPane;
