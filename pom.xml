@@ -110,6 +110,10 @@
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
+
+					<finalName>${project.name}-${project.version}</finalName>
+					<classifier>jar</classifier>
+					<appendAssemblyId>false</appendAssemblyId>
 				</configuration>
 				<executions>
 					<execution>
