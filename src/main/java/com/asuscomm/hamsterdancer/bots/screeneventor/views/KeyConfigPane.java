@@ -52,7 +52,8 @@ public class KeyConfigPane extends JPanel {
 		this.add(lblDesctiption, gbc_lblDescription);
 
 		final JTextField txtKeyCombination = new JTextField();
-		final KeyCombinationRecorder keyRecorder = new KeyCombinationRecorder(txtKeyCombination);
+		final KeyCombinationRecorder keyRecorder =
+			new KeyCombinationRecorder(txtKeyCombination, defaultKeyCombi);
 
 		final GridBagConstraints gbc_txtKeyCombination = new GridBagConstraints();
 		gbc_txtKeyCombination.weightx = 2.0;

@@ -10,6 +10,7 @@ import org.jnativehook.keyboard.NativeKeyListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -39,12 +40,21 @@ public class KeyCombinationRecorder implements NativeKeyListener {
 	 * Creates a new KeyCombinationRecorder object.
 	 *
 	 * @param sourceComponent Component used for key recording.
+	 * @param defaultKeyCombi TODO: doc
 	 */
-	public KeyCombinationRecorder(final JTextComponent sourceComponent) {
+	public KeyCombinationRecorder(final JTextComponent sourceComponent,
+		final int... defaultKeyCombi) {
 		inputSource = sourceComponent;
 
 		configureKeyListening();
 		suppressInputsOnSourceComponent();
+
+		prepareDefaults(defaultKeyCombi);
+	}
+
+	private void prepareDefaults(final int... defaultKeyCombi) {
+		possibleCombo.addAll(Arrays.asList(ArrayUtils.toObject(defaultKeyCombi)));
+		displayPossibleComboInComponent();
 	}
 
 	private void configureKeyListening() {

@@ -111,9 +111,7 @@ public class MainFrame extends JFrame {
 				TitledBorder.TOP,
 				null,
 				null));
-		controlsPane.addKeyCombi(
-			"Get Mouse Position & Add Action",
-			new KeyCombinationListener() {
+		controlsPane.addKeyCombi("Get Mouse Position & Add Action", new KeyCombinationListener() {
 				@Override
 				public void keyCombinationReleased(final Integer... keys) {
 					// TODO Auto-generated method stub
@@ -123,8 +121,9 @@ public class MainFrame extends JFrame {
 				public void keyCombinationPressed(final Integer... keys) {
 					// TODO Auto-generated method stub
 				}
-			},
-			NativeKeyEvent.VC_F7);
+			} /*,
+               *NativeKeyEvent.VC_F7*/
+			);
 		controlsPane.addKeyCombi(
 			"Get Mouse Position",
 			new KeyCombinationListener() {
