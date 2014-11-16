@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.asuscomm.hamsterdancer.bots</groupId>
 	<artifactId>screeneventor</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<name>screeneventor</name>
 	<description>A bot to create key and mouse events based on screenshot patterns.</description>
 	<inceptionYear>2014</inceptionYear>
