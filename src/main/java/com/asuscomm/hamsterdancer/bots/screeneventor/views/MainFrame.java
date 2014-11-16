@@ -115,19 +115,6 @@ public class MainFrame extends JFrame {
 				TitledBorder.TOP,
 				null,
 				null));
-		controlsPane.addKeyCombi("Get Mouse Position & Add Action", new KeyCombinationListener() {
-				@Override
-				public void keyCombinationReleased(final Integer... keys) {
-					// TODO Auto-generated method stub
-				}
-
-				@Override
-				public void keyCombinationPressed(final Integer... keys) {
-					// TODO Auto-generated method stub
-				}
-			} /*,
-               *NativeKeyEvent.VC_F7*/
-			);
 		controlsPane.addKeyCombi(
 			"Get Mouse Position",
 			new KeyCombinationListener() {
@@ -143,6 +130,20 @@ public class MainFrame extends JFrame {
 			},
 			NativeKeyEvent.VC_F6);
 		controlsPane.addKeyCombi(
+			"Get Mouse Position & Add Action",
+			new KeyCombinationListener() {
+				@Override
+				public void keyCombinationReleased(final Integer... keys) {
+					// TODO Auto-generated method stub
+				}
+
+				@Override
+				public void keyCombinationPressed(final Integer... keys) {
+					// TODO Auto-generated method stub
+				}
+			},
+			NativeKeyEvent.VC_F7);
+		controlsPane.addKeyCombi(
 			"Start/Stop Script",
 			new KeyCombinationListener() {
 				@Override
@@ -155,8 +156,7 @@ public class MainFrame extends JFrame {
 					// nothing todo
 				}
 			},
-			NativeKeyEvent.VC_F8,
-			NativeKeyEvent.VC_CONTROL_L);
+			NativeKeyEvent.VC_F8);
 		southPane.add(controlsPane);
 
 		final JPanel statusPane = new StatusPane(actionsScript);
