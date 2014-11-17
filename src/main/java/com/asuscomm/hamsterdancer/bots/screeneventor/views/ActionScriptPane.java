@@ -474,8 +474,11 @@ public class ActionScriptPane extends JPanel {
 	}
 
 	/** Gets the currently configured Action and adds it to the script. */
-	public void addCurrentConfig() {
+	public synchronized void addCurrentConfig() {
 		actionsScript.add(actionsPane.getAction());
+
+		final int lastIndex = actionsScript.size() - 1;
+		scriptTable.getSelectionModel().setSelectionInterval(lastIndex, lastIndex);
 		scriptTable.revalidate();
 	}
 }
