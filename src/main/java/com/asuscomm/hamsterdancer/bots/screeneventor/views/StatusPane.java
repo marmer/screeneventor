@@ -10,6 +10,7 @@ import java.awt.Point;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
 
 
@@ -128,14 +129,10 @@ public class StatusPane extends JPanel {
 		new Thread(new Runnable() {
 				@Override
 				public void run() {
-					while (true) {
-						lblIterationsLeft.setText(
-							ITERATIONS_LEFT_TEXT + actionScript.getIterationsLeft());
-						lblTimeLeft.setText(TIME_LEFT_TEXT + actionScript.getTimeLeft());
+					final StatusRefresher statusRefresher = new StatusRefresher();
 
-						final Point mouseLocation = MouseInfo.getPointerInfo().getLocation();
-						lblCursorPosition.setText(
-							CURSOR_POSITION_TEXT + mouseLocation.x + "," + mouseLocation.y);
+					while (true) {
+						SwingUtilities.invokeLater(statusRefresher);
 
 						try {
 							Thread.sleep(REFRESH_DELAY);
@@ -145,5 +142,17 @@ public class StatusPane extends JPanel {
 					}
 				}
 			}).start();
+	}
+
+	private final class StatusRefresher implements Runnable {
+		@Override
+		public void run() {
+			lblIterationsLeft.setText(ITERATIONS_LEFT_TEXT + actionScript.getIterationsLeft());
+			lblTimeLeft.setText(TIME_LEFT_TEXT + actionScript.getTimeLeft());
+
+			final Point mouseLocation = MouseInfo.getPointerInfo().getLocation();
+			lblCursorPosition.setText(CURSOR_POSITION_TEXT + mouseLocation.x + "," +
+				mouseLocation.y);
+		}
 	}
 }
