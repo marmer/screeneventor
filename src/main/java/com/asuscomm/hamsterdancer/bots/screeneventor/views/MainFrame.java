@@ -217,7 +217,8 @@ public class MainFrame extends JFrame {
 		/**
 		 * Creates a new ActionPreparator object.
 		 *
-		 * @param addAfterPreparation TODO: doc
+		 * @param addAfterPreparation If this flag is true, the prepared action will immediately
+		 *                            added to the script.
 		 */
 		public ActionPreparator(final boolean addAfterPreparation) {
 			this.addAfterPreparation = addAfterPreparation;
