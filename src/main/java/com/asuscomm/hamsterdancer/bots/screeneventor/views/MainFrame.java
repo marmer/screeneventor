@@ -34,6 +34,7 @@ import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
@@ -213,6 +214,19 @@ public class MainFrame extends JFrame {
 		private java.awt.Point startPoint;
 		private java.awt.Point endPoint;
 		private final boolean addAfterPreparation;
+		private final Runnable pointer =
+			new Runnable() {
+				@Override
+				public void run() {
+					endPoint = MouseInfo.getPointerInfo().getLocation();
+					actionsPane.prepareAction(new Point(startPoint.x, startPoint.y),
+						new Point(endPoint.x, endPoint.y));
+
+					if (addAfterPreparation) {
+						scriptPane.addCurrentConfig();
+					}
+				}
+			};
 
 		/**
 		 * Creates a new ActionPreparator object.
@@ -231,13 +245,7 @@ public class MainFrame extends JFrame {
 
 		@Override
 		public void keyCombinationReleased(final Integer... keys) {
-			endPoint = MouseInfo.getPointerInfo().getLocation();
-			actionsPane.prepareAction(new Point(startPoint.x, startPoint.y),
-				new Point(endPoint.x, endPoint.y));
-
-			if (addAfterPreparation) {
-				scriptPane.addCurrentConfig();
-			}
+			SwingUtilities.invokeLater(pointer);
 		}
 	}
 
