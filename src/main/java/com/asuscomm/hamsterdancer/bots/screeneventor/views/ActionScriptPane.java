@@ -265,7 +265,7 @@ public class ActionScriptPane extends JPanel {
 		gbc_chckbxPlaySoundWhenDone.gridy = 14;
 		scriptControlPane.add(chckbxPlaySoundWhenDone, gbc_chckbxPlaySoundWhenDone);
 
-		final JLabel lblMaxIterations = new JLabel("Max Execution Time");
+		final JLabel lblMaxIterations = new JLabel("Max Iterations");
 		final GridBagConstraints gbc_lblMaxIterations = new GridBagConstraints();
 		gbc_lblMaxIterations.gridwidth = 2;
 		gbc_lblMaxIterations.insets = new Insets(0, 0, 5, 0);
