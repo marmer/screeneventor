@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.GridPane?>
+<?import com.asuscomm.hamsterdancer.bots.screeneventor.views.fx.*?>
+
+<GridPane hgap="5.0" vgap="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label text="Action" GridPane.halignment="CENTER" />
+      <Label text="Area" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+      <Label text="X" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+      <Label text="Y" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+      <Label text="Pre-Delay in ms" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
+      <Label text="Inter-Delay in ms" GridPane.columnIndex="5" GridPane.halignment="CENTER" />
+      <Label text="Start" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+      <Label text="End" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+      <Label text="Radius" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+      <Label text="Comment" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+      <ComboBox prefWidth="150.0" GridPane.rowIndex="1" />
+      <ComboBox prefWidth="150.0" GridPane.rowIndex="3" />
+      <Spinner GridPane.columnIndex="2" GridPane.rowIndex="1" />
+      <Spinner GridPane.columnIndex="3" GridPane.rowIndex="1" />
+      <Spinner GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <Spinner GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      <Spinner GridPane.columnIndex="2" GridPane.rowIndex="3" />
+      <Spinner GridPane.columnIndex="4" GridPane.rowIndex="1" />
+      <Spinner GridPane.columnIndex="5" GridPane.rowIndex="1" />
+      <CheckBox mnemonicParsing="false" text="CheckBox" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+      <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="2">
+         <children>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="Reset" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+         </children>
+      </AnchorPane>
+      <TextField GridPane.columnIndex="4" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</GridPane>
