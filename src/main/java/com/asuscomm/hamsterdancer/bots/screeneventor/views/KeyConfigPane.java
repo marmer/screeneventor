@@ -1,28 +1,25 @@
 package com.asuscomm.hamsterdancer.bots.screeneventor.views;
 
-import com.asuscomm.hamsterdancer.bots.screeneventor.nativeinput.GlobalKeyCombinationProcessor;
-import com.asuscomm.hamsterdancer.bots.screeneventor.nativeinput.KeyCombinationListener;
-import com.asuscomm.hamsterdancer.bots.screeneventor.nativeinput.KeyCombinationRecorder;
-
-import org.apache.commons.lang3.ArrayUtils;
-
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.apache.commons.lang3.ArrayUtils;
+
+import com.asuscomm.hamsterdancer.bots.screeneventor.nativeinput.GlobalKeyCombinationProcessor;
+import com.asuscomm.hamsterdancer.bots.screeneventor.nativeinput.KeyCombinationListener;
+import com.asuscomm.hamsterdancer.bots.screeneventor.nativeinput.KeyCombinationRecorder;
 
 /**
  * Pane used for key configuration.
  *
  * @author MarMer
- * @since  2014-11-12
+ * @since 2014-11-12
  */
 public class KeyConfigPane extends JPanel {
 	/** serialVersionUID. */
@@ -38,16 +35,19 @@ public class KeyConfigPane extends JPanel {
 	}
 
 	/**
-	 * Adds an action in form of a {@link KeyCombinationListener} to prepare it for being able to
-	 * get configured for execution at key combinations.
+	 * Adds an action in form of a {@link KeyCombinationListener} to prepare it
+	 * for being able to get configured for execution at key combinations.
 	 *
-	 * @param label           Label of the action
-	 * @param action          Actions to be performed when key combination was configured and hit.
-	 * @param defaultKeyCombi TODO: doc
+	 * @param label
+	 *            Label of the action
+	 * @param action
+	 *            Actions to be performed when key combination was configured
+	 *            and hit.
+	 * @param defaultKeyCombi
+	 *            TODO: doc
 	 */
 	public void addKeyCombi(final String label,
-		final KeyCombinationListener action,
-		final int... defaultKeyCombi) {
+			final KeyCombinationListener action, final int... defaultKeyCombi) {
 		final JLabel lblDesctiption = new JLabel(label);
 		final GridBagConstraints gbc_lblDescription = new GridBagConstraints();
 		gbc_lblDescription.anchor = GridBagConstraints.EAST;
@@ -57,8 +57,8 @@ public class KeyConfigPane extends JPanel {
 		this.add(lblDesctiption, gbc_lblDescription);
 
 		final JTextField txtKeyCombination = new JTextField();
-		final KeyCombinationRecorder keyRecorder =
-			new KeyCombinationRecorder(txtKeyCombination, defaultKeyCombi);
+		final KeyCombinationRecorder keyRecorder = new KeyCombinationRecorder(
+				txtKeyCombination, defaultKeyCombi);
 
 		final GridBagConstraints gbc_txtKeyCombination = new GridBagConstraints();
 		gbc_txtKeyCombination.weightx = 2.0;
@@ -74,12 +74,7 @@ public class KeyConfigPane extends JPanel {
 		}
 
 		final JButton btnAssign = new JButton("Assign");
-		btnAssign.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(final ActionEvent arg0) {
-					register(action, keyRecorder);
-				}
-			});
+		btnAssign.addActionListener(e -> register(action, keyRecorder));
 
 		final GridBagConstraints gbc_btnAssign = new GridBagConstraints();
 		gbc_btnAssign.fill = GridBagConstraints.HORIZONTAL;
@@ -89,12 +84,7 @@ public class KeyConfigPane extends JPanel {
 		this.add(btnAssign, gbc_btnAssign);
 
 		final JButton btnClear = new JButton("Clear");
-		btnClear.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(final ActionEvent arg0) {
-					unregister(action, keyRecorder);
-				}
-			});
+		btnClear.addActionListener(e -> unregister(action, keyRecorder));
 
 		final GridBagConstraints gbc_btnClear = new GridBagConstraints();
 		gbc_btnClear.fill = GridBagConstraints.HORIZONTAL;
@@ -107,14 +97,13 @@ public class KeyConfigPane extends JPanel {
 	}
 
 	private void register(final KeyCombinationListener action,
-		final KeyCombinationRecorder keyRecorder) {
-		GlobalKeyCombinationProcessor.registerListener(
-			action,
-			keyRecorder.getKeyCombinationToListenFor());
+			final KeyCombinationRecorder keyRecorder) {
+		GlobalKeyCombinationProcessor.registerListener(action,
+				keyRecorder.getKeyCombinationToListenFor());
 	}
 
 	private void unregister(final KeyCombinationListener action,
-		final KeyCombinationRecorder keyRecorder) {
+			final KeyCombinationRecorder keyRecorder) {
 		GlobalKeyCombinationProcessor.removeListener(action);
 		keyRecorder.reset();
 	}
